@@ -1,9 +1,12 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -14,7 +17,11 @@ public class Kingdom {
   private long id;
   @NotNull
   private String owner;
-  private String name = owner + "s kingdom";
+  private String name = owner + "'s kingdom";
+
+  @OneToOne()
+  @JoinColumn(name = "user_id")
+  private List<User> users;
 
   public Kingdom(String owner, String name) {
     this.owner = owner;

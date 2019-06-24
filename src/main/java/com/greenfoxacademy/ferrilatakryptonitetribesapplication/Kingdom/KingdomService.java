@@ -10,6 +10,10 @@ public class KingdomService {
   private IKingdomRepository iKingdomRepository;
 
   public boolean isValidKingdom(Kingdom kingdom) {
-    return iKingdomRepository.existsByName(kingdom.getName());
+    if (kingdom.getName() == null || kingdom.getName().equals("")) {
+      return false;
+    } else {
+      return !iKingdomRepository.existsByName(kingdom.getName());
+    }
   }
 }
