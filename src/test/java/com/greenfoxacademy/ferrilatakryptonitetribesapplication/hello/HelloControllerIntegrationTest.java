@@ -1,4 +1,4 @@
-package com.greenfoxacademy.springwebapp.hello;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.hello;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

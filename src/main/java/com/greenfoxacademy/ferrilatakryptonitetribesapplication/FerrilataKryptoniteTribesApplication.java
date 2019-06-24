@@ -1,4 +1,4 @@
-package com.greenfoxacademy.springwebapp;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

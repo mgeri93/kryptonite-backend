@@ -1,6 +1,6 @@
-package com.greenfoxacademy.springwebapp.hello;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.hello;
 
-import com.greenfoxacademy.springwebapp.services.HelloServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.services.HelloServiceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
