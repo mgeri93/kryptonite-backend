@@ -1,4 +1,4 @@
-package com.greenfoxacademy.springwebapp.services;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.services;
 
 import org.springframework.stereotype.Service;
 

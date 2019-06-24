@@ -1,6 +1,6 @@
-package com.greenfoxacademy.springwebapp.controllers;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.controllers;
 
-import com.greenfoxacademy.springwebapp.services.HelloService;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.services.HelloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
