@@ -1,5 +1,8 @@
 package com.greenfoxacademy.springwebapp.Repositories;
 
-public class UserRepository {
+import com.greenfoxacademy.springwebapp.Models.User;
+import org.springframework.data.repository.CrudRepository;
+
+public interface UserRepository extends CrudRepository<User, Long> {
 
 }
