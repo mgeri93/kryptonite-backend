@@ -1,10 +1,19 @@
-package com.greenfoxacademy.springwebapp.Models;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Models;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 public class User {
 
@@ -14,5 +23,7 @@ public class User {
 
   private String username;
   private String password;
+
+
 
 }
