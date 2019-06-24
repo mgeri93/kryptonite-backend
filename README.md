@@ -1,5 +1,5 @@
-# spring-webapp
-Simple "Hello World!" web application with CircleCI, checkstyle, and some tests
+# Tribes app
+Tribes web application where you can set up your own kingdom and battle with others.
 
 # Update your environment variables
 
