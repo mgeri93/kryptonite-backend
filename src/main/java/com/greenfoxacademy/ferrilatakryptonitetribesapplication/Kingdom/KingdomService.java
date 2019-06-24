@@ -9,6 +9,9 @@ public class KingdomService {
   @Autowired
   private IKingdomRepository iKingdomRepository;
 
+  public KingdomService() {
+  }
+
   public boolean isValidKingdom(Kingdom kingdom) {
     if (kingdom.getName() == null || kingdom.getName().equals("")) {
       return false;
