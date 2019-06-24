@@ -9,5 +9,4 @@ public class FerrilataKryptoniteTribesApplication {
   public static void main(String[] args) {
     SpringApplication.run(FerrilataKryptoniteTribesApplication.class, args);
   }
-
 }
