@@ -1,17 +1,13 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Models;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.User;
 
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -24,6 +20,13 @@ public class User {
   private String username;
   private String password;
 
+  public User(){
+  }
+
+  public User(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
 
 
 }
