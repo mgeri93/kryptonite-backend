@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Models;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Models.UserTest;
 
 import static org.junit.Assert.*;
 
