@@ -14,6 +14,14 @@ public class BuildingService {
   }
 
   public boolean isValidBuilding(Building building) {
-    return building != null;
+    return building.getBuildingType() == null || !building.getBuildingType().equals("");
+  }
+
+  public void saveBuilding(Building building) {
+    buildingRepository.save(building);
+  }
+
+  public Building findById(long id) {
+    return buildingRepository.findById(id);
   }
 }
