@@ -1,4 +1,4 @@
-package com.greenfoxacademy.springwebapp.Building;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Building;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,5 +11,9 @@ public class BuildingService {
   @Autowired
   public BuildingService(BuildingRepository buildingRepository) {
     this.buildingRepository = buildingRepository;
+  }
+
+  public boolean isValidBuilding(Building building) {
+    return building != null;
   }
 }

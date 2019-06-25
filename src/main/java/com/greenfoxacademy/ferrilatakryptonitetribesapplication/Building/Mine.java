@@ -1,4 +1,4 @@
-package com.greenfoxacademy.springwebapp.Building;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Building;
 
 import javax.persistence.Entity;
 import lombok.Getter;

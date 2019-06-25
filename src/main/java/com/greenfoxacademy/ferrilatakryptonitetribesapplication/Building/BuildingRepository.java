@@ -1,4 +1,4 @@
-package com.greenfoxacademy.springwebapp.Building;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Building;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
