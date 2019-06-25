@@ -15,7 +15,11 @@ public class UserService {
   }
 
   public boolean isValidUser(User user){
-    return user.getUsername() != null;
+    return (user.getUsername() != null && !user.getUsername().equals("") );
+  }
+
+  public boolean isExistingUser(User user) {
+    return userRepository.existsByUsername(user.getUsername());
   }
 
   public void saveUser(User user){
