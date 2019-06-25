@@ -20,13 +20,13 @@ public class KingdomTest {
   private KingdomService kingdomService;
 
   @Test
-  public void isValidKingdomWithCorrectInputs () {
-    assertTrue(kingdomService.isValidKingdom(new Kingdom("Attila", "Megye")));
+  public void isValidKingdomWithValidInputs() {
+    assertTrue (kingdomService.isValidKingdom(new Kingdom("Attila", "Megye")));
   }
 
   @Test
-  public void isValidKingdomWithNull() {
-    assertFalse(kingdomService.isValidKingdom(new Kingdom(null, null)));
+  public void isValidKingdomWithEmptyName() {
+    assertFalse (kingdomService.isValidKingdom(new Kingdom("", "")));
   }
 
 

@@ -17,7 +17,7 @@ public class KingdomService {
   }
 
   public boolean isValidKingdom(Kingdom kingdom) {
-    return (kingdom.getName() == null || kingdom.getName().equals(""));
+    return (kingdom.getName() != null && !kingdom.getName().equals(""));
   }
 
 }
