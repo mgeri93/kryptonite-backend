@@ -21,6 +21,7 @@ public abstract class Building {
 
   private long level;
   private double HP;
+  private String buildingType;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "kingdom_id", referencedColumnName = "id")

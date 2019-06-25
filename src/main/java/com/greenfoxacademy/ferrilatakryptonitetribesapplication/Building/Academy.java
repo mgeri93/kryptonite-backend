@@ -7,7 +7,9 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Academy {
+public class Academy extends Building {
 
-  public Academy() {}
+  public Academy() {
+    this.setBuildingType("Academy");
+  }
 }

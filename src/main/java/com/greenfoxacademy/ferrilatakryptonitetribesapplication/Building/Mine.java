@@ -9,5 +9,7 @@ import lombok.Setter;
 @Setter
 public class Mine extends Building {
 
-  public Mine() {}
+  public Mine() {
+    this.setBuildingType("Mine");
+  }
 }

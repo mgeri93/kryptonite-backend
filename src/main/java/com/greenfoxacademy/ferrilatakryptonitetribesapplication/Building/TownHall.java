@@ -9,5 +9,7 @@ import lombok.Setter;
 @Setter
 public class TownHall extends Building {
 
-  public TownHall() {}
+  public TownHall() {
+    this.setBuildingType("TownHall");
+  }
 }

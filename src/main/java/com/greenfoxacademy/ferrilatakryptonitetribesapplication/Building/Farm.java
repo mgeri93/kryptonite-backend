@@ -9,5 +9,7 @@ import lombok.Setter;
 @Setter
 public class Farm extends Building {
 
-  public Farm() {}
+  public Farm() {
+    this.setBuildingType("Farm");
+  }
 }
