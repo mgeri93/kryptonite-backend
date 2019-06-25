@@ -1,7 +1,8 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.hello;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.KingdomTests;
 
 import static org.junit.Assert.*;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom.KingdomService;
 import org.junit.Test;
@@ -19,6 +20,9 @@ public class KingdomTest {
   @Autowired
   private KingdomService kingdomService;
 
+  @Autowired
+  private IKingdomRepository iKingdomRepository;
+
   @Test
   public void isValidKingdomWithCorrectInputs () {
     assertTrue(kingdomService.isValidKingdom(new Kingdom("Attila", "Megye")));
@@ -29,5 +33,10 @@ public class KingdomTest {
     assertFalse(kingdomService.isValidKingdom(new Kingdom(null, null)));
   }
 
-
+  @Test
+  public void isExistingKingdomForExisting() {
+    Kingdom myKingdom = new Kingdom("Attila", "Tanya");
+    iKingdomRepository.save(myKingdom);
+    assertTrue(kingdomService.isExistingKingdom(myKingdom));
+  }
 }
