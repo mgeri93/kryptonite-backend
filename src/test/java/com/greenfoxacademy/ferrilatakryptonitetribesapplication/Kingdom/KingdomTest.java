@@ -2,8 +2,6 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom;
 
 import static org.junit.Assert.*;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom.Kingdom;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom.KingdomService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +17,23 @@ public class KingdomTest {
   @Autowired
   private KingdomService kingdomService;
 
+  @Autowired
+  private IKingdomRepository iKingdomRepository;
+
   @Test
-  public void isValidKingdomWithValidInputs() {
-    assertTrue (kingdomService.isValidKingdom(new Kingdom("Attila", "Megye")));
+  public void isValidKingdomWithCorrectInputs () {
+    assertTrue(kingdomService.isValidKingdom(new Kingdom("Attila", "Megye")));
   }
 
   @Test
-  public void isValidKingdomWithEmptyName() {
-    assertFalse (kingdomService.isValidKingdom(new Kingdom("", "")));
+  public void isValidKingdomWithNull() {
+    assertFalse(kingdomService.isValidKingdom(new Kingdom(null, null)));
   }
 
-
+  @Test
+  public void isExistingKingdomForExisting() {
+    Kingdom myKingdom = new Kingdom("Attila", "Tanya");
+    iKingdomRepository.save(myKingdom);
+    assertTrue(kingdomService.isExistingKingdom(myKingdom));
+  }
 }
