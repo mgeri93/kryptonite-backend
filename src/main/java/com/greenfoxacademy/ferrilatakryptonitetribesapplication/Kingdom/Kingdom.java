@@ -1,5 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.User.User;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,11 +20,9 @@ public class Kingdom {
   private String owner;
   private String name = owner + "'s kingdom";
 
-  // can't uncomment if I want my tests to actually run as User class
-  //does not exist in my code yet.
- /* @OneToOne()
+  @OneToOne()
   @JoinColumn(name = "user_id")
-  private List<User> users;*/
+  private List<User> users;
 
   public Kingdom(String owner, String name) {
     this.owner = owner;

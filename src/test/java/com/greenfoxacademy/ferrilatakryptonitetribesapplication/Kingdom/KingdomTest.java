@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.hello;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom;
 
 import static org.junit.Assert.*;
 
