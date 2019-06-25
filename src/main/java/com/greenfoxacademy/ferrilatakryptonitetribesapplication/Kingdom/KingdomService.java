@@ -1,24 +1,10 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class KingdomService {
+public interface KingdomService {
 
-  @Autowired
-  private IKingdomRepository iKingdomRepository;
+  public boolean isExistingKingdom(Kingdom kingdom);
 
-  public KingdomService() {
-  }
-
-  public boolean isExistingKingdom(Kingdom kingdom) {
-    return iKingdomRepository.existsByName(kingdom.getName());
-  }
-
-  public boolean isValidKingdom(Kingdom kingdom) {
-    return (kingdom.getName() != null && !kingdom.getName().equals(""));
-  }
+  public boolean isValidKingdom(Kingdom kingdom);
 
 }
-
