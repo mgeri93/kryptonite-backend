@@ -14,7 +14,7 @@ public class BuildingService {
   }
 
   public boolean isValidBuilding(Building building) {
-    return (building.getBuildingType() != null && !building.getBuildingType().equals(""));
+    return !(building == null || building.getBuildingType().equals(""));
   }
 
   public void saveBuilding(Building building) {

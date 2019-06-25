@@ -1,15 +1,17 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Building;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
+@AutoConfigureMockMvc
 public class BuildingServiceTest {
 
   private BuildingService buildingService;
@@ -18,14 +20,21 @@ public class BuildingServiceTest {
 
   private Building academy = new Academy();
 
+  private Building farm;
+
+  @Before
+  public void init() {
+    MockitoAnnotations.initMocks(this);
+    buildingService = new BuildingService(buildingRepository);
+  }
+
   @Test
   public void validBuilding_ReturnsTrue() {
     assertTrue(buildingService.isValidBuilding(academy));
   }
 
   @Test
-  public void isValidBuildingWithIncorrectInput() {}
-
-  @Test
-  public void saveValidBuilding() {}
+  public void isValidBuildingWithIncorrectInput() {
+    assertFalse(buildingService.isValidBuilding(farm));
+  }
 }

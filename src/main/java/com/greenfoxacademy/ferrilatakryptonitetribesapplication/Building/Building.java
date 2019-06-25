@@ -23,7 +23,7 @@ public abstract class Building {
   private double HP;
   private String buildingType;
 
-  //  @ManyToOne(fetch = FetchType.EAGER)
-  //  @JoinColumn(name = "kingdom_id", referencedColumnName = "id")
-  //  private Kingdom kingdom;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "kingdom_id", referencedColumnName = "id")
+  private Kingdom kingdom;
 }
