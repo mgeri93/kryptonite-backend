@@ -1,7 +1,5 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.User;
 
-
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,6 +26,4 @@ public class User {
     this.username = username;
     this.password = password;
   }
-
-
 }
