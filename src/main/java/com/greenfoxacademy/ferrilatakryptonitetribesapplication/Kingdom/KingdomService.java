@@ -12,11 +12,13 @@ public class KingdomService {
   public KingdomService() {
   }
 
-  public boolean isValidKingdom(Kingdom kingdom) {
-    if (kingdom.getName() == null || kingdom.getName().equals("")) {
-      return false;
-    } else {
-      return !iKingdomRepository.existsByName(kingdom.getName());
-    }
+  public boolean isExistingKingdom(Kingdom kingdom) {
+    return iKingdomRepository.existsByName(kingdom.getName());
   }
+
+  public boolean isValidKingdom(Kingdom kingdom) {
+    return (kingdom.getName() == null || kingdom.getName().equals(""));
+  }
+
 }
+
