@@ -3,9 +3,12 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.UserTest;
 import static org.junit.Assert.*;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.User.User;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.User.UserService;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.User.UserRepository;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.User.UserServiceImp;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,11 +21,20 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public class UserTest {
 
-  @Autowired
-  UserService userService;
+  @MockBean
+  private UserRepository userRepository;
+
+  @MockBean
+  UserServiceImp userService;
 
   @Autowired
   MockMvc mockMvc;
+
+  @Before
+  public void init() {
+    MockitoAnnotations.initMocks(this);
+    userService = new UserServiceImp(userRepository);
+  }
 
   @Test
   public void getUsername() {
