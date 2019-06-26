@@ -1,16 +1,7 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resourcetest;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource;
 
 import static org.junit.Assert.*;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.IResourceRepository;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceFactory;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceType;
-import java.io.IOException;
-import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
