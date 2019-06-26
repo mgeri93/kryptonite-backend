@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.userTest;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdomtests;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -16,24 +16,16 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class KingdomControllerTest {
 
   @Autowired
   MockMvc mockMvc;
 
   @Test
-  public void givenLoginURL_whenMockMVC_thenStatusOK_andReturnsWithLogin() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.post("/login"))
+  public void givenKingdomURL_whenMockMVC_thenStatusOK_andReturnsWithKingdom() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.get("/kingdom"))
         .andDo(print())
         .andExpect(status().isOk())
-        .andExpect(content().string("login"));
-  }
-
-  @Test
-  public void givenRegisterURL_whenMockMVC_thenStatusOK_andReturnsWithRegister() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.post("/register"))
-        .andDo(print())
-        .andExpect(status().isOk())
-        .andExpect(content().string("register"));
+        .andExpect(content().string("kingdom"));
   }
 }

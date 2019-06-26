@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resourceTest;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resourcetest;
 
 import static org.junit.Assert.*;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
