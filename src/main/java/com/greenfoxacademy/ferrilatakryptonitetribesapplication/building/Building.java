@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.building;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ public abstract class Building {
   private long level;
   private double hp;
 
-  //  @ManyToOne(fetch = FetchType.EAGER)
-  //  @JoinColumn(name = "kingdom_id", referencedColumnName = "id")
-  //  private kingdom kingdom;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "kingdom_id", referencedColumnName = "id")
+  private Kingdom kingdom;
 }
