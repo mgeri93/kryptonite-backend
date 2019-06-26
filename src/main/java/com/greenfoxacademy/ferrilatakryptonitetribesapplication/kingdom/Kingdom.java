@@ -1,7 +1,7 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Resource.Resource;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.User.User;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -27,6 +27,7 @@ public class Kingdom {
   @NotNull
   private String owner;
   private String name = owner + "'s kingdom";
+
 
   @OneToMany(fetch = FetchType.EAGER)
   @JoinColumn(name = "resource_id")

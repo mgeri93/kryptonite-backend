@@ -1,6 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Resource;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom.Kingdom;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
