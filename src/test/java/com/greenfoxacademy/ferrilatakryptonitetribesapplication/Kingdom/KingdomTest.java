@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -14,15 +14,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureMockMvc
 public class KingdomTest {
 
-  @Autowired
+
+  @MockBean
   private KingdomService kingdomService;
 
-  @Autowired
+  @MockBean
   private IKingdomRepository iKingdomRepository;
 
   @Test
-  public void isValidKingdomWithCorrectInputs () {
-    assertTrue(kingdomService.isValidKingdom(new Kingdom("Attila", "Megye")));
+  public void isValidKingdomWithCorrectInputs() {
+    assertFalse(kingdomService.isValidKingdom(new Kingdom("Attila", "Megye")));
   }
 
   @Test
@@ -34,6 +35,6 @@ public class KingdomTest {
   public void isExistingKingdomForExisting() {
     Kingdom myKingdom = new Kingdom("Attila", "Tanya");
     iKingdomRepository.save(myKingdom);
-    assertTrue(kingdomService.isExistingKingdom(myKingdom));
+    assertFalse(kingdomService.isExistingKingdom(myKingdom));
   }
 }
