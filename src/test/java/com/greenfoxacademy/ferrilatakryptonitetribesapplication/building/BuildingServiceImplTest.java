@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import javax.validation.constraints.AssertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,9 +42,9 @@ public class BuildingServiceImplTest {
 
   @Test
   public void saveValidBuilding() {
-    Building mine = new Mine();
+    Building mine = BuildingFactory.createBuilding(BuildingType.Mine);
     when(buildingService.saveBuilding(any(Building.class))).thenReturn(mine);
-    assertEquals(buildingRepository.save(mine), mine);
+    assertEquals(mine, buildingRepository.save(mine));
   }
 
   @Test
