@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 public class KingdomServiceImpl implements KingdomService {
 
   @Autowired
-  private IKingdomRepository iKingdomRepository;
+  private IKingdomRepository kingdomRepository;
 
   @Override
   public boolean isExistingKingdom(Kingdom kingdom) {
-    return iKingdomRepository.existsByName(kingdom.getName());
+    return kingdomRepository.existsByName(kingdom.getName());
   }
 
   @Override
