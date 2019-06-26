@@ -3,6 +3,8 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.building;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+
+import javax.validation.constraints.AssertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,11 +45,13 @@ public class BuildingServiceImplTest {
   public void saveValidBuilding() {
     Building mine = new Mine();
     when(buildingService.saveBuilding(any(Building.class))).thenReturn(mine);
+    assertEquals(buildingRepository.save(mine), mine);
   }
 
   @Test
   public void findValidBuildingById() {
-    Building buildingToReturn = new Academy();
+    Building buildingToReturn = BuildingFactory.createBuilding(BuildingType.Academy);
     when(buildingService.findById(1)).thenReturn(buildingToReturn);
+    assertEquals(buildingRepository.findById(1), buildingToReturn);
   }
 }
