@@ -1,6 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
