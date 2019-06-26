@@ -1,7 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
-import com.sun.tools.javac.code.Attribute.Enum;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;

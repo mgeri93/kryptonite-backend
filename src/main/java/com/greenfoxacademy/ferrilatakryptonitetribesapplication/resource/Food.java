@@ -10,8 +10,9 @@ import lombok.Setter;
 @Entity
 public class Food extends Resource {
 
+  public void dummy () {
 
-  private String resourceType = "food";
+  }
 
   public Food(int amount, Kingdom kingdom) {
     super(amount, kingdom);

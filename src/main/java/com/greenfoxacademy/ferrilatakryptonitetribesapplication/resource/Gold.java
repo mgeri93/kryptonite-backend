@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @Entity
 public class Gold extends Resource {
-  private String resourceType = "gold";
 
   public Gold(int amount, Kingdom kingdom) {
     super(amount, kingdom);
