@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.User;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 public interface KingdomService {
 

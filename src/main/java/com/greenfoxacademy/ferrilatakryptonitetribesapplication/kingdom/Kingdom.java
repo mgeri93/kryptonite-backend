@@ -1,6 +1,6 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.User.User;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
