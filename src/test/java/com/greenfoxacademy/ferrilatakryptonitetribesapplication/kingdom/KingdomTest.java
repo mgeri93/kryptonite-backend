@@ -19,7 +19,7 @@ public class KingdomTest {
   private KingdomService kingdomService;
 
   @Autowired
-  private IKingdomRepository iKingdomRepository;
+  private IKingdomRepository kingdomRepository;
 
   @Test
   public void isValidKingdomWithCorrectInputs () {
@@ -34,7 +34,7 @@ public class KingdomTest {
   @Test
   public void isExistingKingdomForExisting() {
     Kingdom myKingdom = new Kingdom("Attila", "Tanya");
-    iKingdomRepository.save(myKingdom);
+    kingdomRepository.save(myKingdom);
     assertTrue(kingdomService.isExistingKingdom(myKingdom));
   }
 }
