@@ -1,10 +1,10 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.UserTest;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.usertest;
 
 import static org.junit.Assert.*;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.User.User;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.User.UserRepository;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.User.UserServiceImp;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.UserRepository;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.UserServiceImp;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
