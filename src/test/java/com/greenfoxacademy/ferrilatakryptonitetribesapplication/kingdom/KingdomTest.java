@@ -22,7 +22,7 @@ public class KingdomTest {
   private IKingdomRepository kingdomRepository;
 
   @Test
-  public void isValidKingdomWithCorrectInputs () {
+  public void isValidKingdomWithCorrectInputs() {
     assertTrue(kingdomService.isValidKingdom(new Kingdom("Attila", "Megye")));
   }
 

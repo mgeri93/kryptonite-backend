@@ -32,7 +32,7 @@ public class ResourceServiceImplTest {
   }
 
   @Test
-  public void factoryWithValidEnum () {
+  public void factoryWithValidEnum() {
     Resource myResource = ResourceFactory.createResource(ResourceType.Gold);
     assertTrue(myResource.getAmount() == 0);
   }
