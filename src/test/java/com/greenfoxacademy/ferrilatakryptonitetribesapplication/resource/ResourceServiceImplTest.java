@@ -21,7 +21,7 @@ public class ResourceServiceImplTest {
   @Test
   public void notNullKingdomWithNullKingdom() {
     Gold myGold = new Gold(4, null);
-    assertFalse (resourceService.notNullKingdom(myGold));
+    assertFalse(resourceService.notNullKingdom(myGold));
   }
 
   @Test
