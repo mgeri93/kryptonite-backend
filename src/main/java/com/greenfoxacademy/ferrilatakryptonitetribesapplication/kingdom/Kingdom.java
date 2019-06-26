@@ -1,6 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.User.User;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Resource.Resource;
 import java.util.ArrayList;
 import java.util.List;

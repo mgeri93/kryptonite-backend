@@ -1,7 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Resource;
 
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom.Kingdom;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Entity;

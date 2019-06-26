@@ -2,11 +2,8 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.ResourceTest;
 
 import static org.junit.Assert.*;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom.IKingdomRepository;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom.KingdomService;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom.KingdomServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Resource.Gold;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Resource.ResourceServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;

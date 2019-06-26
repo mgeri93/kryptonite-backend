@@ -2,9 +2,9 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.KingdomTests;
 
 import static org.junit.Assert.*;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom.IKingdomRepository;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom.Kingdom;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Kingdom.KingdomService;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.KingdomService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
