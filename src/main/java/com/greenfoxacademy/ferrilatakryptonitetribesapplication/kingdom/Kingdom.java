@@ -31,7 +31,7 @@ public class Kingdom {
 
   @OneToMany(fetch = FetchType.EAGER)
   @JoinColumn(name = "resource_id")
-  private List<Resource> resourceList = new ArrayList<>();
+  private List<Resource> resourceList;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
@@ -40,8 +40,10 @@ public class Kingdom {
   public Kingdom(@NotNull String owner, String name) {
     this.owner = owner;
     this.name = name;
+    this.resourceList = new ArrayList<>();
   }
 
   public Kingdom() {
+    this.resourceList = new ArrayList<>();
   }
 }

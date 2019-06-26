@@ -1,15 +1,13 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.ResourceTest;
 
 import static org.junit.Assert.*;
-
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.Resource.ResourceServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -17,11 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureMockMvc
 public class ResourceServiceImplTest {
 
-  @Autowired
+  @MockBean
   private ResourceServiceImpl resourceService;
 
-  @Autowired
-  private IKingdomRepository iKingdomRepository;
 
   @Test
   public void notNullKingdomWithNullKingdom() {

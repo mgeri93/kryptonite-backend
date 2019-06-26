@@ -3,7 +3,7 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Resource;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -31,11 +31,9 @@ public abstract class Resource {
   private Kingdom kingdom;
 
   public Resource(int amount, Kingdom kingdom) {
-    Date date= new Date();
-    long time = date.getTime();
     this.amount = amount;
     this.kingdom = kingdom;
-    this.updated_at = new Timestamp(time);
+    this.updated_at = Timestamp.valueOf(LocalDateTime.now());
   }
 
   public Resource() {
