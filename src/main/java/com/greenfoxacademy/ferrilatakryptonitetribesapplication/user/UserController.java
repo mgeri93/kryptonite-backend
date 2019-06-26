@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.User;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
