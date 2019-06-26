@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Resource;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource;
 
 public interface ResourceService {
 

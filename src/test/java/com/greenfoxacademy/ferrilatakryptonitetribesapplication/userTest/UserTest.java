@@ -1,8 +1,8 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.UserTest;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.userTest;
 
 import static org.junit.Assert.*;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.User.User;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
 import org.junit.Test;
 
 public class UserTest {

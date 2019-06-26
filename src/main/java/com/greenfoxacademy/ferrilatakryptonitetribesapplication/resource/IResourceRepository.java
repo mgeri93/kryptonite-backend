@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Resource;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource;
 
 import org.springframework.data.repository.CrudRepository;
 

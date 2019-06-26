@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Resource;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.KingdomServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
