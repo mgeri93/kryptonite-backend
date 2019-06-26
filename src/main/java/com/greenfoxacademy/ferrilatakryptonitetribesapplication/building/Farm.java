@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Building;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.building;
 
 import javax.persistence.Entity;
 import lombok.Getter;
@@ -9,7 +9,5 @@ import lombok.Setter;
 @Setter
 public class Farm extends Building {
 
-  public Farm() {
-    this.setBuildingType("Farm");
-  }
+  public Farm() {}
 }

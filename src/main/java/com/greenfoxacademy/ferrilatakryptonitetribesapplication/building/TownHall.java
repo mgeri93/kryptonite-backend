@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.Building;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.building;
 
 import javax.persistence.Entity;
 import lombok.Getter;
@@ -9,7 +9,5 @@ import lombok.Setter;
 @Setter
 public class TownHall extends Building {
 
-  public TownHall() {
-    this.setBuildingType("TownHall");
-  }
+  public TownHall() {}
 }

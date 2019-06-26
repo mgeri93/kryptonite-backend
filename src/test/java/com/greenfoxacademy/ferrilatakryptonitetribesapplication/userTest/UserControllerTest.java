@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.UserTest;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.userTest;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
