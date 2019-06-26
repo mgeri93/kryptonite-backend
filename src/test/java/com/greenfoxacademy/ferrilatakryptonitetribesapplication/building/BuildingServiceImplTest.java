@@ -15,39 +15,39 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureMockMvc
 public class BuildingServiceImplTest {
 
-  private BuildingServiceImpl buildingServiceImpl;
+  private BuildingServiceImpl buildingService;
 
   @Mock private BuildingRepository buildingRepository;
 
-  private Building academy = BuildingFactory.createBuilding("Academy");
+  private Building academy = BuildingFactory.createBuilding(BuildingType.Academy);
 
   private Building farm;
 
   @Before
   public void init() {
     MockitoAnnotations.initMocks(this);
-    buildingServiceImpl = new BuildingServiceImpl(buildingRepository);
+    buildingService = new BuildingServiceImpl(buildingRepository);
   }
 
   @Test
   public void isValidBuildingWithCorrectInput() {
-    assertTrue(buildingServiceImpl.isValidBuilding(academy));
+    assertTrue(buildingService.isValidBuilding(academy));
   }
 
   @Test
   public void isValidBuildingWithIncorrectInput() {
-    assertFalse(buildingServiceImpl.isValidBuilding(farm));
+    assertFalse(buildingService.isValidBuilding(farm));
   }
 
   @Test
   public void saveValidBuilding() {
     Building mine = new Mine();
-    when(buildingServiceImpl.saveBuilding(any(Building.class))).thenReturn(mine);
+    when(buildingService.saveBuilding(any(Building.class))).thenReturn(mine);
   }
 
   @Test
   public void findValidBuildingById() {
     Building buildingToReturn = new Academy();
-    when(buildingServiceImpl.findById(1)).thenReturn(buildingToReturn);
+    when(buildingService.findById(1)).thenReturn(buildingToReturn);
   }
 }
