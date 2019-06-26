@@ -13,8 +13,8 @@ public class ResourceServiceImpl implements ResourceService {
 
   @Override
   public boolean notNullKingdom(Resource resource) {
-    return (resource.getKingdom() != null &&
-        kingdomService.isExistingKingdom(resource.getKingdom()));
+    return (resource.getKingdom() != null
+        && kingdomService.isExistingKingdom(resource.getKingdom()));
   }
 
   @Override

@@ -1,6 +1,5 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource;
 
-
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -24,7 +23,7 @@ public abstract class Resource {
   private long id;
   private String resourceType;
   private int amount;
-  private Timestamp updated_at;
+  private Timestamp updatedAt;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "kingdom_id")
@@ -33,7 +32,7 @@ public abstract class Resource {
   public Resource(int amount, Kingdom kingdom) {
     this.amount = amount;
     this.kingdom = kingdom;
-    this.updated_at = Timestamp.valueOf(LocalDateTime.now());
+    this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
   }
 
   public Resource() {
