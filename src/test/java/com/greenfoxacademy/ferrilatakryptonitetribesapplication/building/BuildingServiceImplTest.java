@@ -51,7 +51,8 @@ public class BuildingServiceImplTest {
   @Test
   public void findValidBuildingById() {
     Building buildingToReturn = BuildingFactory.createBuilding(BuildingType.Academy);
+    buildingToReturn.setLevel(100L);
     when(buildingService.findById(1)).thenReturn(buildingToReturn);
-    assertEquals(buildingRepository.findById(1), buildingToReturn);
+    assertEquals(100L, buildingRepository.findById(1).getLevel(), 0);
   }
 }
