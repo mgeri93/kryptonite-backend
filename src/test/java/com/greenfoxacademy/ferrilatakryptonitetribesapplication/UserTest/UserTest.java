@@ -38,25 +38,25 @@ public class UserTest {
 
   @Test
   public void getUsername() {
-    User testUser = new User("geri","password");
-    assertEquals("geri",testUser.getUsername());
+    User testUser = new User("geri", "password");
+    assertEquals("geri", testUser.getUsername());
   }
 
   @Test
   public void getPassword() {
     User testUser = new User("geri", "password");
-    assertEquals("password",testUser.getPassword());
+    assertEquals("password", testUser.getPassword());
   }
 
   @Test
-  public void isValidUser(){
-    User testUser = new User ("geri","password");
+  public void isValidUser() {
+    User testUser = new User("geri", "password");
     assertTrue(userService.isValidUser(testUser));
   }
 
   @Test
-  public void notValidUser(){
-    User testUser = new User ("","password");
+  public void notValidUser() {
+    User testUser = new User("", "password");
     assertFalse(userService.isValidUser(testUser));
   }
 
