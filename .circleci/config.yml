@@ -33,7 +33,7 @@ jobs:
          if [[ ($CIRCLE_BRANCH == "FKTHeroku") ]]
           then
            command:
-            git push https://heroku:4a850162-7a66-444d-92f4-392d08260472@git.heroku.com/kryptonite-tribes.git master
+             git push https://heroku:4a850162-7a66-444d-92f4-392d08260472@git.heroku.com/kryptonite-tribes.git master
 
 
       - store_test_results:
