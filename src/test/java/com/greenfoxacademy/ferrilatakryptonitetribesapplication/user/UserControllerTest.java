@@ -18,7 +18,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class UserControllerTest {
 
-  @Autowired MockMvc mockMvc;
+  @Autowired
+  MockMvc mockMvc;
 
   @Test
   public void givenLoginURL_whenMockMVC_thenStatusOK_andReturnsWithLogin() throws Exception {

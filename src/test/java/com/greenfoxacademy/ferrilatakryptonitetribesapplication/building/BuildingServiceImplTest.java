@@ -11,15 +11,18 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 public class BuildingServiceImplTest {
 
+  @MockBean
   private BuildingServiceImpl buildingService;
 
-  @Mock private BuildingRepository buildingRepository;
+  @Mock
+  private BuildingRepository buildingRepository;
 
   @Before
   public void init() {
