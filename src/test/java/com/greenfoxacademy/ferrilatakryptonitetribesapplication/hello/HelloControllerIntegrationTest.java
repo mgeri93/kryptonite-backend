@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.hello;
+/*package com.greenfoxacademy.ferrilatakryptonitetribesapplication.hello;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,11 +21,11 @@ public class HelloControllerIntegrationTest {
   @Autowired
   MockMvc mockMvc;
 
-/*  @Test
+  @Test
   public void givenHelloURL_whenMockMVC_thenStatusOK_andReturnsWithHelloWorld() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.get("/api/hello"))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().string("Hello World!"));
-  }*/
-}
+  }
+}*/

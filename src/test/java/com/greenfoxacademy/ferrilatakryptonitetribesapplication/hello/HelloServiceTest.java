@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.hello;
+/*package com.greenfoxacademy.ferrilatakryptonitetribesapplication.hello;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.services.HelloServiceImpl;
 import org.junit.Assert;
@@ -14,7 +14,7 @@ public class HelloServiceTest {
     helloService = new HelloServiceImpl();
   }
 
-/*  @Test
+  @Test
   public void getHelloWorld_ValidExpectedValue_Equals() {
     Assert.assertEquals("Hello World!", helloService.getHelloWorld());
   }
@@ -22,5 +22,5 @@ public class HelloServiceTest {
   @Test
   public void getHelloWorld_InvalidExpectedValue_NotEquals() {
     Assert.assertNotEquals("Hello!", helloService.getHelloWorld());
-  }*/
-}
+  }
+}*/
