@@ -18,7 +18,10 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public boolean validCredentials(String username, String password) {
-    return userRepository.findByUsername(username).getPassword().equals(password);
+    if (userRepository.existsByUsername(username)) {
+      return userRepository.findByUsername(username).getPassword().equals(password);
+    }
+    else return false;
   }
 
   @Override
@@ -34,7 +37,7 @@ public class UserServiceImpl implements UserService {
         missingCred2 = "password";
       }
       if (!missingCred1.equals("") && !missingCred2.equals("")) {
-        return new ResponseEntity<>("Missing parameter(s}: " + missingCred1 + "," + missingCred2,
+        return new ResponseEntity<>("Missing parameter(s): " + missingCred1 + "," + missingCred2,
             HttpStatus.BAD_REQUEST);
       } else {
         return new ResponseEntity<>("Missing parameter(s): " + missingCred1 + missingCred2,
