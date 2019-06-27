@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ResourceServiceImpl implements ResourceService {
 
+  private KingdomServiceImpl kingdomService;
 
-  @Autowired
-  KingdomServiceImpl kingdomService;
+  public ResourceServiceImpl(KingdomServiceImpl kingdomService) {
+    this.kingdomService = kingdomService;
+  }
 
   @Override
   public boolean notNullKingdom(Resource resource) {
