@@ -12,6 +12,6 @@ public interface IUserService {
 
   boolean validCredentials(String username, String password);
 
-  Object loginResponse (String username, String password);
+  Object loginResponse(String username, String password);
 
 }
