@@ -6,5 +6,5 @@ public interface BuildingService {
 
   Building saveBuilding(Building building);
 
-  Building findById(long id);
+  Building findBuildingById(long id);
 }

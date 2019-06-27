@@ -21,10 +21,6 @@ public class BuildingServiceImplTest {
 
   @Mock private BuildingRepository buildingRepository;
 
-  private Building academy = BuildingFactory.createBuilding(BuildingType.Academy);
-
-  private Building farm;
-
   @Before
   public void init() {
     MockitoAnnotations.initMocks(this);
@@ -33,11 +29,13 @@ public class BuildingServiceImplTest {
 
   @Test
   public void isValidBuildingWithCorrectInput() {
+    Building academy = BuildingFactory.createBuilding(BuildingType.Academy);
     assertTrue(buildingService.isValidBuilding(academy));
   }
 
   @Test
   public void isValidBuildingWithIncorrectInput() {
+    Building farm = null;
     assertFalse(buildingService.isValidBuilding(farm));
   }
 
@@ -52,7 +50,7 @@ public class BuildingServiceImplTest {
   public void findValidBuildingById() {
     Building buildingToReturn = BuildingFactory.createBuilding(BuildingType.Academy);
     buildingToReturn.setLevel(100L);
-    when(buildingService.findById(1)).thenReturn(buildingToReturn);
-    assertEquals(100L, buildingRepository.findById(1).getLevel(), 0);
+    when(buildingService.findBuildingById(1)).thenReturn(buildingToReturn);
+    assertEquals(100L, buildingRepository.findBuildingById(1).getLevel(), 0);
   }
 }
