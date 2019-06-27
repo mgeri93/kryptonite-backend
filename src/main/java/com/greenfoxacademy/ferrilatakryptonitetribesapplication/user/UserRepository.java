@@ -3,6 +3,8 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Long> {
-  boolean existsByUsername(String username);
+
   User findByUsername(String username);
+
+  boolean existsByUsername(String name);
 }

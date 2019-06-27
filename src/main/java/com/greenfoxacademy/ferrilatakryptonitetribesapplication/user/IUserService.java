@@ -1,10 +1,17 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
+import java.util.List;
 
-import org.springframework.http.ResponseEntity;
+public interface IUserService {
 
-public interface UserService {
+  List<User> findAllUser();
+
+  void saveUser(User user);
+
   boolean credentialsProvided(String username, String password);
+
   boolean validCredentials(String username, String password);
+
   Object loginResponse (String username, String password);
+
 }
