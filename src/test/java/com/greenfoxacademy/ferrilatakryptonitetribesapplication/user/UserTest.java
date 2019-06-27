@@ -60,7 +60,7 @@ public class UserTest {
   }
 
   @Test
-  public void isExistingUser(){
+  public void isExistingUser() {
     User testUser = new User("geri", "password");
     assertFalse(userService.isExistingUser(testUser));
   }
