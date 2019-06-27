@@ -25,8 +25,7 @@ public class Kingdom {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   @NotNull
-  private String owner;
-  private String name = owner + "'s kingdom";
+  private String name;
 
 
   @OneToMany(fetch = FetchType.EAGER)
@@ -37,8 +36,7 @@ public class Kingdom {
   @JoinColumn(name = "user_id")
   private User user;
 
-  public Kingdom(@NotNull String owner, String name) {
-    this.owner = owner;
+  public Kingdom(String name) {
     this.name = name;
     this.resourceList = new ArrayList<>();
   }
