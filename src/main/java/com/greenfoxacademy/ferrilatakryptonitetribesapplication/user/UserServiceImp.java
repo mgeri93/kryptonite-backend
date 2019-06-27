@@ -25,7 +25,7 @@ public class UserServiceImp implements IUserService {
   }
 
   @Override
-  public List<User> findAll() {
+  public List<User> findAllUser() {
     List<User> users = new ArrayList<>();
     userRepository.findAll().forEach(user -> users.add(user));
     return users;
@@ -36,7 +36,7 @@ public class UserServiceImp implements IUserService {
     userRepository.save(user);
   }
 
-  public Optional<User> findById(long id) {
+  public Optional<User> findUserById(long id) {
     return userRepository.findById(id);
   }
 }
