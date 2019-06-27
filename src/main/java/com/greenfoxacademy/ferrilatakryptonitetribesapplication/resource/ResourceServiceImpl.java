@@ -9,6 +9,7 @@ public class ResourceServiceImpl implements ResourceService {
 
   private KingdomServiceImpl kingdomService;
 
+  @Autowired
   public ResourceServiceImpl(KingdomServiceImpl kingdomService) {
     this.kingdomService = kingdomService;
   }
