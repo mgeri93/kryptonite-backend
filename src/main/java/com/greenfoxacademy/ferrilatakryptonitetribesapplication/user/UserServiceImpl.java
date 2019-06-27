@@ -60,23 +60,29 @@ public class UserServiceImpl implements IUserService {
   public Object loginResponse(String username, String password) {
 
     if (!credentialsProvided(username, password)) {
-      if ((username.equals("")) && (password.equals(""))) {
-        return new ResponseEntity<>("Missing parameter(s): username, password", HttpStatus.BAD_REQUEST);
-      } else if ((username.equals(""))){
-        return new ResponseEntity<>("Missing parameter(s): username",
-            HttpStatus.BAD_REQUEST);
-      } else {
-        return new ResponseEntity<>("Missing parameter(s): password",
-            HttpStatus.BAD_REQUEST);
-      }
+      loginResponseWithValidCredentials(username, password);
     }
     if (validCredentials(username, password)) {
       return new ResponseEntity<>(userRepository.findByUsername(username), HttpStatus.OK);
     }
     if (!userRepository.existsByUsername(username)) {
       return new ResponseEntity<>("No such user: " + username + "!", HttpStatus.UNAUTHORIZED);
-    } else{
+    } else {
       return new ResponseEntity<>("Wrong password!", HttpStatus.UNAUTHORIZED);
+    }
+  }
+
+  @Override
+  public Object loginResponseWithValidCredentials(String username, String password) {
+    if ((username.equals("")) && (password.equals(""))) {
+      return new ResponseEntity<>("Missing parameter(s): username, password",
+          HttpStatus.BAD_REQUEST);
+    } else if ((username.equals(""))){
+      return new ResponseEntity<>("Missing parameter(s): username",
+          HttpStatus.BAD_REQUEST);
+    } else {
+      return new ResponseEntity<>("Missing parameter(s): password",
+          HttpStatus.BAD_REQUEST);
     }
   }
 }

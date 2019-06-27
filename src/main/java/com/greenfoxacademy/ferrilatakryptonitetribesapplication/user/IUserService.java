@@ -14,4 +14,6 @@ public interface IUserService {
 
   Object loginResponse(String username, String password);
 
+  Object loginResponseWithValidCredentials(String username, String password);
+
 }
