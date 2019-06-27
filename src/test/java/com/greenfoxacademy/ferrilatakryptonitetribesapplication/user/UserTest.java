@@ -63,4 +63,14 @@ public class UserTest {
     User testUser = new User("geri", "password");
     assertFalse(userService.isExistingUser(testUser));
   }
+
+  @Test
+  public void credentialsProvidedWithProvided() {
+    assertTrue(userService.credentialsProvided("admin", "password"));
+  }
+
+  @Test
+  public void validCredentialsWithNonexistentUser () {
+    assertFalse(userService.validCredentials("user", "root"));
+  }
 }
