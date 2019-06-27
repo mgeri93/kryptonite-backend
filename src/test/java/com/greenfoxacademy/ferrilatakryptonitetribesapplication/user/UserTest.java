@@ -70,7 +70,7 @@ public class UserTest {
   }
 
   @Test
-  public void validCredentialsWithNonexistentUser () {
+  public void validCredentialsWithNonexistentUser() {
     assertFalse(userService.validCredentials("user", "root"));
   }
 }
