@@ -1,8 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
-import static org.junit.Assert.assertFalse;
-
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
+import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
