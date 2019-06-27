@@ -34,7 +34,7 @@ jobs:
   deploy:
     - docker:
         - image: circleci/openjdk:8-jdk
-    -steps:
+    - steps:
       - checkout
       - run:
         name: Deploy development to Heroku
