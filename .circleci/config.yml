@@ -31,10 +31,10 @@ jobs:
       - run: gradle test
       - run:
           name: Deploy Master to Heroku
-           command: |
-            if [[ ($CIRCLE_BRANCH == "FKTHeroku") ]]
-             then
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+            command: |
+              if [[ ($CIRCLE_BRANCH == "FKTHeroku") ]]
+               then
+              git push https://heroku:4a850162-7a66-444d-92f4-392d08260472@git.heroku.com/kryptonite-tribes.git master
 
       - store_test_results:
           path: build/test-results
