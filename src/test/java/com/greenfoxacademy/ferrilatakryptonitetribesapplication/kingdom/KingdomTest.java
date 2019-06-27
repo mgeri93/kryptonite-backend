@@ -1,12 +1,11 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 
@@ -15,26 +14,23 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureMockMvc
 public class KingdomTest {
 
-  @Autowired
-  private KingdomService kingdomService;
+  @MockBean
+  private KingdomServiceImpl kingdomService;
 
-  @Autowired
-  private IKingdomRepository kingdomRepository;
 
   @Test
-  public void isValidKingdomWithCorrectInputs() {
-    assertTrue(kingdomService.isValidKingdom(new Kingdom("Attila", "Megye")));
+  public void isValidKingdomWithIncorrectInputs() {
+    assertFalse(kingdomService.isValidKingdom(new Kingdom("")));
   }
 
   @Test
   public void isValidKingdomWithNull() {
-    assertFalse(kingdomService.isValidKingdom(new Kingdom(null, null)));
+    assertFalse(kingdomService.isValidKingdom(new Kingdom(null)));
   }
 
   @Test
   public void isExistingKingdomForExisting() {
-    Kingdom myKingdom = new Kingdom("Attila", "Tanya");
-    kingdomRepository.save(myKingdom);
-    assertTrue(kingdomService.isExistingKingdom(myKingdom));
+    Kingdom myKingdom = new Kingdom("Tanya");
+    assertFalse(kingdomService.isExistingKingdom(myKingdom));
   }
 }
