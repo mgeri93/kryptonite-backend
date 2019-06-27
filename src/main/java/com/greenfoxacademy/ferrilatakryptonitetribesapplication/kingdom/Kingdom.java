@@ -36,8 +36,12 @@ public class Kingdom {
   @JoinColumn(name = "user_id")
   private User user;
 
-  public Kingdom(String name) {
-    this.name = name;
+  public Kingdom(String name, User user) {
+    if (name == null || name.equals("")) {
+      this.name = user.getUsername() + "'s kingdom";
+    } else {
+      this.name = name;
+    }
     this.resourceList = new ArrayList<>();
   }
 
