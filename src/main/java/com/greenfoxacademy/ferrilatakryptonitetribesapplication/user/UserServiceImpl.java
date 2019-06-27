@@ -77,7 +77,7 @@ public class UserServiceImpl implements IUserService {
     if ((username.equals("")) && (password.equals(""))) {
       return new ResponseEntity<>("Missing parameter(s): username, password",
           HttpStatus.BAD_REQUEST);
-    } else if ((username.equals(""))){
+    } else if ((username.equals(""))) {
       return new ResponseEntity<>("Missing parameter(s): username",
           HttpStatus.BAD_REQUEST);
     } else {
