@@ -30,9 +30,7 @@ jobs:
       - run: gradle build -x test -x checkstyleMain
       - run: gradle test
       - run:
-              name: Deploy Master to Heroku
-                command:
-                  if [[ ($CIRCLE_BRANCH == "FKTHeroku") ]]
+          if [[ ($CIRCLE_BRANCH == "FKTHeroku") ]]
                    then
                   git push https://heroku:4a850162-7a66-444d-92f4-392d08260472@git.heroku.com/kryptonite-tribes.git master
 
