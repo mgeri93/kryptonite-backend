@@ -18,11 +18,11 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public boolean validCredentials(String username, String password) {
-    return userRepository.findByUsername().getPassword().equals(password);
+    return userRepository.findByUsername(username).getPassword().equals(password);
   }
 
   @Override
-  public ResponseEntity loginResponse(String username, String password) {
+  public Object loginResponse(String username, String password) {
 
     if (!credentialsProvided(username, password)) {
       String missingCred1 = "";
@@ -34,11 +34,26 @@ public class UserServiceImpl implements UserService {
         missingCred2 = "password";
       }
       if (!missingCred1.equals("") && !missingCred2.equals("")) {
-        return new ResponseEntity<>("{ \"status\" : \"error\", "
-            + "\"message\" : \"Missing parameter(s): username, password!\" }",
+        return new ResponseEntity<>("Missing parameter(s}: " + missingCred1 + "," + missingCred2,
+            HttpStatus.BAD_REQUEST);
+      } else {
+        return new ResponseEntity<>("Missing parameter(s): " + missingCred1 + missingCred2,
             HttpStatus.BAD_REQUEST);
       }
     }
+
+    if (validCredentials(username, password)) {
+      return new ResponseEntity<>(userRepository.findByUsername(username), HttpStatus.OK);
+    }
+
+    if (!userRepository.existsByUsername(username)) {
+      return new ResponseEntity<>("No such user: " + username + "!", HttpStatus.UNAUTHORIZED);
+    }
+
+    if (!validCredentials(username, password)) {
+      return new ResponseEntity<>("Wrong password!", HttpStatus.UNAUTHORIZED);
+    }
+    return null;
   }
 }
 
