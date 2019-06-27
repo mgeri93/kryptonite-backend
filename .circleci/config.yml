@@ -31,20 +31,10 @@ jobs:
       - run: gradle test
       - run:
           name: Deploy Master to Heroku
-          command: |
+           command: |
+            if [[ ($CIRCLE_BRANCH == "FKT10") ]]
+             then
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
 
       - store_test_results:
           path: build/test-results
-
-workflows:
-  version: 2.1
-  build-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
