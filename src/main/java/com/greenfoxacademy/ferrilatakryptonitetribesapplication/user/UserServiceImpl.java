@@ -60,7 +60,7 @@ public class UserServiceImpl implements IUserService {
   public Object loginResponse(String username, String password) {
 
     if (!credentialsProvided(username, password)) {
-      loginResponseWithValidCredentials(username, password);
+      return loginResponseWithValidCredentials(username, password);
     }
     if (validCredentials(username, password)) {
       return new ResponseEntity<>(userRepository.findByUsername(username), HttpStatus.OK);
