@@ -57,7 +57,7 @@ public class UserServiceImpl implements IUserService {
   }
 
   @Override
-  public Object loginResponse(String username, String password) {
+  public ResponseEntity loginResponse(String username, String password) {
 
     if (!credentialsProvided(username, password)) {
       return loginResponseWithValidCredentials(username, password);
@@ -73,7 +73,7 @@ public class UserServiceImpl implements IUserService {
   }
 
   @Override
-  public Object loginResponseWithValidCredentials(String username, String password) {
+  public ResponseEntity loginResponseWithValidCredentials(String username, String password) {
     if ((username.equals("")) && (password.equals(""))) {
       return new ResponseEntity<>("Missing parameter(s): username, password",
           HttpStatus.BAD_REQUEST);
