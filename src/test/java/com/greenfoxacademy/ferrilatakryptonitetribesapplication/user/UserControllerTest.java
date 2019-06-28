@@ -98,7 +98,7 @@ public class UserControllerTest {
   }
 
   @Test
-  public void postLoginWithSavedUser () throws Exception{
+  public void postLoginWithSavedUser() throws Exception {
     userRepository.save(new User("Bond", "password123"));
     mockMvc.perform(post("/login")
         .contentType(contentType)
