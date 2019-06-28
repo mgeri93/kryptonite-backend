@@ -14,8 +14,8 @@ public class UserController {
   UserServiceImpl userService;
 
   @PostMapping("/login")
-  ResponseEntity login(@RequestBody User user) {
-    return userService.loginResponse(user.getUsername(), user.getPassword());
+  ResponseEntity login(@RequestBody UserDTO userDTO) {
+    return userService.loginResponse(userDTO.getUsername(), userDTO.getPassword());
   }
 
   @PostMapping("/register")
