@@ -41,9 +41,10 @@ public class UserControllerTest {
   MockMvc mockMvc;
 
   @Before
-  public void init() {
-    MockitoAnnotations.initMocks(this);}
-    
+  public void init(){
+    MockitoAnnotations.initMocks(this);
+  }
+
 
   @Test
   public void givenRegisterURL_whenMockMVC_thenStatusOK_andReturnsWithRegister() throws Exception {
