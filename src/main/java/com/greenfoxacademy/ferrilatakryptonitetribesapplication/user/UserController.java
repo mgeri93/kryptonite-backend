@@ -14,7 +14,7 @@ public class UserController {
   UserServiceImpl userService;
 
   @PostMapping("/login")
-  Object login(@RequestBody User user) {
+  ResponseEntity login(@RequestBody User user) {
     return userService.loginResponse(user.getUsername(), user.getPassword());
   }
 
