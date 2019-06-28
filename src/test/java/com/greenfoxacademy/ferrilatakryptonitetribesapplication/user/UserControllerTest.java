@@ -31,7 +31,7 @@ public class UserControllerTest {
       MediaType.APPLICATION_JSON.getSubtype(),
       Charset.forName("utf8"));
 
-  @MockBean
+  @Autowired
   UserRepository userRepository;
 
   @MockBean
@@ -90,12 +90,20 @@ public class UserControllerTest {
   @Test
   public void postLoginWithWrongPassword() throws Exception {
     when(userService.loginResponse("Bond", "wrongpassword"))
-        .thenReturn(new ResponseEntity<>(new User("Bond", "password123"),
-            HttpStatus.BAD_REQUEST));
+        .thenReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     mockMvc.perform(post("/login")
         .contentType(contentType)
         .content("{\"username\": \"Bond\", \"password\": \"wrongpassword\"}"))
         .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void postLoginWithSavedUser () throws Exception{
+    userRepository.save(new User("Bond", "password123"));
+    mockMvc.perform(post("/login")
+        .contentType(contentType)
+        .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
+        .andExpect(status().isOk());
   }
 
 }

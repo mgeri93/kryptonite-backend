@@ -15,7 +15,10 @@ public class UserController {
 
   @PostMapping("/login")
   ResponseEntity login(@RequestBody UserDTO userDTO) {
-    return userService.loginResponse(userDTO.getUsername(), userDTO.getPassword());
+    if (userDTO != null) {
+      return userService.loginResponse(userDTO.getUsername(), userDTO.getPassword());
+    }
+    else return new ResponseEntity(HttpStatus.BAD_REQUEST);
   }
 
   @PostMapping("/register")
