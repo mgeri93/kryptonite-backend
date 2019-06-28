@@ -1,8 +1,8 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -36,7 +36,7 @@ public class Kingdom {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @OneToMany(mappedBy = "kingdom", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "kingdom", fetch = FetchType.LAZY)
   private List<Building> buildings;
 
   public Kingdom(String name, User user) {
