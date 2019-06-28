@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
 import java.util.ArrayList;
@@ -24,9 +25,8 @@ public class Kingdom {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-  @NotNull
-  private String name;
 
+  @NotNull private String name;
 
   @OneToMany(fetch = FetchType.EAGER)
   @JoinColumn(name = "resource_id")
@@ -35,6 +35,9 @@ public class Kingdom {
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
   private User user;
+
+  @OneToMany(mappedBy = "kingdom", fetch = FetchType.LAZY)
+  private List<Building> buildings;
 
   public Kingdom(String name, User user) {
     if (name == null || name.equals("")) {
@@ -45,7 +48,5 @@ public class Kingdom {
     this.resourceList = new ArrayList<>();
   }
 
-  public Kingdom() {
-    this.resourceList = new ArrayList<>();
-  }
+  public Kingdom() {}
 }

@@ -42,12 +42,13 @@ public class UserControllerTest {
 
   @Before
   public void init() {
-    MockitoAnnotations.initMocks(this);
-  }
+    MockitoAnnotations.initMocks(this);}
+    
 
   @Test
   public void givenRegisterURL_whenMockMVC_thenStatusOK_andReturnsWithRegister() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.post("/register"))
+    mockMvc
+        .perform(MockMvcRequestBuilders.post("/register"))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().string("register"));
