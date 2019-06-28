@@ -32,23 +32,23 @@ jobs:
       - store_test_results:
             path: build/test-results
   deploy:
-    - docker:
-        - image: circleci/openjdk:8-jdk
-    -steps:
-      - checkout
-      - deploy:
-        name: Deploy development to Heroku
-        command: |
-          git push https://heroku:4a850162-7a66-444d-92f4-392d08260472@git.heroku.com/kryptonite-tribes.git FKTHeroku:master
+        - docker:
+            - image: circleci/openjdk:8-jdk
+        -steps:
+          - checkout
+          - deploy:
+            name: Deploy development to Heroku
+            command: |
+              git push https://heroku:4a850162-7a66-444d-92f4-392d08260472@git.heroku.com/kryptonite-tribes.git FKTHeroku:master
 
 workflows:
-  version: 2.1
-  build_deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
+        version: 2.1
+        build_deploy:
+          jobs:
             - build
-          filters:
-            branches:
-              only: FKTHeroku
+            - deploy:
+                requires:
+                  - build
+                filters:
+                  branches:
+                    only: FKTHeroku
