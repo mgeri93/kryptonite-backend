@@ -17,7 +17,6 @@ public class ResourceServiceImplTest {
   @MockBean
   private ResourceServiceImpl resourceService;
 
-
   @Test
   public void notNullKingdomWithNullKingdom() {
     Gold myGold = new Gold(4, null);
