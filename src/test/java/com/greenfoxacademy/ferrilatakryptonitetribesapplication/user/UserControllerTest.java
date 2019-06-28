@@ -69,7 +69,7 @@ public class UserControllerTest {
   @Test
   public void postLoginWithMissingUsername() throws Exception {
     when(userService.loginResponse("", "password123"))
-        .thenReturn(status().isBadRequest());
+        .thenReturn(new ResponseEntity(HttpStatus.BAD_REQUEST));
     mockMvc.perform(post("/login")
         .contentType(contentType)
         .content("{\"username\":, \"password\": \"password123\"}"))
