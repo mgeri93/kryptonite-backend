@@ -41,7 +41,7 @@ public class UserControllerTest {
   MockMvc mockMvc;
 
   @Before
-  public void init(){
+  public void init() {
     MockitoAnnotations.initMocks(this);
   }
 
