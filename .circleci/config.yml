@@ -1,10 +1,10 @@
 version: 2
 jobs:
   test:
-    - working_directory: ~/repo
+    working_directory: ~/repo
 
-        docker:
-          - image: circleci/openjdk:8-jdk
+    docker:
+      - image: circleci/openjdk:8-jdk
 
         environment:
           # Customize the JVM maximum heap limit
