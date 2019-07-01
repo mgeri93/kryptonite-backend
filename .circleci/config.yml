@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 jobs:
   build:
     working_directory: ~/repo
@@ -10,14 +10,14 @@ jobs:
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
-    
+
     steps:
       - checkout
 
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "build.gradle" }}
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            - v1-dependencies-
 
       - run: gradle dependencies
 
@@ -29,7 +29,16 @@ jobs:
       - run: gradle checkstyleMain
       - run: gradle build -x test -x checkstyleMain
       - run: gradle test
-
-
       - store_test_results:
           path: build/test-results
+
+      - run: bash .circleci/setup-heroku.sh
+      - add_ssh_keys:
+          fingerprints:
+            - $HEROKU_SSH_FINGERPRINT
+      - deploy:
+          name: Deploy to Heroku if tests pass and branch is development
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "development" ]; then
+              git push --force git@heroku.com:$HEROKU_APP_NAME.git HEAD:refs/heads/master
+            fi
