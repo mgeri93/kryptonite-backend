@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.mockito.Mockito.when;
+
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -31,7 +33,7 @@ public class UserControllerTest {
       MediaType.APPLICATION_JSON.getSubtype(),
       Charset.forName("utf8"));
 
-  @Autowired
+  @Mock
   UserRepository userRepository;
 
   @MockBean
