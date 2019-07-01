@@ -3,35 +3,36 @@ jobs:
   test:
     working_directory: ~/repo
 
-    docker:
-      - image: circleci/openjdk:8-jdk
+      docker:
+        - image: circleci/openjdk:8-jdk
 
-        environment:
-          # Customize the JVM maximum heap limit
-          JVM_OPTS: -Xmx3200m
-          TERM: dumb
-          steps:
-            - checkout
+      environment:
+        # Customize the JVM maximum heap limit
+        JVM_OPTS: -Xmx3200m
+        TERM: dumb
 
-            - restore_cache:
-                keys:
-                  - v1-dependencies-{{ checksum "build.gradle" }}
-                  - v1-dependencies-
+      steps:
+        - checkout
 
-            - run: gradle dependencies
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "build.gradle" }}
+              - v1-dependencies-
 
-            - save_cache:
-                paths:
-                  - ~/.gradle
-                key: v1-dependencies-{{ checksum "build.gradle" }}
+        - run: gradle dependencies
 
-    - run: gradle checkstyleMain
-    - run: gradle test
-    - store_test_results:
-        path: build/test-results
+        - save_cache:
+            paths:
+              - ~/.gradle
+            key: v1-dependencies-{{ checksum "build.gradle" }}
+
+        - run: gradle checkstyleMain
+        - run: gradle test
+
+        - store_test_results:
+            path: build/test-results
 
   build:
-    - requires: test
     working_directory: ~/repo
 
     docker:
@@ -57,7 +58,7 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      - run: gradle build -x test -x checkstyleMain
+      - run: gradle build
 
   deploy:
     docker:
@@ -68,12 +69,11 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - $HEROKU_SSH_FINGERPRINT
-
       - deploy:
           name: Deploy to Heroku if tests pass and branch is development
           command: |
             if [ "${CIRCLE_BRANCH}" == "development" ]; then
-              git push --force git@heroku.com:$HEROKU_APP_NAME.git HEAD:refs/heads/master
+              git push --force git@heroku.com:$HEROKU_APP_NAME.git HEAD:refs/heads/development
             fi
 
 workflows:
