@@ -65,6 +65,7 @@ public class UserControllerTest {
     mockMvc.perform(post("/login")
         .contentType(contentType)
         .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
+        .andDo(print())
         .andExpect(status().isOk());
   }
 
@@ -75,6 +76,7 @@ public class UserControllerTest {
     mockMvc.perform(post("/login")
         .contentType(contentType)
         .content("{\"username\":, \"password\": \"password123\"}"))
+        .andDo(print())
         .andExpect(status().isBadRequest());
   }
 
@@ -86,6 +88,7 @@ public class UserControllerTest {
     mockMvc.perform(post("/login")
         .contentType(contentType)
         .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
+        .andDo(print())
         .andExpect(status().isUnauthorized());
   }
 
@@ -96,6 +99,7 @@ public class UserControllerTest {
     mockMvc.perform(post("/login")
         .contentType(contentType)
         .content("{\"username\": \"Bond\", \"password\": \"wrongpassword\"}"))
+        .andDo(print())
         .andExpect(status().isBadRequest());
   }
 
@@ -105,7 +109,7 @@ public class UserControllerTest {
     mockMvc.perform(post("/login")
         .contentType(contentType)
         .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
+        .andDo(print())
         .andExpect(status().isOk());
   }
-
 }
