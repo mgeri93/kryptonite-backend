@@ -14,6 +14,10 @@ public class Gold extends Resource {
     super(amount, kingdom);
   }
 
+  public Gold(int amount){
+    super(amount);
+  }
+
   public Gold() {
   }
 }

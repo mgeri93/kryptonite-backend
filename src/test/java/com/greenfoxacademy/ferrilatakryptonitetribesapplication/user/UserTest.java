@@ -61,7 +61,7 @@ public class UserTest {
 
   @Test
   public void isExistingUser() {
-    User testUser = new User("geri", "password");
+    User testUser = new User("g eri", "password");
     assertFalse(userService.isExistingUser(testUser));
   }
 }

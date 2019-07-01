@@ -1,7 +1,14 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Farm;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Mine;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.TownHall;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceFactory;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 @Setter
@@ -45,7 +53,11 @@ public class Kingdom {
     } else {
       this.name = name;
     }
-    this.resourceList = new ArrayList<>();
+    this.resourceList.add(0, new Gold(100));
+    this.buildings.add(0, new TownHall());
+    this.buildings.add(1, new Farm());
+    this.buildings.add(2, new Mine());
+    this.buildings.add(3, new Academy());
   }
 
   public Kingdom() {}
