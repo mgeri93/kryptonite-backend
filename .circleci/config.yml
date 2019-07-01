@@ -28,6 +28,12 @@ jobs:
 
       - run: gradle build
   test:
+      working_directory: ~/repo
+
+      docker:
+        - image: circleci/openjdk:8-jdk
+
+
         - run: gradle checkstyleMain
         - run: gradle test
 
@@ -52,8 +58,13 @@ jobs:
 
 workflows:
   version: 2
-  build-test-deploy:
+  build_and_test:
     jobs:
       - build
-      - test
+      - test:
+          requires:
+            - build
       - deploy
+          filters:
+            branches:
+              only: development
