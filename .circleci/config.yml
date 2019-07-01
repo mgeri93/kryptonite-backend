@@ -2,11 +2,9 @@ version: 2
 jobs:
   test:
     working_directory: ~/repo
-
-      docker:
-        - image: circleci/openjdk:8-jdk
-
-      environment:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    environment:
         # Customize the JVM maximum heap limit
         JVM_OPTS: -Xmx3200m
         TERM: dumb
@@ -82,10 +80,10 @@ workflows:
     jobs:
       - test
       - build
-          requires:
-            - test
+        requires:
+          - test
       - deploy
         requires: build
-       filters:
-         branches:
-           only: development
+        filters:
+          branches:
+            only: development
