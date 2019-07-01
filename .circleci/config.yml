@@ -54,10 +54,8 @@ workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - test
       - build
-        requires:
-          - test
+      - test
       - deploy
         requires: build
         filters:
