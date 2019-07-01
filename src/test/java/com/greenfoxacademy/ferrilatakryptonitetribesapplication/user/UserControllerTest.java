@@ -23,7 +23,8 @@ public class UserControllerTest {
 
   @Test
   public void givenLoginURL_whenMockMVC_thenStatusOK_andReturnsWithLogin() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.post("/login"))
+    mockMvc
+        .perform(MockMvcRequestBuilders.post("/login"))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().string("login"));
@@ -31,7 +32,8 @@ public class UserControllerTest {
 
   @Test
   public void givenRegisterURL_whenMockMVC_thenStatusOK_andReturnsWithRegister() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.post("/register"))
+    mockMvc
+        .perform(MockMvcRequestBuilders.post("/register"))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().string("register"));
