@@ -19,7 +19,7 @@ public class TimeServiceImpTest {
 
   @Test
   public void timeLeftWithFutureFinish() {
-    String answer = "1970-01-01 01:08:57.975";
+    String answer = "1970-01-01 00:08:57.975";
     Timestamp testStamp = Timestamp.valueOf(answer);
     Timestamp myStamp = timeServiceImp.timeLeft(Timestamp.valueOf("2019-07-02 18:48:05.123"),
         Timestamp.valueOf("2019-07-02 18:57:03.098"));
