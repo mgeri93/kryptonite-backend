@@ -27,6 +27,7 @@ jobs:
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
       - run: gradle checkstyleMain
+      - run: gradle checkstyleTest
       - run: gradle test
 
       - store_test_results:
@@ -58,7 +59,7 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      - run: gradle build
+      - run: gradle build -x checkstyleMain -x checkstyleTest -x test
 
   deploy:
     docker:
