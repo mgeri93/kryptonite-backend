@@ -50,15 +50,6 @@ public class UserControllerTest {
   }
 
   @Test
-  public void givenRegisterURL_whenMockMVC_thenStatusOK_andReturnsWithRegister() throws Exception {
-    mockMvc
-        .perform(MockMvcRequestBuilders.post("/register"))
-        .andDo(print())
-        .andExpect(status().isOk())
-        .andExpect(content().string("register"));
-  }
-
-  @Test
   public void postLoginWithValidCredentials() throws Exception {
     when(userService.loginResponse("Bond", "password123"))
         .thenReturn(new ResponseEntity<>(new User("Bond", "password123"), HttpStatus.OK));
