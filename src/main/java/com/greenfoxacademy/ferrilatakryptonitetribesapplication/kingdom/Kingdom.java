@@ -8,6 +8,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.TownHal
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.persistence.Entity;
@@ -49,7 +50,9 @@ public class Kingdom {
       this.name = user.getUsername() + "'s kingdom";
     } else {
       this.name = name;
+      this.resourceList = new ArrayList<>();
       this.resourceList.add(0, new Gold(100));
+      this.buildings = new ArrayList<>();
       this.buildings = Arrays.asList(new TownHall(), new Farm(), new Mine(), new Academy());
     }
   }
