@@ -14,6 +14,10 @@ public class Food extends Resource {
     super(amount, kingdom);
   }
 
+  public Food(int amount){
+    super(amount);
+  }
+
   public Food() {
   }
 }
