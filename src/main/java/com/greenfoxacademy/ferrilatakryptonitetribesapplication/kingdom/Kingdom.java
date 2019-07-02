@@ -2,6 +2,7 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,9 @@ public class Kingdom {
   @OneToMany(mappedBy = "kingdom", fetch = FetchType.LAZY)
   private List<Building> buildings;
 
+  @OneToMany(mappedBy = "kingdom", fetch = FetchType.LAZY)
+  private List<Troop> troops;
+
   public Kingdom(String name, User user) {
     if (name == null || name.equals("")) {
       this.name = user.getUsername() + "'s kingdom";
@@ -46,6 +50,8 @@ public class Kingdom {
       this.name = name;
     }
     this.resourceList = new ArrayList<>();
+    this.buildings = new ArrayList<>();
+    this.troops = new ArrayList<>();
   }
 
   public Kingdom() {}
