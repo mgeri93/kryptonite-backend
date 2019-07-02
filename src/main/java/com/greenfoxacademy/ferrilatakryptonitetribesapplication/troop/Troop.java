@@ -22,9 +22,9 @@ public class Troop {
   private long id;
   @NotNull
   private int level = 1;
-  private int hp;
-  private int attack;
-  private int defense;
+  private int hp = 1;
+  private int attack = 1;
+  private int defense = 1;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "kingdom_id")
@@ -39,9 +39,19 @@ public class Troop {
     if (level > 0) {
       this.level = level;
     }
-    this.hp = hp;
-    this.attack = attack;
-    this.defense = defense;
-    this.kingdom = kingdom;
+    if (hp > 0) {
+      this.hp = hp;
+    }
+    if (attack > 0) {
+      this.attack = attack;
+    }
+    if (defense > 0) {
+      this.defense = defense;
+    }
+    if (kingdom != null) {
+      this.kingdom = kingdom;
+    } else {
+      this.kingdom = new Kingdom();
+    }
   }
 }
