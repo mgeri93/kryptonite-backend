@@ -65,6 +65,7 @@ public class UserServiceImp implements IUserService {
     } else {
       User userToBeSaved = createUserFromDTO(userDTO);
       Kingdom kingdom = createKingdom(userDTO.getKingdom(), userName);
+      kingdom.setUser(userToBeSaved);
       kingdomRepository.save(kingdom);
       userRepository.save(userToBeSaved);
       return ResponseEntity.status(200)
