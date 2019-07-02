@@ -53,13 +53,8 @@ public class UserServiceImpl implements UserService {
     String userName = userDTO.getUsername();
     String password = userDTO.getPassword();
 
-    if ((userName == null || userName.isEmpty()) && (password == null || password.isEmpty())) {
-      return ResponseEntity.status(400)
-          .body(new ErrorMessage("Missing parameters: username, password!"));
-    } else if (password == null || password.isEmpty()) {
-      return ResponseEntity.status(400).body(new ErrorMessage("Missing parameter: password!"));
-    } else if (userName == null || userName.isEmpty()) {
-      return ResponseEntity.status(400).body(new ErrorMessage("Missing parameter: username!"));
+    if (!credentialsProvided(userName, password)) {
+      return registerUserWithMissingCredentials(userDTO);
     } else if (userRepository.existsByUsername(userName)) {
       return ResponseEntity.status(409).body(new ErrorMessage("Username already taken!"));
     } else {
@@ -72,6 +67,19 @@ public class UserServiceImpl implements UserService {
           .body(
               new UserWithKingdomDTO(
                   userToBeSaved.getId(), userToBeSaved.getUsername(), kingdom.getId()));
+    }
+  }
+
+  public ResponseEntity registerUserWithMissingCredentials(UserDTO userDTO) {
+    String userName = userDTO.getUsername();
+    String password = userDTO.getPassword();
+    if ((userName == null || userName.isEmpty()) && (password == null || password.isEmpty())) {
+      return ResponseEntity.status(400)
+          .body(new ErrorMessage("Missing parameters: username, password!"));
+    } else if (password == null || password.isEmpty()) {
+      return ResponseEntity.status(400).body(new ErrorMessage("Missing parameter: password!"));
+    } else {
+      return ResponseEntity.status(400).body(new ErrorMessage("Missing parameter: username!"));
     }
   }
 
