@@ -34,7 +34,7 @@ public abstract class Resource {
     this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
   }
 
-  public Resource(int amount){
+  public Resource(int amount) {
     this.amount = amount;
     this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
   }
