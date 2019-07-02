@@ -20,12 +20,6 @@ public class TroopTest {
   private TroopServiceImp troopServiceImp;
 
   @Test
-  public void constructorWithNegativeLevel() {
-    Troop myTroop = new Troop(-2, 4, 5, 6, new Kingdom());
-    assertEquals(myTroop.getLevel(), 1);
-  }
-
-  @Test
   public void constructorWithAllInvalidParameters() {
     Troop anotherTroop = new Troop(-1, -4, 0, 0, null);
     assertEquals(anotherTroop.getLevel(), 1);

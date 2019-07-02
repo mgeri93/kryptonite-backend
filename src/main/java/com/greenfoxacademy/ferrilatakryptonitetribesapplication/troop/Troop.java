@@ -48,10 +48,5 @@ public class Troop {
     if (defense > 0) {
       this.defense = defense;
     }
-    if (kingdom != null) {
-      this.kingdom = kingdom;
-    } else {
-      this.kingdom = new Kingdom();
-    }
   }
 }
