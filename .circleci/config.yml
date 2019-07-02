@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 jobs:
   test:
     working_directory: ~/repo
@@ -77,7 +77,7 @@ jobs:
             fi
 
 workflows:
-  version: 2
+  version: 2.1
   test-build-and-deploy:
     jobs:
       - test
@@ -90,4 +90,3 @@ workflows:
           filters:
             branches:
               only: development
-              
