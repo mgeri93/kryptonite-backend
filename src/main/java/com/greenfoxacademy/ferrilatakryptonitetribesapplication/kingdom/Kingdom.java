@@ -49,9 +49,9 @@ public class Kingdom {
       this.name = user.getUsername() + "'s kingdom";
     } else {
       this.name = name;
+      this.resourceList.add(0, new Gold(100));
+      this.buildings = Arrays.asList(new TownHall(), new Farm(), new Mine(), new Academy());
     }
-    this.resourceList.add(0, new Gold(100));
-    this.buildings = Arrays.asList(new TownHall(), new Farm(), new Mine(), new Academy());
   }
 
   public Kingdom() {}
