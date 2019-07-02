@@ -29,9 +29,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class UserControllerTest {
 
-  private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-      MediaType.APPLICATION_JSON.getSubtype(),
-      Charset.forName("utf8"));
+  private MediaType contentType =
+      new MediaType(
+          MediaType.APPLICATION_JSON.getType(),
+          MediaType.APPLICATION_JSON.getSubtype(),
+          Charset.forName("utf8"));
 
   @Mock
   UserRepository userRepository;
@@ -47,7 +49,6 @@ public class UserControllerTest {
     MockitoAnnotations.initMocks(this);
   }
 
-
   @Test
   public void givenRegisterURL_whenMockMVC_thenStatusOK_andReturnsWithRegister() throws Exception {
     mockMvc
@@ -60,11 +61,12 @@ public class UserControllerTest {
   @Test
   public void postLoginWithValidCredentials() throws Exception {
     when(userService.loginResponse("Bond", "password123"))
-        .thenReturn(new ResponseEntity<>(new User("Bond", "password123"),
-            HttpStatus.OK));
-    mockMvc.perform(post("/login")
-        .contentType(contentType)
-        .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
+        .thenReturn(new ResponseEntity<>(new User("Bond", "password123"), HttpStatus.OK));
+    mockMvc
+        .perform(
+            post("/login")
+                .contentType(contentType)
+                .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
         .andDo(print())
         .andExpect(status().isOk());
   }
@@ -73,9 +75,11 @@ public class UserControllerTest {
   public void postLoginWithMissingUsername() throws Exception {
     when(userService.loginResponse("", "password123"))
         .thenReturn(new ResponseEntity(HttpStatus.BAD_REQUEST));
-    mockMvc.perform(post("/login")
-        .contentType(contentType)
-        .content("{\"username\":, \"password\": \"password123\"}"))
+    mockMvc
+        .perform(
+            post("/login")
+                .contentType(contentType)
+                .content("{\"username\":, \"password\": \"password123\"}"))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -83,11 +87,12 @@ public class UserControllerTest {
   @Test
   public void postLoginWithNonexistentUser() throws Exception {
     when(userService.loginResponse("Bond", "password123"))
-        .thenReturn(new ResponseEntity<>(new User("Bond", "password123"),
-            HttpStatus.UNAUTHORIZED));
-    mockMvc.perform(post("/login")
-        .contentType(contentType)
-        .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
+        .thenReturn(new ResponseEntity<>(new User("Bond", "password123"), HttpStatus.UNAUTHORIZED));
+    mockMvc
+        .perform(
+            post("/login")
+                .contentType(contentType)
+                .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
         .andDo(print())
         .andExpect(status().isUnauthorized());
   }
@@ -96,9 +101,11 @@ public class UserControllerTest {
   public void postLoginWithWrongPassword() throws Exception {
     when(userService.loginResponse("Bond", "wrongpassword"))
         .thenReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
-    mockMvc.perform(post("/login")
-        .contentType(contentType)
-        .content("{\"username\": \"Bond\", \"password\": \"wrongpassword\"}"))
+    mockMvc
+        .perform(
+            post("/login")
+                .contentType(contentType)
+                .content("{\"username\": \"Bond\", \"password\": \"wrongpassword\"}"))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -106,10 +113,18 @@ public class UserControllerTest {
   @Test
   public void postLoginWithSavedUser() throws Exception {
     userRepository.save(new User("Bond", "password123"));
-    mockMvc.perform(post("/login")
-        .contentType(contentType)
-        .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
+    mockMvc
+        .perform(
+            post("/login")
+                .contentType(contentType)
+                .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
         .andDo(print())
         .andExpect(status().isOk());
+  }
+
+  @Test
+  public void register_unsuccessful_withMissingJsonObject() throws Exception {
+    mockMvc.perform(post("/register"))
+        .andExpect(status().isBadRequest());
   }
 }
