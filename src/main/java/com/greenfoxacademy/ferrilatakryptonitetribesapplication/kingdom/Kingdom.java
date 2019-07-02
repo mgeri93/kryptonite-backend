@@ -49,4 +49,8 @@ public class Kingdom {
   }
 
   public Kingdom() {}
+
+  public Kingdom(String name) {
+    this.name = name;
+  }
 }
