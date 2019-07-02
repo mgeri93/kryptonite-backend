@@ -25,7 +25,7 @@ public class UserTest {
   private UserRepository userRepository;
 
   @MockBean
-  UserServiceImp userService;
+  UserServiceImpl userService;
 
   @MockBean
   IKingdomRepository kingdomRepository;
@@ -36,7 +36,7 @@ public class UserTest {
   @Before
   public void init() {
     MockitoAnnotations.initMocks(this);
-    userService = new UserServiceImp(userRepository, kingdomRepository);
+    userService = new UserServiceImpl(userRepository, kingdomRepository);
   }
 
   @Test

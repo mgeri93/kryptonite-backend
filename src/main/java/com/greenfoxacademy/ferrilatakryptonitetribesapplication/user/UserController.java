@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
-  private UserServiceImp userService;
+  private UserServiceImpl userService;
 
   @Autowired
-  public UserController(UserServiceImp userService) {
+  public UserController(UserServiceImpl userService) {
     this.userService = userService;
   }
 

@@ -14,13 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImp implements IUserService {
+public class UserServiceImpl implements IUserService {
 
   private UserRepository userRepository;
   private IKingdomRepository kingdomRepository;
 
   @Autowired
-  public UserServiceImp(UserRepository userRepository, IKingdomRepository kingdomRepository) {
+  public UserServiceImpl(UserRepository userRepository, IKingdomRepository kingdomRepository) {
     this.userRepository = userRepository;
     this.kingdomRepository = kingdomRepository;
   }
