@@ -3,7 +3,6 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +23,7 @@ public class UserTest {
   private UserRepository userRepository;
 
   @MockBean
-  UserServiceImp userService;
+  UserServiceImpl userService;
 
   @Autowired
   MockMvc mockMvc;
@@ -32,7 +31,7 @@ public class UserTest {
   @Before
   public void init() {
     MockitoAnnotations.initMocks(this);
-    userService = new UserServiceImp(userRepository);
+    userService = new UserServiceImpl(userRepository);
   }
 
   @Test
@@ -63,5 +62,15 @@ public class UserTest {
   public void isExistingUser() {
     User testUser = new User("g eri", "password");
     assertFalse(userService.isExistingUser(testUser));
+  }
+
+  @Test
+  public void credentialsProvidedWithProvided() {
+    assertTrue(userService.credentialsProvided("admin", "password"));
+  }
+
+  @Test
+  public void validCredentialsWithNonexistentUser() {
+    assertFalse(userService.validCredentials("user", "root"));
   }
 }
