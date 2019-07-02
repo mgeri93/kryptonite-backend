@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
 import javax.validation.constraints.NotNull;
 import lombok.Builder;
@@ -10,8 +10,10 @@ import lombok.Setter;
 @Setter
 public class UserDTO {
 
-  @NotNull private String username;
-  @NotNull private String password;
+  @NotNull
+  private String username;
+  @NotNull
+  private String password;
   private String kingdom;
 
   public UserDTO() {}

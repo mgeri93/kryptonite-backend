@@ -4,7 +4,6 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdom
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,5 +66,15 @@ public class UserTest {
   public void isExistingUser() {
     User testUser = new User("geri", "password");
     assertFalse(userService.isExistingUser(testUser));
+  }
+
+  @Test
+  public void credentialsProvidedWithProvided() {
+    assertTrue(userService.credentialsProvided("admin", "password"));
+  }
+
+  @Test
+  public void validCredentialsWithNonexistentUser() {
+    assertFalse(userService.validCredentials("user", "root"));
   }
 }

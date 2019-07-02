@@ -1,6 +1,5 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +18,15 @@ public class UserController {
   }
 
   @PostMapping("/login")
-  ResponseEntity<String> login() {
-    return new ResponseEntity<>("login", HttpStatus.OK);
+  ResponseEntity login(@RequestBody UserDTO userDTO) {
+    if (userDTO != null) {
+      try {
+        return userService.loginResponse(userDTO.getUsername(), userDTO.getPassword());
+      } catch (Exception e) {
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+      }
+    }
+    return new ResponseEntity(HttpStatus.BAD_REQUEST);
   }
 
   @PostMapping("/register")
