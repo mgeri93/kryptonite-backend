@@ -2,11 +2,9 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.time;
 
 import java.sql.Timestamp;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import static org.mockito.Mockito.when;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
