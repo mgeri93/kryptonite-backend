@@ -36,7 +36,9 @@ public class Troop {
 
   public Troop(@NotNull int level, int hp, int attack, int defense,
       Kingdom kingdom) {
-    this.level = level;
+    if (level > 0) {
+      this.level = level;
+    }
     this.hp = hp;
     this.attack = attack;
     this.defense = defense;
