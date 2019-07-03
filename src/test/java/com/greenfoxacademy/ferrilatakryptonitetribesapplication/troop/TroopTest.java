@@ -20,7 +20,7 @@ public class TroopTest {
 
   @Test
   public void constructorWithAllInvalidParameters() {
-    Troop anotherTroop = new Troop(-1, -4, 0, 0, null);
+    Troop anotherTroop = new Troop(-1, -4, 0, 0);
     assertEquals(anotherTroop.getLevel(), 1);
     assertEquals(anotherTroop.getHp(), 1);
     assertEquals(anotherTroop.getAttack(), 1);
@@ -29,7 +29,7 @@ public class TroopTest {
 
   @Test
   public void troopValidityCheck() {
-    Troop testTroop = new Troop(-1, -4, 0, 0, null);
+    Troop testTroop = new Troop(-1, -4, 0, 0);
     when(troopServiceImp.isValidTroop(testTroop)).thenReturn(true);
     assertTrue(troopServiceImp.isValidTroop(testTroop));
   }

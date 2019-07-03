@@ -57,6 +57,4 @@ public class Troop {
       this.defense = defense;
     } else {
       this.defense = 1;
-    }
-  }
-}
+    }}}
