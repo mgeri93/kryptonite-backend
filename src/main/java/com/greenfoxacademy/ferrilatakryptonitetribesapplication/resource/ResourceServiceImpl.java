@@ -1,6 +1,8 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.KingdomServiceImpl;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,13 @@ public class ResourceServiceImpl implements ResourceService {
   @Override
   public boolean amountSpecified(Resource resource) {
     return (resource.getAmount() != 0);
+  }
+
+  @Override
+  public Timestamp timeDifference(Resource resource) {
+    Timestamp resourceTime = resource.getUpdatedAt();
+    Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+    return new Timestamp(now.getTime() - resourceTime.getTime());
   }
 
 }
