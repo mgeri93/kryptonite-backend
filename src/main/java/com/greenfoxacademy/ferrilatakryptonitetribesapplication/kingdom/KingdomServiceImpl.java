@@ -23,4 +23,9 @@ public class KingdomServiceImpl implements KingdomService {
   public boolean isValidKingdom(Kingdom kingdom) {
     return (kingdom.getName() != null && !kingdom.getName().equals(""));
   }
+
+  @Override
+  public void updateResource(Kingdom kingdom) {
+
+  }
 }

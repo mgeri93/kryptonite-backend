@@ -24,4 +24,5 @@ public class ResourceServiceImpl implements ResourceService {
   public boolean amountSpecified(Resource resource) {
     return (resource.getAmount() != 0);
   }
+
 }
