@@ -51,9 +51,7 @@ public class UserControllerTest {
   public void postLoginWithValidCredentials() throws Exception {
     when(userService.loginResponse("Bond", "password123"))
         .thenReturn(new ResponseEntity<>(new User("Bond", "password123"), HttpStatus.OK));
-    mockMvc
-        .perform(
-            post("/login")
+    mockMvc.perform(post("/login")
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
         .andDo(print())
@@ -64,9 +62,7 @@ public class UserControllerTest {
   public void postLoginWithMissingUsername() throws Exception {
     when(userService.loginResponse("", "password123"))
         .thenReturn(new ResponseEntity(HttpStatus.BAD_REQUEST));
-    mockMvc
-        .perform(
-            post("/login")
+    mockMvc.perform(post("/login")
                 .contentType(contentType)
                 .content("{\"username\":, \"password\": \"password123\"}"))
         .andDo(print())
@@ -77,9 +73,7 @@ public class UserControllerTest {
   public void postLoginWithNonexistentUser() throws Exception {
     when(userService.loginResponse("Bond", "password123"))
         .thenReturn(new ResponseEntity<>(new User("Bond", "password123"), HttpStatus.UNAUTHORIZED));
-    mockMvc
-        .perform(
-            post("/login")
+    mockMvc.perform(post("/login")
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
         .andDo(print())
@@ -90,9 +84,7 @@ public class UserControllerTest {
   public void postLoginWithWrongPassword() throws Exception {
     when(userService.loginResponse("Bond", "wrongpassword"))
         .thenReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
-    mockMvc
-        .perform(
-            post("/login")
+    mockMvc.perform(post("/login")
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"wrongpassword\"}"))
         .andDo(print())
@@ -102,9 +94,7 @@ public class UserControllerTest {
   @Test
   public void postLoginWithSavedUser() throws Exception {
     userRepository.save(new User("Bond", "password123"));
-    mockMvc
-        .perform(
-            post("/login")
+    mockMvc.perform(post("/login")
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
         .andDo(print())

@@ -16,7 +16,9 @@ public class UserDTO {
   private String password;
   private String kingdom;
 
-  public UserDTO() {}
+  public UserDTO() {
+
+  }
 
   public UserDTO(String username, String password, String kingdom) {
     this.username = username;

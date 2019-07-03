@@ -64,8 +64,7 @@ public class UserServiceImpl implements UserService {
       kingdomRepository.save(kingdom);
       userRepository.save(userToBeSaved);
       return ResponseEntity.status(200)
-          .body(
-              new UserWithKingdomDTO(
+          .body(new UserWithKingdomDTO(
                   userToBeSaved.getId(), userToBeSaved.getUsername(), kingdom.getId()));
     }
   }
@@ -84,8 +83,7 @@ public class UserServiceImpl implements UserService {
   }
 
   public User createUserFromDTO(UserDTO userDTO) {
-    ModelMapper modelMapper = new ModelMapper();
-    return modelMapper.map(userDTO, User.class);
+    return new ModelMapper().map(userDTO, User.class);
   }
 
   public Kingdom createKingdom(String kingdomName, String username) {
