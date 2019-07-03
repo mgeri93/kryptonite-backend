@@ -31,7 +31,6 @@ public class Troop {
   private Kingdom kingdom;
 
   public Troop() {
-    this.kingdom = new Kingdom();
   }
 
   public Troop(@NotNull int level, int hp, int attack, int defense,
