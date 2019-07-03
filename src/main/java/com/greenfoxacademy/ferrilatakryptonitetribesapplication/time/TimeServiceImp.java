@@ -8,8 +8,9 @@ public class TimeServiceImp implements TimeService {
 
   @Override
   public Timestamp timeLeft(Timestamp start, Timestamp finish) {
-    long ts1 = start.getTime();
-    long ts2 = finish.getTime();
-    return new Timestamp(ts2 - ts1);
+    if (finish.getTime() < start.getTime()) {
+      return Timestamp.valueOf("1970-01-01 00:00:00.000");
+    }
+    return new Timestamp(finish.getTime() - start.getTime());
   }
 }
