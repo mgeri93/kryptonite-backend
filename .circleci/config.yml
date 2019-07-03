@@ -10,7 +10,7 @@ jobs:
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
-      TZ: "Atlantic/Canary"
+      TZ: "Europe/Amsterdam"
 
     steps:
       - checkout
@@ -44,7 +44,7 @@ jobs:
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
-      TZ: "Atlantic/Canary"
+      TZ: "Europe/Amsterdam"
 
     steps:
       - checkout
