@@ -1,7 +1,9 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop;
 
+import java.util.List;
+
 public interface TroopService {
 
-  public boolean isValidTroop(Troop troop);
+  boolean isValidTroop(Troop troop);
 
 }
