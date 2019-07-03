@@ -1,5 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.ErrorMessage;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.UserWithKingdomDTO;
 import java.nio.charset.Charset;
 import org.junit.Before;
 import org.junit.Test;
@@ -105,5 +107,19 @@ public class UserControllerTest {
   public void register_unsuccessful_withMissingJsonObject() throws Exception {
     mockMvc.perform(post("/register"))
         .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void registerWithValidCredentials() throws Exception {
+    UserDTO testUserDTO = new UserDTO();
+    testUserDTO.setUsername("Dani");
+    testUserDTO.setPassword("LOL");
+    when(userService.registerNewUser(testUserDTO))
+        .thenReturn(new ResponseEntity<>(new UserWithKingdomDTO(1, "Dani", 1), HttpStatus.OK));
+    mockMvc.perform(post("/register")
+        .contentType(contentType)
+        .content("{\"id\": \"1\", \"username\": \"Dani\", \"kingdomId\": \"1\"}"))
+        .andDo(print())
+        .andExpect(status().isOk());
   }
 }
