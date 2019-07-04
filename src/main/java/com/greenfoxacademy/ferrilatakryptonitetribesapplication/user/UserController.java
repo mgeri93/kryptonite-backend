@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
+  private UserServiceImpl userService;
+
   @Autowired
-  UserServiceImpl userService;
+  public UserController(UserServiceImpl userService) {
+    this.userService = userService;
+  }
 
   @PostMapping("/login")
   ResponseEntity login(@RequestBody UserDTO userDTO) {
@@ -26,7 +30,7 @@ public class UserController {
   }
 
   @PostMapping("/register")
-  ResponseEntity<String> register() {
-    return new ResponseEntity<>("register", HttpStatus.OK);
+  ResponseEntity register(@RequestBody UserDTO userDTO) {
+    return userService.registerNewUser(userDTO);
   }
 }
