@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,24 +24,36 @@ public class TimeServiceImpTest {
   @Test
   public void timeLeftWithFutureFinish() {
     Timestamp testStamp = Timestamp.valueOf("1970-01-01 01:08:57.975");
-    Timestamp myStamp = timeServiceImp.timeLeft(Timestamp.valueOf("2019-07-02 18:48:05.123"),
+    try {
+      Timestamp myStamp = timeServiceImp.timeLeft(Timestamp.valueOf("2019-07-02 18:48:05.123"),
         Timestamp.valueOf("2019-07-02 18:57:03.098"));
-    assertEquals(myStamp, testStamp);
+      assertEquals(myStamp, testStamp);
+    } catch (Exception e) {
+      System.out.println("Invalid input parameters");
+    }
   }
 
   @Test
   public void timeLeftWithAssertNotSame() {
     Timestamp testStamp = Timestamp.valueOf("1970-01-01 01:08:57.975");
-    Timestamp myStamp = timeServiceImp.timeLeft(Timestamp.valueOf("2019-07-02 18:48:05.123"),
-        Timestamp.valueOf("2019-07-02 18:51:03.098"));
-    assertNotSame(myStamp, testStamp);
+    try {
+      Timestamp myStamp = timeServiceImp.timeLeft(Timestamp.valueOf("2019-07-02 18:48:05.123"),
+          Timestamp.valueOf("2019-07-02 18:51:03.098"));
+      assertNotSame(myStamp, testStamp);
+    } catch (Exception e) {
+      System.out.println("Invalid input parameters");
+    }
   }
 
   @Test
   public void timeLeftWithFinishEarlierThanStart() {
-    Timestamp testStamp = Timestamp.valueOf("1970-01-01 00:00:00.000");
-    Timestamp myStamp = timeServiceImp.timeLeft(Timestamp.valueOf("2019-07-02 18:57:05.123"),
-        Timestamp.valueOf("2019-07-01 18:48:03.098"));
-    assertEquals(myStamp, testStamp);
+    boolean thrown = false;
+    try {
+      timeServiceImp.timeLeft(Timestamp.valueOf("2019-07-02 18:51:03.098"),
+          Timestamp.valueOf("2018-07-02 18:51:03.098"));
+    } catch (Exception e) {
+      thrown = true;
+    }
+    assertTrue(thrown);
   }
 }
