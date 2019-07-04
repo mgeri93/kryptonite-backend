@@ -26,7 +26,7 @@ public class TimeServiceImpTest {
     Timestamp testStamp = Timestamp.valueOf("1970-01-01 01:08:57.975");
     try {
       Timestamp myStamp = timeServiceImp.timeLeft(Timestamp.valueOf("2019-07-02 18:48:05.123"),
-        Timestamp.valueOf("2019-07-02 18:57:03.098"));
+          Timestamp.valueOf("2019-07-02 18:57:03.098"));
       assertEquals(myStamp, testStamp);
     } catch (Exception e) {
       System.out.println("Invalid input parameters");
