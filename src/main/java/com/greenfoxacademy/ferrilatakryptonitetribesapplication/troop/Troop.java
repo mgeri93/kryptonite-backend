@@ -1,9 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
