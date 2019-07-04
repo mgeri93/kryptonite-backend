@@ -12,6 +12,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -39,7 +40,7 @@ public class Kingdom {
   @JoinColumn(name = "resource_id")
   private List<Resource> resourceList;
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
   private User user;
 
@@ -65,4 +66,8 @@ public class Kingdom {
   }
 
   public Kingdom() {}
+
+  public Kingdom(String name) {
+    this.name = name;
+  }
 }
