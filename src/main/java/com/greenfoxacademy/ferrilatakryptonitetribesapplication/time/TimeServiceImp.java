@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 public class TimeServiceImp implements TimeService {
 
   @Override
-  public Timestamp timeLeft(Timestamp start, Timestamp finish) {
+  public Timestamp timeLeft(Timestamp start, Timestamp finish) throws Exception {
     if (finish.getTime() < start.getTime()) {
-      return Timestamp.valueOf("1970-01-01 00:00:00.000");
+      throw new Exception()
     }
     return new Timestamp(finish.getTime() - start.getTime());
   }
