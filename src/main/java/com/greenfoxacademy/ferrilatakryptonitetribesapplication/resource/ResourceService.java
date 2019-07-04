@@ -5,4 +5,6 @@ public interface ResourceService {
   boolean notNullKingdom(Resource resource);
 
   boolean amountSpecified(Resource resource);
+
+  Resource saveResource(Resource resource);
 }
