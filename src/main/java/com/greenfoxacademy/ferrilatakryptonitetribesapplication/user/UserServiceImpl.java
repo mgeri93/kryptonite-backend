@@ -59,7 +59,8 @@ public class UserServiceImpl implements UserService {
       return ResponseEntity.status(409).body(new ErrorMessage("Username already taken!"));
     } else {
       User userToBeSaved = createUserFromDTO(userDTO);
-      Kingdom kingdom = createKingdom(userDTO.getKingdom(), userName);
+      Kingdom kingdom = createKingdom(userDTO.getKingdom(), new User(userToBeSaved.getUsername(),
+          userToBeSaved.getPassword()));
       kingdom.setUser(userToBeSaved);
       kingdomRepository.save(kingdom);
       userRepository.save(userToBeSaved);
@@ -86,11 +87,11 @@ public class UserServiceImpl implements UserService {
     return new ModelMapper().map(userDTO, User.class);
   }
 
-  public Kingdom createKingdom(String kingdomName, String username) {
+  public Kingdom createKingdom(String kingdomName, User user) {
     if (isKingdomNameNullOrEmpty(kingdomName)) {
-      return new Kingdom(String.format("%s's kingdom", username));
+      return new Kingdom(String.format("%s's kingdom", user.getUsername()), user);
     }
-    return new Kingdom(kingdomName);
+    return new Kingdom(kingdomName, user);
   }
 
   public Boolean isKingdomNameNullOrEmpty(String kingdomName) {
