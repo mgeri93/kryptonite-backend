@@ -33,4 +33,14 @@ public class TroopTest {
     when(troopServiceImp.isValidTroop(testTroop)).thenReturn(true);
     assertTrue(troopServiceImp.isValidTroop(testTroop));
   }
+
+  @Test
+  public void noParameterConstructor() {
+    Troop testTroop = new Troop(1, 1, 1, 1);
+    Troop defaultTroop = new Troop();
+    assertEquals(testTroop.getLevel(), defaultTroop.getLevel());
+    assertEquals(testTroop.getHp(), defaultTroop.getHp());
+    assertEquals(testTroop.getAttack(), defaultTroop.getAttack());
+    assertEquals(testTroop.getDefense(), defaultTroop.getDefense());
+  }
 }

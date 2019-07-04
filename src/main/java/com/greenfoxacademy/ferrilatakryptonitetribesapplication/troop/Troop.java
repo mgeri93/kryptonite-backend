@@ -2,6 +2,7 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,10 +24,10 @@ public class Troop {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   @NotNull
-  private int level = 0;
-  private int hp = 0;
-  private int attack = 0;
-  private int defense = 0;
+  private long level;
+  private long hp;
+  private long attack;
+  private long defense;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "kingdom_id")
@@ -41,14 +42,9 @@ public class Troop {
   }
 
   public Troop(int level, int hp, int attack, int defense) {
-    List<Integer> validStats = new ArrayList<>();
-    validStats.add(Math.max(level, 1));
-    validStats.add(Math.max(hp, 1));
-    validStats.add(Math.max(attack, 1));
-    validStats.add(Math.max(defense, 1));
-    this.level = validStats.get(0);
-    this.hp = validStats.get(1);
-    this.attack = validStats.get(2);
-    this.defense = validStats.get(3);
+    this.level = Math.max(level, 1);
+    this.hp = Math.max(hp, 1);
+    this.attack = Math.max(attack, 1);
+    this.defense = Math.max(defense, 1);
   }
 }
