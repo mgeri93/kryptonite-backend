@@ -121,4 +121,17 @@ public class UserControllerTest {
         .andDo(print())
         .andExpect(status().isOk());
   }
+
+  @Test
+  public void registerWithoutUsernameAndPassword() throws Exception {
+    when(userService.registerNewUser(new UserDTO()))
+        .thenReturn(new ResponseEntity<>("\"status\": \"error\",\n"
+            + "    \"message\": \"Missing parameters: username, password!\"",
+            HttpStatus.BAD_REQUEST));
+    mockMvc.perform(post("/register")
+        .contentType(contentType)
+        .content("{\"id\": \", \"username\": \", \"kingdomId\": \"}"))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+  }
 }
