@@ -32,9 +32,14 @@ public class KingdomServiceImpl implements KingdomService {
 
   @Override
   public void updateResource(Kingdom kingdom){
-    kingdom.getResourceList().get(0).setAmount(kingdom.getResourceList().get(0).getAmount()
-        - (int)(((int)((resourceService.timeDifference(kingdom.getResourceList().get(0)) / 60000)
-        / /*Updtae time:*/60 )) * /*UpgradeCost:*/10));
+    if ((resourceService.timeDifference(kingdom.getResourceList().get(0)) /60000) / /*UpgradeTime*/60 <= 1 ) {
+      kingdom.getResourceList().get(0).setAmount(kingdom.getResourceList().get(0).getAmount()
+          - (int) (
+          ((int) ((resourceService.timeDifference(kingdom.getResourceList().get(0)) / 60000)
+              / /*Upgradetime:*/60)) * /*UpgradeCost:*/10));
+
+    } if
     kingdomRepository.save(kingdom);
   }
+
 }
