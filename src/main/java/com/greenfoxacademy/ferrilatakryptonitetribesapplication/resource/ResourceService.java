@@ -8,5 +8,5 @@ public interface ResourceService {
 
   boolean amountSpecified(Resource resource);
 
-  Timestamp timeDifference(Resource resource);
+  long timeDifference(Resource resource);
 }

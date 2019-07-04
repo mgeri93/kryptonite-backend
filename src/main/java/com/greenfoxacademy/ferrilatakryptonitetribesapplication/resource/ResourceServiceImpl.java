@@ -28,10 +28,10 @@ public class ResourceServiceImpl implements ResourceService {
   }
 
   @Override
-  public Timestamp timeDifference(Resource resource) {
+  public long timeDifference(Resource resource) {
     Timestamp resourceTime = resource.getUpdatedAt();
-    Timestamp now = Timestamp.valueOf(LocalDateTime.now());
-    return new Timestamp(now.getTime() - resourceTime.getTime());
+    long now = Timestamp.valueOf(LocalDateTime.now()).getTime();
+    return  now - resourceTime.getTime();
   }
 
 }
