@@ -30,6 +30,6 @@ public class ResourceServiceImpl implements ResourceService {
 
   @Override
   public Resource saveResource(Resource resource) {
-    return ();
+    return resourceRepository.save(resource);
   }
 }
