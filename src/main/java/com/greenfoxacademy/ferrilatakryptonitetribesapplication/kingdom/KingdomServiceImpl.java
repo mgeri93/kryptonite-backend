@@ -1,6 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.time.TimeServiceImp;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,13 @@ public class KingdomServiceImpl implements KingdomService {
 
   private IKingdomRepository kingdomRepository;
   private ResourceServiceImpl resourceService;
+  private TimeServiceImp timeService;
 
   @Autowired
   public KingdomServiceImpl(
-      IKingdomRepository kingdomRepository) {
+      IKingdomRepository kingdomRepository, TimeServiceImp timeService) {
     this.kingdomRepository = kingdomRepository;
+    this.timeService = timeService;
   }
 
   public void setResourceService(ResourceServiceImpl resourceService) {
@@ -44,5 +47,4 @@ public class KingdomServiceImpl implements KingdomService {
     }
     kingdomRepository.save(kingdom);
   }
-
 }
