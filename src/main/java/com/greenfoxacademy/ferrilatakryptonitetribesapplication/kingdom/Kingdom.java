@@ -36,18 +36,20 @@ public class Kingdom {
 
   @NotNull private String name;
 
-  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER)
-  @JoinColumn(name = "resource_id")
+  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+      mappedBy = "kingdom",fetch = FetchType.EAGER)
   private List<Resource> resourceList;
 
   @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
   private User user;
 
-  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "kingdom", fetch = FetchType.LAZY)
+  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+      mappedBy = "kingdom", fetch = FetchType.LAZY)
   private List<Building> buildings;
 
-  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+      mappedBy = "kingdom", fetch = FetchType.LAZY)
   private List<Troop> troops;
 
   public Kingdom(String name, User user) {
@@ -57,12 +59,16 @@ public class Kingdom {
       this.name = name;
     }
     this.resourceList = new ArrayList<>();
-    this.resourceList.add(0, new Gold(100));
+    /*this.resourceList.add(0, new Gold(100));*/
     this.buildings = new ArrayList<>();
-    this.buildings = Arrays.asList(new TownHall(), new Farm(), new Mine(), new Academy());
+    /*this.buildings = Arrays.asList(new TownHall(), new Farm(), new Mine(), new Academy());*/
     this.troops = new ArrayList<>();
   }
 
-  public Kingdom() {}
+  public Kingdom() {
+    this.resourceList = new ArrayList<>();
+    this.buildings = new ArrayList<>();
+    this.troops = new ArrayList<>();
+  }
 
 }

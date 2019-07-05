@@ -1,7 +1,13 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingFactory;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingType;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.ErrorMessage;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.UserWithKingdomDTO;
 import java.util.ArrayList;
@@ -59,8 +65,9 @@ public class UserServiceImpl implements UserService {
       return ResponseEntity.status(409).body(new ErrorMessage("Username already taken!"));
     } else {
       User userToBeSaved = createUserFromDTO(userDTO);
-      Kingdom kingdom = createKingdom(userDTO.getKingdom(), new User(userToBeSaved.getUsername(),
-          userToBeSaved.getPassword()));
+      Kingdom kingdom = initKingdom(createKingdom(userDTO.getKingdom(),
+          new User(userToBeSaved.getUsername(),
+          userToBeSaved.getPassword())));
       kingdom.setUser(userToBeSaved);
       kingdomRepository.save(kingdom);
       userRepository.save(userToBeSaved);
@@ -85,6 +92,18 @@ public class UserServiceImpl implements UserService {
 
   public User createUserFromDTO(UserDTO userDTO) {
     return new ModelMapper().map(userDTO, User.class);
+  }
+
+  public Kingdom initKingdom(Kingdom kingdom){
+    Gold startingGold =  new Gold(100);
+    startingGold.setKingdom(kingdom);
+    kingdom.getResourceList().add(0,startingGold);
+    for (BuildingType buildingType : BuildingType.values()){
+      kingdom.getBuildings().add(BuildingFactory.createBuilding(buildingType));
+    } for (Building building : kingdom.getBuildings()){
+      building.setKingdom(kingdom);
+    }
+    return kingdom;
   }
 
   public Kingdom createKingdom(String kingdomName, User user) {
