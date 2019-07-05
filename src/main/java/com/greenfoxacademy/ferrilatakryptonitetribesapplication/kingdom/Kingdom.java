@@ -36,7 +36,7 @@ public class Kingdom {
 
   @NotNull private String name;
 
-  @OneToMany(fetch = FetchType.EAGER)
+  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER)
   @JoinColumn(name = "resource_id")
   private List<Resource> resourceList;
 
@@ -44,10 +44,10 @@ public class Kingdom {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @OneToMany(mappedBy = "kingdom", fetch = FetchType.LAZY)
+  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "kingdom", fetch = FetchType.LAZY)
   private List<Building> buildings;
 
-  @OneToMany(mappedBy = "kingdom", fetch = FetchType.LAZY)
+  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)
   private List<Troop> troops;
 
   public Kingdom(String name, User user) {
@@ -64,5 +64,5 @@ public class Kingdom {
   }
 
   public Kingdom() {}
-  
+
 }

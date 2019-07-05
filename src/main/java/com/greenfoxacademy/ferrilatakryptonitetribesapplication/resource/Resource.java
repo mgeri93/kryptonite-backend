@@ -3,6 +3,7 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,8 +25,8 @@ public abstract class Resource {
   private int amount;
   private Timestamp updatedAt;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "kingdom_id")
+  @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+  @JoinColumn(name = "kingdom_id" )
   private Kingdom kingdom;
 
   public Resource(int amount, Kingdom kingdom) {
