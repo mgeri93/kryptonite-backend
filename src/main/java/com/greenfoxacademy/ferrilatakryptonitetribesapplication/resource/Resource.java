@@ -26,7 +26,7 @@ public abstract class Resource {
   private Timestamp updatedAt;
 
   @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-  @JoinColumn(name = "kingdom_id" )
+  @JoinColumn(name = "kingdom_id")
   private Kingdom kingdom;
 
   public Resource(int amount, Kingdom kingdom) {
