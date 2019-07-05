@@ -29,7 +29,7 @@ public class ResourceServiceImpl implements ResourceService {
   }
 
   @Override
-  public Resource saveResource(Resource resource) {
-    return resourceRepository.save(resource);
+  public void saveResource(Resource resource) {
+    resourceRepository.save(resource);
   }
 }

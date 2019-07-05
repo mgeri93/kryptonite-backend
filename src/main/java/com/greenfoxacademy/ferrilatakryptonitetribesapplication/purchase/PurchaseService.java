@@ -11,13 +11,13 @@ public interface PurchaseService {
 
   Gold getGoldOfKingdom(List<Resource> kingdomResource);
 
-  Resource purchaseIfEnoughGold(Gold gold, Long upgradeLevelTo, Long upgradeCost);
+  int purchaseIfEnoughGold(Gold gold, Long upgradeLevelTo, Long upgradeCost);
 
-  Resource purchaseTroop(Kingdom kingdom);
+  int purchaseTroop(Kingdom kingdom);
 
-  Resource purchaseBuilding(Kingdom kingdom);
+  int purchaseBuilding(Kingdom kingdom);
 
-  Resource purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo);
+  int purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo);
 
-  Resource purchaseBuildingUpgrade(Kingdom kingdom, Long buildingId, Long upgradeLevelTo);
+  int purchaseBuildingUpgrade(Kingdom kingdom, Long buildingId, Long upgradeLevelTo);
 }

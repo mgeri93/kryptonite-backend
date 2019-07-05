@@ -35,14 +35,15 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   @Override
-  public Resource purchaseBuilding(Kingdom kingdom) {
+  public int purchaseBuilding(Kingdom kingdom) {
     List<Resource> kingdomResources = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResources);
-    return purchaseIfEnoughGold(gold, 1L, buildingCreateCost);
+    purchaseIfEnoughGold(gold, 1L, buildingCreateCost);
+    return gold.getAmount();
   }
 
   @Override
-  public Resource purchaseBuildingUpgrade(Kingdom kingdom, Long buildingId, Long upgradeLevelTo) {
+  public int purchaseBuildingUpgrade(Kingdom kingdom, Long buildingId, Long upgradeLevelTo) {
     Building building = buildingService.findBuildingById(buildingId);
     building.setLevel(upgradeLevelTo);
     List<Resource> kingdomResource = kingdom.getResourceList();
@@ -52,14 +53,15 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   @Override
-  public Resource purchaseTroop(Kingdom kingdom) {
+  public int purchaseTroop(Kingdom kingdom) {
     List<Resource> kingdomResources = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResources);
-    return purchaseIfEnoughGold(gold, 1L, troopCreateCost);
+    purchaseIfEnoughGold(gold, 1L, troopCreateCost);
+    return gold.getAmount();
   }
 
   @Override
-  public Resource purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo) {
+  public int purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo) {
     Troop troop = troopService.findTroopById(troopId);
     troop.setLevel(upgradeLevelTo);
     List<Resource> kingdomResource = kingdom.getResourceList();
@@ -81,11 +83,14 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   @Override
-  public Resource purchaseIfEnoughGold(Gold gold, Long upgradeLevelTo, Long upgradeCost) {
+  public int purchaseIfEnoughGold(Gold gold, Long upgradeLevelTo, Long upgradeCost) {
     if (isGoldEnough(gold, upgradeCost)) {
       long newGoldAmount = gold.getAmount() - (upgradeLevelTo * upgradeCost);
       gold.setAmount((int) newGoldAmount);
+      resourceService.saveResource(gold);
+      return gold.getAmount();
+    } else {
+      return gold.getAmount();
     }
-    return resourceService.saveResource(gold);
   }
 }

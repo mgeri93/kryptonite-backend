@@ -6,5 +6,5 @@ public interface ResourceService {
 
   boolean amountSpecified(Resource resource);
 
-  Resource saveResource(Resource resource);
+  void saveResource(Resource resource);
 }
