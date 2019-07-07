@@ -1,10 +1,13 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Farm;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
 import java.util.List;
@@ -15,6 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -61,8 +65,30 @@ public class PurchaseServiceImplTest {
   }
 
   @Test
-  public void canUpgradeTroopTest() {}
+  public void canUpgradeBuildingTest() {
+    Kingdom kingdom = new Kingdom("Stormwind", new User("Dani", "lel"));
+    List<Resource> kingdomResource = kingdom.getResourceList();
+    Gold gold = new Gold(200);
+    kingdomResource.add(gold);
+    Building farm = new Farm();
+    farm.setLevel(1);
+    List<Building> kingdomBuildings = kingdom.getBuildings();
+    kingdomBuildings.add(farm);
+    when(buildingService.findBuildingById(1)).thenReturn(farm);
+    assertEquals(0, purchaseService.purchaseBuildingUpgrade(kingdom, (long) 1, (long) 2));
+  }
 
   @Test
-  public void canUpgradeBuildingTest() {}
+  public void canUpgradeTroopTest() {
+    Kingdom kingdom = new Kingdom("Stormwind", new User("Dani", "lel"));
+    List<Resource> kingdomResource = kingdom.getResourceList();
+    Gold gold = new Gold(200);
+    kingdomResource.add(gold);
+    Troop troop = new Troop();
+    troop.setLevel(1);
+    List<Troop> kingdomTroops = kingdom.getTroops();
+    kingdomTroops.add(troop);
+    when(troopService.findTroopById(1)).thenReturn(troop);
+    assertEquals(0, purchaseService.purchaseTroopUpgrade(kingdom, (long) 1, (long) 2));
+  }
 }
