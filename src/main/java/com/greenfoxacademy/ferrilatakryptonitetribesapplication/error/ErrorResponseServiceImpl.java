@@ -4,12 +4,11 @@ import java.sql.Timestamp;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ErrorMessageServiceImpl implements ErrorMessageService {
-
+public class ErrorResponseServiceImpl implements ErrorResponseService {
+  
   @Override
   public ErrorResponseModel notFound(String path) {
-    return new ErrorResponseModel("Error 404", "URL not found, Error 404", path,
-        new Timestamp(System.currentTimeMillis()));
+    return null;
   }
 
   @Override
@@ -23,18 +22,27 @@ public class ErrorMessageServiceImpl implements ErrorMessageService {
   }
 
   @Override
-  public ErrorResponseModel forbiddenRequest(String path) {
+  public ErrorResponseModel badRequest(String path) {
     return null;
   }
 
   @Override
-  public ErrorResponseModel badRequest(String path) {
-    return new ErrorResponseModel("Error 400", "Bad request", path,
-        new Timestamp(System.currentTimeMillis()));
+  public ErrorResponseModel noSuchUser(String path) {
+    return null;
   }
 
   @Override
-  public ErrorResponseModel invalidUser(String path) {
+  public ErrorResponseModel alreadyExistingUser(String path) {
+    return null;
+  }
+
+  @Override
+  public ErrorResponseModel invalidRegInputs(String path) {
+    return null;
+  }
+
+  @Override
+  public ErrorResponseModel wrongCredentials(String path) {
     return null;
   }
 
@@ -60,8 +68,6 @@ public class ErrorMessageServiceImpl implements ErrorMessageService {
 
   @Override
   public ErrorResponseModel invalidTimeStamp(String path) {
-    return new ErrorResponseModel("Error 400, Bad request",
-        "Invalid Timestamp values in parameters", path,
-        new Timestamp(System.currentTimeMillis()));
+    return null;
   }
 }
