@@ -1,10 +1,18 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TroopServiceImp implements TroopService {
+
+  private TroopRepository troopRepository;
+
+  @Autowired
+  public TroopServiceImp(TroopRepository troopRepository) {
+    this.troopRepository = troopRepository;
+  }
 
   @Override
   public boolean isValidTroop(Troop troop) {
@@ -21,4 +29,8 @@ public class TroopServiceImp implements TroopService {
   }
 
 
+
+  public Troop findTroopById(long id) {
+    return troopRepository.findTroopById(id);
+  }
 }

@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 public class ResourceServiceImpl implements ResourceService {
 
   private KingdomServiceImpl kingdomService;
+  private IResourceRepository resourceRepository;
 
   @Autowired
   public ResourceServiceImpl(KingdomServiceImpl kingdomService) {
     this.kingdomService = kingdomService;
+    this.resourceRepository = resourceRepository;
   }
 
   @Override
@@ -34,4 +36,9 @@ public class ResourceServiceImpl implements ResourceService {
     return  now - resourceTime.getTime();
   }
 
+
+  @Override
+  public void saveResource(Resource resource) {
+    resourceRepository.save(resource);
+  }
 }
