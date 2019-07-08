@@ -53,9 +53,7 @@ public class Kingdom {
       this.name = name;
     }
     this.resourceList = new ArrayList<>();
-    /*this.resourceList.add(0, new Gold(100));*/
     this.buildings = new ArrayList<>();
-    /*this.buildings = Arrays.asList(new TownHall(), new Farm(), new Mine(), new Academy());*/
     this.troops = new ArrayList<>();
   }
 

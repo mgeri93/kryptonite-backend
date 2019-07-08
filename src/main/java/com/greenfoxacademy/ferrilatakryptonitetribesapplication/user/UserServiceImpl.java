@@ -92,8 +92,7 @@ public class UserServiceImpl implements UserService {
   }
 
   public Kingdom initKingdom(Kingdom kingdom) {
-    Gold startingGold =  new Gold(100);
-    startingGold.setKingdom(kingdom);
+    Gold startingGold =  new Gold(100, kingdom);
     kingdom.getResourceList().add(0,startingGold);
     for (BuildingType buildingType : BuildingType.values()) {
       kingdom.getBuildings().add(BuildingFactory.createBuilding(buildingType));
