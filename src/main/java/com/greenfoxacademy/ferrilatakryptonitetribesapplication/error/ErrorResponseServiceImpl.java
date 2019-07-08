@@ -1,7 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.error;
 
 import java.sql.Timestamp;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service

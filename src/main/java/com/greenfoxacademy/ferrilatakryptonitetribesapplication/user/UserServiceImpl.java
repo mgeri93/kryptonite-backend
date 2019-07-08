@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     String password = userDTO.getPassword();
 
     if (!credentialsProvided(userName, password)) {
-      return registerUserWithMissingCredentials(userDTO);
+      throw  errorResponseService.invalidRegInputs("/register");
     } else if (userRepository.existsByUsername(userName)) {
       throw errorResponseService.alreadyExistingUser("/register");
     } else {
