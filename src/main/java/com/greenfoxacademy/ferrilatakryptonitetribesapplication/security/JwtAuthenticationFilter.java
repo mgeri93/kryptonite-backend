@@ -1,14 +1,12 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.security;
 
+import com.auth0.jwt.JWT;
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.EXPIRATION_TIME;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.HEADER_STRING;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.SECRET;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.TOKEN_PREFIX;
-
-
-import com.auth0.jwt.JWT;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.ApplicationUser;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,15 +22,16 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
   private AuthenticationManager authenticationManager;
 
-  public JWTAuthenticationFilter (AuthenticationManager authenticationManager){
+  public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
     this.authenticationManager = authenticationManager;
   }
 
   @Override
-  public Authentication attemptAuthentication (HttpServletRequest req, HttpServletResponse res)
+  public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
       throws AuthenticationException {
     try {
       ApplicationUser creds = new ObjectMapper()

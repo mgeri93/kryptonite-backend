@@ -24,7 +24,8 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
   private IKingdomRepository kingdomRepository;
 
   @Autowired
-  public ApplicationUserServiceImpl(ApplicationUserRepository applicationUserRepository, IKingdomRepository kingdomRepository) {
+  public ApplicationUserServiceImpl(ApplicationUserRepository applicationUserRepository,
+      IKingdomRepository kingdomRepository) {
     this.applicationUserRepository = applicationUserRepository;
     this.kingdomRepository = kingdomRepository;
   }
@@ -56,7 +57,6 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
   public ResponseEntity registerNewUser(ApplicationUserDTO applicationUserDTO) {
     String userName = applicationUserDTO.getUsername();
     String password = applicationUserDTO.getPassword();
-
     if (!credentialsProvided(userName, password)) {
       return registerUserWithMissingCredentials(applicationUserDTO);
     } else if (applicationUserRepository.existsByUsername(userName)) {
@@ -64,13 +64,14 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     } else {
       ApplicationUser applicationUserToBeSaved = createUserFromDTO(applicationUserDTO);
       Kingdom kingdom = initKingdom(createKingdom(applicationUserDTO.getKingdom(),
-          new ApplicationUser(applicationUserToBeSaved.getUsername(), applicationUserToBeSaved.getPassword())));
+          new ApplicationUser(applicationUserToBeSaved.getUsername(),
+              applicationUserToBeSaved.getPassword())));
       kingdom.setApplicationUser(applicationUserToBeSaved);
       kingdomRepository.save(kingdom);
       applicationUserRepository.save(applicationUserToBeSaved);
-      return ResponseEntity.status(200)
-          .body(new UserWithKingdomDTO(
-                  applicationUserToBeSaved.getId(), applicationUserToBeSaved.getUsername(), kingdom.getId()));
+      return ResponseEntity.status(200).body(new UserWithKingdomDTO(
+                  applicationUserToBeSaved.getId(), applicationUserToBeSaved.getUsername(),
+              kingdom.getId()));
     }
   }
 
@@ -136,10 +137,12 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
       return loginResponseWithValidCredentials(username, password);
     }
     if (validCredentials(username, password)) {
-      return new ResponseEntity<>(applicationUserRepository.findByUsername(username), HttpStatus.OK);
+      return new ResponseEntity<>(applicationUserRepository.findByUsername(username),
+          HttpStatus.OK);
     }
     if (!applicationUserRepository.existsByUsername(username)) {
-      return new ResponseEntity<>("No such applicationUser: " + username + "!", HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>("No such applicationUser: " + username + "!",
+          HttpStatus.UNAUTHORIZED);
     } else {
       return new ResponseEntity<>("Wrong password!", HttpStatus.UNAUTHORIZED);
     }

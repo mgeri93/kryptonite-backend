@@ -1,11 +1,10 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.security;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.HEADER_STRING;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.SECRET;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.TOKEN_PREFIX;
-
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.FilterChain;
@@ -17,8 +16,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
-  public JWTAuthorizationFilter(AuthenticationManager authManager) {
+public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
+
+  public JwtAuthorizationFilter(AuthenticationManager authManager) {
     super(authManager);
   }
 

@@ -51,7 +51,8 @@ public class ApplicationApplicationUserControllerTest {
   @Test
   public void postLoginWithValidCredentials() throws Exception {
     when(userService.loginResponse("Bond", "password123"))
-        .thenReturn(new ResponseEntity<>(new ApplicationUser("Bond", "password123"), HttpStatus.OK));
+        .thenReturn(new ResponseEntity<>(new ApplicationUser("Bond",
+            "password123"), HttpStatus.OK));
     mockMvc.perform(post("/login")
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
@@ -73,7 +74,8 @@ public class ApplicationApplicationUserControllerTest {
   @Test
   public void postLoginWithNonexistentUser() throws Exception {
     when(userService.loginResponse("Bond", "password123"))
-        .thenReturn(new ResponseEntity<>(new ApplicationUser("Bond", "password123"), HttpStatus.UNAUTHORIZED));
+        .thenReturn(new ResponseEntity<>(new ApplicationUser("Bond",
+            "password123"), HttpStatus.UNAUTHORIZED));
     mockMvc.perform(post("/login")
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
@@ -114,7 +116,8 @@ public class ApplicationApplicationUserControllerTest {
     testApplicationUserDTO.setUsername("Dani");
     testApplicationUserDTO.setPassword("LOL");
     when(userService.registerNewUser(testApplicationUserDTO))
-        .thenReturn(new ResponseEntity<>(new UserWithKingdomDTO(1, "Dani", 1), HttpStatus.OK));
+        .thenReturn(new ResponseEntity<>(new UserWithKingdomDTO(1, "Dani",
+            1), HttpStatus.OK));
     mockMvc.perform(post("/register")
         .contentType(contentType)
         .content("{\"id\": \"1\", \"username\": \"Dani\", \"kingdomId\": \"1\"}"))

@@ -1,6 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.security;
 
 public class SecurityConstants {
+
   public static final String SECRET = "SecretKeyToGenJWTs";
   public static final long EXPIRATION_TIME = 60_000; // 1 days
   public static final String TOKEN_PREFIX = "Bearer ";

@@ -17,12 +17,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
-  private UserDetailsServiceImpl userDetailsServiceImpl;
-  private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-  public WebSecurity(UserDetailsServiceImpl userDetailsServiceImpl, BCryptPasswordEncoder bCryptPasswordEncoder) {
+  private UserDetailsServiceImpl userDetailsServiceImpl;
+  private BCryptPasswordEncoder passwordEncoder;
+
+  public WebSecurity(UserDetailsServiceImpl userDetailsServiceImpl,
+      BCryptPasswordEncoder passwordEncoder) {
     this.userDetailsServiceImpl = userDetailsServiceImpl;
-    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Override
@@ -32,15 +34,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         .anyRequest().authenticated()
         .and()
         //.antMatcher("/login", )
-        .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-        .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+        .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+        .addFilter(new JwtAuthorizationFilter(authenticationManager()))
         // this disables session creation on Spring Security
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
 
   @Override
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(bCryptPasswordEncoder);
+    auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder);
   }
 
   @Bean
