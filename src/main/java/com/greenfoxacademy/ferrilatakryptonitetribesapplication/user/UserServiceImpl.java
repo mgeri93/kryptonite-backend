@@ -1,5 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.error.ErrorResponseModel;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.error.ErrorResponseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.ErrorMessage;
@@ -18,11 +20,14 @@ public class UserServiceImpl implements UserService {
 
   private UserRepository userRepository;
   private IKingdomRepository kingdomRepository;
+  private ErrorResponseServiceImpl errorResponseService;
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository, IKingdomRepository kingdomRepository) {
+  public UserServiceImpl(UserRepository userRepository, IKingdomRepository kingdomRepository,
+      ErrorResponseServiceImpl errorResponseService) {
     this.userRepository = userRepository;
     this.kingdomRepository = kingdomRepository;
+    this.errorResponseService = errorResponseService;
   }
 
   public boolean isValidUser(User user) {
@@ -49,14 +54,14 @@ public class UserServiceImpl implements UserService {
     return userRepository.findById(id);
   }
 
-  public ResponseEntity registerNewUser(UserDTO userDTO) {
+  public ResponseEntity registerNewUser(UserDTO userDTO) throws Exception {
     String userName = userDTO.getUsername();
     String password = userDTO.getPassword();
 
     if (!credentialsProvided(userName, password)) {
       return registerUserWithMissingCredentials(userDTO);
     } else if (userRepository.existsByUsername(userName)) {
-      return ResponseEntity.status(409).body(new ErrorMessage("Username already taken!"));
+      throw errorResponseService.alreadyExistingUser("/register");
     } else {
       User userToBeSaved = createUserFromDTO(userDTO);
       Kingdom kingdom = createKingdom(userDTO.getKingdom(), userName);

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ErrorResponseServiceImpl implements ErrorResponseService {
-  
+
   @Override
   public ErrorResponseModel notFound(String path) {
     return null;
@@ -33,7 +33,8 @@ public class ErrorResponseServiceImpl implements ErrorResponseService {
 
   @Override
   public ErrorResponseModel alreadyExistingUser(String path) {
-    return null;
+    return new ErrorResponseModel("Error 404, Bad request", "User already exists!",
+        path, new Timestamp(System.currentTimeMillis()));
   }
 
   @Override
@@ -68,6 +69,7 @@ public class ErrorResponseServiceImpl implements ErrorResponseService {
 
   @Override
   public ErrorResponseModel invalidTimeStamp(String path) {
-    return null;
+    return new ErrorResponseModel("Error 404, Bad request",
+        "Invalid start-finish times", path, new Timestamp(System.currentTimeMillis()));
   }
 }
