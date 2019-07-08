@@ -2,7 +2,6 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.error;
 
 public interface ErrorResponseService {
   ErrorResponseModel notFound(String path);
-  ErrorResponseModel internalServerError(String path);
   ErrorResponseModel unauthorizedRequest(String path);
   ErrorResponseModel badRequest(String path);
   ErrorResponseModel noSuchUser(String path);

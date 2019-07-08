@@ -35,7 +35,7 @@ public class UserController {
   }
 
   @PostMapping("/register")
-  Object register(@RequestBody UserDTO userDTO) {
+  Object register(@RequestBody UserDTO userDTO) throws Exception{
     try {
       return userService.registerNewUser(userDTO);
     } catch (Exception e) {
