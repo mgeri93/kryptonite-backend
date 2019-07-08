@@ -3,7 +3,7 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.ApplicationUser;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -36,7 +36,7 @@ public class Kingdom {
 
   @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
-  private User user;
+  private ApplicationUser applicationUser;
 
   @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
       mappedBy = "kingdom", fetch = FetchType.LAZY)
@@ -46,9 +46,9 @@ public class Kingdom {
       mappedBy = "kingdom", fetch = FetchType.LAZY)
   private List<Troop> troops;
 
-  public Kingdom(String name, User user) {
+  public Kingdom(String name, ApplicationUser applicationUser) {
     if (name == null || name.equals("")) {
-      this.name = user.getUsername() + "'s kingdom";
+      this.name = applicationUser.getUsername() + "'s kingdom";
     } else {
       this.name = name;
     }

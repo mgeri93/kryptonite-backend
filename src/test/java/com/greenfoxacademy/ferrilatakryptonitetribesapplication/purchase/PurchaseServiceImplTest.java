@@ -9,7 +9,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resourc
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.ApplicationUser;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 
@@ -41,7 +41,7 @@ public class PurchaseServiceImplTest {
   @Mock
   private ResourceServiceImpl resourceService;
 
-  private Kingdom kingdom = new Kingdom("Stormwind", new User("Dani", "lel"));
+  private Kingdom kingdom = new Kingdom("Stormwind", new ApplicationUser("Dani", "lel"));
   private List<Resource> kingdomResource = kingdom.getResourceList();
 
   @Before

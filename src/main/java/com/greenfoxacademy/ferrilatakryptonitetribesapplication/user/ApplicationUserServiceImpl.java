@@ -18,65 +18,65 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class ApplicationUserServiceImpl implements ApplicationUserService {
 
-  private UserRepository userRepository;
+  private ApplicationUserRepository applicationUserRepository;
   private IKingdomRepository kingdomRepository;
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository, IKingdomRepository kingdomRepository) {
-    this.userRepository = userRepository;
+  public ApplicationUserServiceImpl(ApplicationUserRepository applicationUserRepository, IKingdomRepository kingdomRepository) {
+    this.applicationUserRepository = applicationUserRepository;
     this.kingdomRepository = kingdomRepository;
   }
 
-  public boolean isValidUser(User user) {
-    return (user.getUsername() != null && !user.getUsername().equals(""));
+  public boolean isValidUser(ApplicationUser applicationUser) {
+    return (applicationUser.getUsername() != null && !applicationUser.getUsername().equals(""));
   }
 
-  public boolean isExistingUser(User user) {
-    return userRepository.existsByUsername(user.getUsername());
-  }
-
-  @Override
-  public List<User> findAllUser() {
-    List<User> users = new ArrayList<>();
-    userRepository.findAll().forEach(user -> users.add(user));
-    return users;
+  public boolean isExistingUser(ApplicationUser applicationUser) {
+    return applicationUserRepository.existsByUsername(applicationUser.getUsername());
   }
 
   @Override
-  public void saveUser(User user) {
-    userRepository.save(user);
+  public List<ApplicationUser> findAllUser() {
+    List<ApplicationUser> applicationUsers = new ArrayList<>();
+    applicationUserRepository.findAll().forEach(user -> applicationUsers.add(user));
+    return applicationUsers;
   }
 
-  public Optional<User> findUserById(long id) {
-    return userRepository.findById(id);
+  @Override
+  public void saveUser(ApplicationUser applicationUser) {
+    applicationUserRepository.save(applicationUser);
   }
 
-  public ResponseEntity registerNewUser(UserDTO userDTO) {
-    String userName = userDTO.getUsername();
-    String password = userDTO.getPassword();
+  public Optional<ApplicationUser> findUserById(long id) {
+    return applicationUserRepository.findById(id);
+  }
+
+  public ResponseEntity registerNewUser(ApplicationUserDTO applicationUserDTO) {
+    String userName = applicationUserDTO.getUsername();
+    String password = applicationUserDTO.getPassword();
 
     if (!credentialsProvided(userName, password)) {
-      return registerUserWithMissingCredentials(userDTO);
-    } else if (userRepository.existsByUsername(userName)) {
+      return registerUserWithMissingCredentials(applicationUserDTO);
+    } else if (applicationUserRepository.existsByUsername(userName)) {
       return ResponseEntity.status(409).body(new ErrorMessage("Username already taken!"));
     } else {
-      User userToBeSaved = createUserFromDTO(userDTO);
-      Kingdom kingdom = initKingdom(createKingdom(userDTO.getKingdom(),
-          new User(userToBeSaved.getUsername(), userToBeSaved.getPassword())));
-      kingdom.setUser(userToBeSaved);
+      ApplicationUser applicationUserToBeSaved = createUserFromDTO(applicationUserDTO);
+      Kingdom kingdom = initKingdom(createKingdom(applicationUserDTO.getKingdom(),
+          new ApplicationUser(applicationUserToBeSaved.getUsername(), applicationUserToBeSaved.getPassword())));
+      kingdom.setApplicationUser(applicationUserToBeSaved);
       kingdomRepository.save(kingdom);
-      userRepository.save(userToBeSaved);
+      applicationUserRepository.save(applicationUserToBeSaved);
       return ResponseEntity.status(200)
           .body(new UserWithKingdomDTO(
-                  userToBeSaved.getId(), userToBeSaved.getUsername(), kingdom.getId()));
+                  applicationUserToBeSaved.getId(), applicationUserToBeSaved.getUsername(), kingdom.getId()));
     }
   }
 
-  public ResponseEntity registerUserWithMissingCredentials(UserDTO userDTO) {
-    String userName = userDTO.getUsername();
-    String password = userDTO.getPassword();
+  public ResponseEntity registerUserWithMissingCredentials(ApplicationUserDTO applicationUserDTO) {
+    String userName = applicationUserDTO.getUsername();
+    String password = applicationUserDTO.getPassword();
     if ((userName == null || userName.isEmpty()) && (password == null || password.isEmpty())) {
       return ResponseEntity.status(400)
           .body(new ErrorMessage("Missing parameters: username, password!"));
@@ -87,8 +87,8 @@ public class UserServiceImpl implements UserService {
     }
   }
 
-  public User createUserFromDTO(UserDTO userDTO) {
-    return new ModelMapper().map(userDTO, User.class);
+  public ApplicationUser createUserFromDTO(ApplicationUserDTO applicationUserDTO) {
+    return new ModelMapper().map(applicationUserDTO, ApplicationUser.class);
   }
 
   public Kingdom initKingdom(Kingdom kingdom) {
@@ -103,11 +103,12 @@ public class UserServiceImpl implements UserService {
     return kingdom;
   }
 
-  public Kingdom createKingdom(String kingdomName, User user) {
+  public Kingdom createKingdom(String kingdomName, ApplicationUser applicationUser) {
     if (isKingdomNameNullOrEmpty(kingdomName)) {
-      return new Kingdom(String.format("%s's kingdom", user.getUsername()), user);
+      return new Kingdom(String.format("%s's kingdom", applicationUser.getUsername()),
+          applicationUser);
     }
-    return new Kingdom(kingdomName, user);
+    return new Kingdom(kingdomName, applicationUser);
   }
 
   public Boolean isKingdomNameNullOrEmpty(String kingdomName) {
@@ -121,8 +122,8 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public boolean validCredentials(String username, String password) {
-    if (userRepository.existsByUsername(username)) {
-      return userRepository.findByUsername(username).getPassword().equals(password);
+    if (applicationUserRepository.existsByUsername(username)) {
+      return applicationUserRepository.findByUsername(username).getPassword().equals(password);
     } else {
       return false;
     }
@@ -135,10 +136,10 @@ public class UserServiceImpl implements UserService {
       return loginResponseWithValidCredentials(username, password);
     }
     if (validCredentials(username, password)) {
-      return new ResponseEntity<>(userRepository.findByUsername(username), HttpStatus.OK);
+      return new ResponseEntity<>(applicationUserRepository.findByUsername(username), HttpStatus.OK);
     }
-    if (!userRepository.existsByUsername(username)) {
-      return new ResponseEntity<>("No such user: " + username + "!", HttpStatus.UNAUTHORIZED);
+    if (!applicationUserRepository.existsByUsername(username)) {
+      return new ResponseEntity<>("No such applicationUser: " + username + "!", HttpStatus.UNAUTHORIZED);
     } else {
       return new ResponseEntity<>("Wrong password!", HttpStatus.UNAUTHORIZED);
     }

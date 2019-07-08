@@ -8,7 +8,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class UserDTO {
+public class ApplicationUserDTO {
 
   @NotNull
   private String username;
@@ -16,11 +16,11 @@ public class UserDTO {
   private String password;
   private String kingdom;
 
-  public UserDTO() {
+  public ApplicationUserDTO() {
 
   }
 
-  public UserDTO(String username, String password, String kingdom) {
+  public ApplicationUserDTO(String username, String password, String kingdom) {
     this.username = username;
     this.password = password;
     this.kingdom = kingdom;

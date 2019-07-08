@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class ApplicationApplicationUserControllerTest {
 
   private MediaType contentType =
       new MediaType(
@@ -35,10 +35,10 @@ public class UserControllerTest {
           Charset.forName("utf8"));
 
   @Mock
-  UserRepository userRepository;
+  ApplicationUserRepository applicationUserRepository;
 
   @MockBean
-  UserServiceImpl userService;
+  ApplicationUserServiceImpl userService;
 
   @Autowired
   MockMvc mockMvc;
@@ -51,7 +51,7 @@ public class UserControllerTest {
   @Test
   public void postLoginWithValidCredentials() throws Exception {
     when(userService.loginResponse("Bond", "password123"))
-        .thenReturn(new ResponseEntity<>(new User("Bond", "password123"), HttpStatus.OK));
+        .thenReturn(new ResponseEntity<>(new ApplicationUser("Bond", "password123"), HttpStatus.OK));
     mockMvc.perform(post("/login")
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
@@ -73,7 +73,7 @@ public class UserControllerTest {
   @Test
   public void postLoginWithNonexistentUser() throws Exception {
     when(userService.loginResponse("Bond", "password123"))
-        .thenReturn(new ResponseEntity<>(new User("Bond", "password123"), HttpStatus.UNAUTHORIZED));
+        .thenReturn(new ResponseEntity<>(new ApplicationUser("Bond", "password123"), HttpStatus.UNAUTHORIZED));
     mockMvc.perform(post("/login")
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
@@ -94,7 +94,7 @@ public class UserControllerTest {
 
   @Test
   public void postLoginWithSavedUser() throws Exception {
-    userRepository.save(new User("Bond", "password123"));
+    applicationUserRepository.save(new ApplicationUser("Bond", "password123"));
     mockMvc.perform(post("/login")
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
@@ -110,10 +110,10 @@ public class UserControllerTest {
 
   @Test
   public void registerWithValidCredentials() throws Exception {
-    UserDTO testUserDTO = new UserDTO();
-    testUserDTO.setUsername("Dani");
-    testUserDTO.setPassword("LOL");
-    when(userService.registerNewUser(testUserDTO))
+    ApplicationUserDTO testApplicationUserDTO = new ApplicationUserDTO();
+    testApplicationUserDTO.setUsername("Dani");
+    testApplicationUserDTO.setPassword("LOL");
+    when(userService.registerNewUser(testApplicationUserDTO))
         .thenReturn(new ResponseEntity<>(new UserWithKingdomDTO(1, "Dani", 1), HttpStatus.OK));
     mockMvc.perform(post("/register")
         .contentType(contentType)
@@ -124,7 +124,7 @@ public class UserControllerTest {
 
   @Test
   public void registerWithoutUsernameAndPassword() throws Exception {
-    when(userService.registerNewUser(new UserDTO()))
+    when(userService.registerNewUser(new ApplicationUserDTO()))
         .thenReturn(new ResponseEntity<>("\"status\": \"error\",\n"
             + "    \"message\": \"Missing parameters: username, password!\"",
             HttpStatus.BAD_REQUEST));
