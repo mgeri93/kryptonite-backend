@@ -13,7 +13,7 @@ public interface UserService {
 
   boolean validCredentials(String username, String password);
 
-  ResponseEntity loginResponse(String username, String password);
+  ResponseEntity loginResponse(String username, String password) throws Exception;
 
   ResponseEntity loginResponseWithValidCredentials(String username, String password);
 

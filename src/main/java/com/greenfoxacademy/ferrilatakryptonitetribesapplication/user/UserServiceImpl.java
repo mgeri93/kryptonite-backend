@@ -1,7 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.error.ErrorResponseModel;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.error.ErrorResponseServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.NoSuchUserException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.WrongPasswordException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.ErrorMessage;
@@ -20,14 +20,11 @@ public class UserServiceImpl implements UserService {
 
   private UserRepository userRepository;
   private IKingdomRepository kingdomRepository;
-  private ErrorResponseServiceImpl errorResponseService;
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository, IKingdomRepository kingdomRepository,
-      ErrorResponseServiceImpl errorResponseService) {
+  public UserServiceImpl(UserRepository userRepository, IKingdomRepository kingdomRepository) {
     this.userRepository = userRepository;
     this.kingdomRepository = kingdomRepository;
-    this.errorResponseService = errorResponseService;
   }
 
   public boolean isValidUser(User user) {
@@ -54,14 +51,14 @@ public class UserServiceImpl implements UserService {
     return userRepository.findById(id);
   }
 
-  public ResponseEntity registerNewUser(UserDTO userDTO) throws Exception {
+  public ResponseEntity registerNewUser(UserDTO userDTO) {
     String userName = userDTO.getUsername();
     String password = userDTO.getPassword();
 
     if (!credentialsProvided(userName, password)) {
-      throw  errorResponseService.invalidRegInputs("/register");
+      return registerUserWithMissingCredentials(userDTO);
     } else if (userRepository.existsByUsername(userName)) {
-      throw errorResponseService.alreadyExistingUser("/register");
+      return ResponseEntity.status(409).body(new ErrorMessage("Username already taken!"));
     } else {
       User userToBeSaved = createUserFromDTO(userDTO);
       Kingdom kingdom = createKingdom(userDTO.getKingdom(), userName);
@@ -126,9 +123,9 @@ public class UserServiceImpl implements UserService {
       return new ResponseEntity<>(userRepository.findByUsername(username), HttpStatus.OK);
     }
     if (!userRepository.existsByUsername(username)) {
-      return new ResponseEntity<>("No such user: " + username + "!", HttpStatus.UNAUTHORIZED);
+      throw new NoSuchUserException("No such user in the database! Please register first!");
     } else {
-      return new ResponseEntity<>("Wrong password!", HttpStatus.UNAUTHORIZED);
+      throw new WrongPasswordException("Invalid password, please try to log-in again.");
     }
   }
 

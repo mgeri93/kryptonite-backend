@@ -1,21 +1,16 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.time;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.error.ErrorResponseServiceImpl;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.error.ErrorResponseModel;
+import java.io.IOException;
 import java.sql.Timestamp;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TimeServiceImp implements TimeService {
 
-  @Autowired
-  ErrorResponseServiceImpl errorMessageService;
-
   @Override
-  public Timestamp timeLeft(Timestamp start, Timestamp finish) throws ErrorResponseModel {
+  public Timestamp timeLeft(Timestamp start, Timestamp finish) throws Exception {
     if (finish.getTime() < start.getTime()) {
-      throw errorMessageService.invalidTimeStamp("");
+      throw new Exception("Start time is greater than finish time!");
     }
     return new Timestamp(finish.getTime() - start.getTime());
   }
