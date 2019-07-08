@@ -50,21 +50,21 @@ public class PurchaseServiceImplTest {
   }
 
   @Test
-  public void canPurchaseTroop_Test() {
+  public void canPurchaseTroop_Test() throws Exception {
     Gold gold = new Gold(100);
     kingdomResource.add(gold);
     assertEquals(90, purchaseService.purchaseTroop(kingdom));
   }
 
   @Test
-  public void canPurchaseBuilding_Test() {
+  public void canPurchaseBuilding_Test() throws Exception {
     Gold gold = new Gold(100);
     kingdomResource.add(gold);
     assertEquals(0, purchaseService.purchaseBuilding(kingdom));
   }
 
   @Test
-  public void canUpgradeBuildingTest() {
+  public void canUpgradeBuildingTest() throws Exception {
     Gold gold = new Gold(200);
     kingdomResource.add(gold);
     Building farm = new Farm();
@@ -76,7 +76,7 @@ public class PurchaseServiceImplTest {
   }
 
   @Test
-  public void canUpgradeTroopTest() {
+  public void canUpgradeTroopTest() throws Exception {
     Gold gold = new Gold(200);
     kingdomResource.add(gold);
     Troop troop = new Troop();

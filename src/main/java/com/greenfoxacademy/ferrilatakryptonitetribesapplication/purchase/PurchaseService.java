@@ -11,13 +11,14 @@ public interface PurchaseService {
 
   Gold getGoldOfKingdom(List<Resource> kingdomResource);
 
-  int purchaseIfEnoughGold(Gold gold, Long upgradeLevelTo, Long upgradeCost);
+  int purchaseIfEnoughGold(Gold gold, Long upgradeLevelTo, Long upgradeCost) throws Exception;
 
-  int purchaseTroop(Kingdom kingdom);
+  int purchaseTroop(Kingdom kingdom) throws Exception;
 
-  int purchaseBuilding(Kingdom kingdom);
+  int purchaseBuilding(Kingdom kingdom) throws Exception;
 
-  int purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo);
+  int purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo) throws Exception;
 
-  int purchaseBuildingUpgrade(Kingdom kingdom, Long buildingId, Long upgradeLevelTo);
+  int purchaseBuildingUpgrade(Kingdom kingdom, Long buildingId, Long upgradeLevelTo)
+      throws Exception;
 }

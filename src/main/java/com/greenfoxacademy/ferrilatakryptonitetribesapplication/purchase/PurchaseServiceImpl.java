@@ -1,6 +1,5 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
-import com.google.common.collect.Iterables;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
@@ -35,7 +34,7 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   @Override
-  public int purchaseBuilding(Kingdom kingdom) {
+  public int purchaseBuilding(Kingdom kingdom) throws Exception {
     List<Resource> kingdomResources = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResources);
     purchaseIfEnoughGold(gold, 1L, buildingCreateCost);
@@ -43,7 +42,8 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   @Override
-  public int purchaseBuildingUpgrade(Kingdom kingdom, Long buildingId, Long upgradeLevelTo) {
+  public int purchaseBuildingUpgrade(Kingdom kingdom, Long buildingId, Long upgradeLevelTo)
+      throws Exception {
     Building building = buildingService.findBuildingById(buildingId);
     building.setLevel(upgradeLevelTo);
     List<Resource> kingdomResource = kingdom.getResourceList();
@@ -52,7 +52,7 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   @Override
-  public int purchaseTroop(Kingdom kingdom) {
+  public int purchaseTroop(Kingdom kingdom) throws Exception {
     List<Resource> kingdomResources = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResources);
     purchaseIfEnoughGold(gold, 1L, troopCreateCost);
@@ -60,7 +60,8 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   @Override
-  public int purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo) {
+  public int purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo)
+      throws Exception {
     Troop troop = troopService.findTroopById(troopId);
     troop.setLevel(upgradeLevelTo);
     List<Resource> kingdomResource = kingdom.getResourceList();
@@ -77,18 +78,19 @@ public class PurchaseServiceImpl implements PurchaseService {
   public Gold getGoldOfKingdom(List<Resource> kingdomResources) {
     List<Resource> filteredResources =
         kingdomResources.stream().filter(g -> g instanceof Gold).collect(Collectors.toList());
-    return (Gold) Iterables.getOnlyElement(filteredResources);
+    return (Gold) filteredResources.get(0);
   }
 
   @Override
-  public int purchaseIfEnoughGold(Gold gold, Long upgradeLevelTo, Long upgradeCost) {
+  public int purchaseIfEnoughGold(Gold gold, Long upgradeLevelTo, Long upgradeCost)
+      throws Exception {
     if (isGoldEnough(gold, upgradeCost)) {
       long newGoldAmount = gold.getAmount() - (upgradeLevelTo * upgradeCost);
       gold.setAmount((int) newGoldAmount);
       resourceService.saveResource(gold);
       return gold.getAmount();
     } else {
-      return gold.getAmount();
+      throw new Exception("Not enough gold to purchase.");
     }
   }
 }
