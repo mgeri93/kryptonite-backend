@@ -2,9 +2,19 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Food;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.mockito.Mockito.when;
+
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -15,8 +25,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureMockMvc
 public class TroopTest {
 
-  @MockBean
+  @InjectMocks
   private TroopServiceImp troopServiceImp;
+
+  @Before
+  public void init() {
+    MockitoAnnotations.initMocks(this);
+  }
+
 
   @Test
   public void constructorWithAllInvalidParameters() {
@@ -43,4 +59,15 @@ public class TroopTest {
     assertEquals(testTroop.getAttack(), defaultTroop.getAttack());
     assertEquals(testTroop.getDefense(), defaultTroop.getDefense());
   }
+
+  @Test
+  public void createTroopDecreaseFood(){
+    Kingdom kingdom = new Kingdom("empire", new User("geri", "password"));
+    kingdom.getResourceList().add(0, new Gold());
+    kingdom.getResourceList().add(1, new Food());
+    kingdom.getResourceList().get(1).setAmount(20);
+    troopServiceImp.createTroop(kingdom);
+    assertEquals(19, kingdom.getResourceList().get(1).getAmount());
+  }
+
 }

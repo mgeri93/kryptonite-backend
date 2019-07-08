@@ -28,8 +28,6 @@ public class TroopServiceImp implements TroopService {
     return newTroop;
   }
 
-
-
   public Troop findTroopById(long id) {
     return troopRepository.findTroopById(id);
   }
