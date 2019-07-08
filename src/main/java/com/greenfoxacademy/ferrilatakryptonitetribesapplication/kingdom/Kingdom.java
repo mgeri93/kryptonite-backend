@@ -1,16 +1,10 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Farm;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Mine;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.TownHall;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -36,18 +30,20 @@ public class Kingdom {
 
   @NotNull private String name;
 
-  @OneToMany(fetch = FetchType.EAGER)
-  @JoinColumn(name = "resource_id")
+  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+      mappedBy = "kingdom",fetch = FetchType.EAGER)
   private List<Resource> resourceList;
 
   @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
   private User user;
 
-  @OneToMany(mappedBy = "kingdom", fetch = FetchType.LAZY)
+  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+      mappedBy = "kingdom", fetch = FetchType.LAZY)
   private List<Building> buildings;
 
-  @OneToMany(mappedBy = "kingdom", fetch = FetchType.LAZY)
+  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+      mappedBy = "kingdom", fetch = FetchType.LAZY)
   private List<Troop> troops;
 
   public Kingdom(String name, User user) {
@@ -55,19 +51,16 @@ public class Kingdom {
       this.name = user.getUsername() + "'s kingdom";
     } else {
       this.name = name;
-      this.resourceList = new ArrayList<>();
-      this.resourceList.add(0, new Gold(100));
-      this.buildings = new ArrayList<>();
-      this.buildings = Arrays.asList(new TownHall(), new Farm(), new Mine(), new Academy());
     }
     this.resourceList = new ArrayList<>();
     this.buildings = new ArrayList<>();
     this.troops = new ArrayList<>();
   }
 
-  public Kingdom() {}
-
-  public Kingdom(String name) {
-    this.name = name;
+  public Kingdom() {
+    this.resourceList = new ArrayList<>();
+    this.buildings = new ArrayList<>();
+    this.troops = new ArrayList<>();
   }
+
 }
