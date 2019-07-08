@@ -48,8 +48,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     building.setLevel(upgradeLevelTo);
     List<Resource> kingdomResource = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResource);
-    Long buildingUpgradeCost = upgradeLevelTo * buildingCreateCost;
-    return purchaseIfEnoughGold(gold, upgradeLevelTo, buildingUpgradeCost);
+    return purchaseIfEnoughGold(gold, upgradeLevelTo, buildingCreateCost);
   }
 
   @Override
@@ -66,8 +65,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     troop.setLevel(upgradeLevelTo);
     List<Resource> kingdomResource = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResource);
-    Long troopUpgradeCost = upgradeLevelTo * troopCreateCost;
-    return purchaseIfEnoughGold(gold, upgradeLevelTo, troopUpgradeCost);
+    return purchaseIfEnoughGold(gold, upgradeLevelTo, troopCreateCost);
   }
 
   @Override

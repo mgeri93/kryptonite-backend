@@ -41,6 +41,9 @@ public class PurchaseServiceImplTest {
   @Mock
   private ResourceServiceImpl resourceService;
 
+  private Kingdom kingdom = new Kingdom("Stormwind", new User("Dani", "lel"));
+  private List<Resource> kingdomResource = kingdom.getResourceList();
+
   @Before
   public void init() {
     MockitoAnnotations.initMocks(this);
@@ -48,8 +51,6 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void canPurchaseTroop_Test() {
-    Kingdom kingdom = new Kingdom("Stormwind", new User("Dani", "lel"));
-    List<Resource> kingdomResource = kingdom.getResourceList();
     Gold gold = new Gold(100);
     kingdomResource.add(gold);
     assertEquals(90, purchaseService.purchaseTroop(kingdom));
@@ -57,8 +58,6 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void canPurchaseBuilding_Test() {
-    Kingdom kingdom = new Kingdom("Stormwind", new User("Dani", "lel"));
-    List<Resource> kingdomResource = kingdom.getResourceList();
     Gold gold = new Gold(100);
     kingdomResource.add(gold);
     assertEquals(0, purchaseService.purchaseBuilding(kingdom));
@@ -66,8 +65,6 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void canUpgradeBuildingTest() {
-    Kingdom kingdom = new Kingdom("Stormwind", new User("Dani", "lel"));
-    List<Resource> kingdomResource = kingdom.getResourceList();
     Gold gold = new Gold(200);
     kingdomResource.add(gold);
     Building farm = new Farm();
@@ -80,8 +77,6 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void canUpgradeTroopTest() {
-    Kingdom kingdom = new Kingdom("Stormwind", new User("Dani", "lel"));
-    List<Resource> kingdomResource = kingdom.getResourceList();
     Gold gold = new Gold(200);
     kingdomResource.add(gold);
     Troop troop = new Troop();
@@ -89,6 +84,6 @@ public class PurchaseServiceImplTest {
     List<Troop> kingdomTroops = kingdom.getTroops();
     kingdomTroops.add(troop);
     when(troopService.findTroopById(1)).thenReturn(troop);
-    assertEquals(0, purchaseService.purchaseTroopUpgrade(kingdom, (long) 1, (long) 2));
+    assertEquals(170, purchaseService.purchaseTroopUpgrade(kingdom, (long) 1, (long) 3));
   }
 }
