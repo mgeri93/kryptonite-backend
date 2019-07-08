@@ -55,6 +55,7 @@ public class PurchaseServiceImpl implements PurchaseService {
   public int purchaseTroop(Kingdom kingdom) throws Exception {
     List<Resource> kingdomResources = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResources);
+    troopService.createTroop(kingdom);
     purchaseIfEnoughGold(gold, 1L, troopCreateCost);
     return gold.getAmount();
   }

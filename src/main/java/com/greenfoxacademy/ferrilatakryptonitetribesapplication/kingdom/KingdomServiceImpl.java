@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.time.TimeServiceImp;
 import java.sql.Timestamp;
@@ -13,6 +14,7 @@ public class KingdomServiceImpl implements KingdomService {
   private IKingdomRepository kingdomRepository;
   private ResourceServiceImpl resourceService;
   private TimeServiceImp timeService;
+  private PurchaseServiceImpl purchaseService;
 
   @Autowired
   public KingdomServiceImpl(
@@ -21,8 +23,10 @@ public class KingdomServiceImpl implements KingdomService {
     this.timeService = timeService;
   }
 
-  public void setResourceService(ResourceServiceImpl resourceService) {
+  public void setServices(ResourceServiceImpl resourceService,
+      PurchaseServiceImpl purchaseService) {
     this.resourceService = resourceService;
+    this.purchaseService = purchaseService;
   }
 
   @Override
@@ -36,7 +40,7 @@ public class KingdomServiceImpl implements KingdomService {
   }
 
   @Override
-  public void updateResource(Kingdom kingdom){
+  public void updateGold(Kingdom kingdom){
     if ((resourceService.timeDifference(kingdom.getResourceList().get(0)) /60000) / /*UpgradeTime*/60 < 1 ) {
       kingdom.getResourceList().get(0).setAmount(kingdom.getResourceList().get(0).getAmount()
           - (int) (

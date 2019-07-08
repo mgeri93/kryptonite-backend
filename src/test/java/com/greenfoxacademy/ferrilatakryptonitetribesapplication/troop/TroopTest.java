@@ -10,14 +10,11 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.mockito.Mockito.when;
 
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -46,7 +43,8 @@ public class TroopTest {
   @Test
   public void troopValidityCheck() {
     Troop testTroop = new Troop(-1, -4, 0, 0);
-    when(troopServiceImp.isValidTroop(testTroop)).thenReturn(true);
+    Kingdom kingdom = new Kingdom("empire", new User("geri", "password"));
+    testTroop.setKingdom(kingdom);
     assertTrue(troopServiceImp.isValidTroop(testTroop));
   }
 
@@ -69,5 +67,4 @@ public class TroopTest {
     troopServiceImp.createTroop(kingdom);
     assertEquals(19, kingdom.getResourceList().get(1).getAmount());
   }
-
 }
