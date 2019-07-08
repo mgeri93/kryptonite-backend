@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.AlreadyExistingUserException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.NoSuchUserException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.WrongPasswordException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
     if (!credentialsProvided(userName, password)) {
       return registerUserWithMissingCredentials(userDTO);
     } else if (userRepository.existsByUsername(userName)) {
-      return ResponseEntity.status(409).body(new ErrorMessage("Username already taken!"));
+      throw new AlreadyExistingUserException("Username already taken, please choose another one!");
     } else {
       User userToBeSaved = createUserFromDTO(userDTO);
       Kingdom kingdom = createKingdom(userDTO.getKingdom(), userName);

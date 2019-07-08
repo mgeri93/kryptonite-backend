@@ -3,6 +3,8 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,13 +27,16 @@ public class UserTest {
   @MockBean
   UserServiceImpl userService;
 
+  @MockBean
+  IKingdomRepository kingdomRepository;
+
   @Autowired
   MockMvc mockMvc;
 
   @Before
   public void init() {
     MockitoAnnotations.initMocks(this);
-    userService = new UserServiceImpl(userRepository);
+    userService = new UserServiceImpl(userRepository, kingdomRepository);
   }
 
   @Test

@@ -42,6 +42,31 @@ public class UserServiceImplErrorAdvice {
     return error(BAD_REQUEST, e);
   }
 
+  @ExceptionHandler({UnauthorizedRequestException.class})
+  public ResponseEntity<String> handleUnauthorizedRequestException(UnauthorizedRequestException e) {
+    return error(UNAUTHORIZED, e);
+  }
+
+  @ExceptionHandler({InvalidKingdomException.class})
+  public ResponseEntity<String> handleInvalidKingdomException(InvalidKingdomException e) {
+    return error(BAD_REQUEST, e);
+  }
+
+  @ExceptionHandler({InvalidTimeStampException.class})
+  public ResponseEntity<String> handleInvalidTimeStampException(InvalidTimeStampException e) {
+    return error(BAD_REQUEST, e);
+  }
+
+  @ExceptionHandler({InvalidBuildingException.class})
+  public ResponseEntity<String> handleInvalidBuildingException(InvalidBuildingException e) {
+    return error(BAD_REQUEST, e);
+  }
+
+  @ExceptionHandler({InvalidResourceException.class})
+  public ResponseEntity<String> handleInvalidResourceException(InvalidResourceException e) {
+    return error(BAD_REQUEST, e);
+  }
+
   private ResponseEntity<String> error(HttpStatus status, Exception e) {
     log.error("Exception : ", e);
     return ResponseEntity.status(status).body(e.getMessage());
