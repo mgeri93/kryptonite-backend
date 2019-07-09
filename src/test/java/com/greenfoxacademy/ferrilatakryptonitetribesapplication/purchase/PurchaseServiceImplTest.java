@@ -50,6 +50,9 @@ public class PurchaseServiceImplTest {
   private Kingdom kingdom = new Kingdom("Stormwind", new User("Dani", "lel"));
   private List<Resource> kingdomResource = kingdom.getResourceList();
   private List<Building> buildings = kingdom.getBuildings();
+  private Building townhHall = new TownHall();
+  private Building farm = new Farm();
+  private Gold gold = new Gold(200);
 
   @Before
   public void init() {
@@ -58,21 +61,18 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void canPurchaseTroop_Test() throws Exception {
-    Gold gold = new Gold(100);
     kingdomResource.add(gold);
-    assertEquals(90, purchaseService.purchaseTroop(kingdom));
+    assertEquals(190, purchaseService.purchaseTroop(kingdom));
   }
 
   @Test
   public void canPurchaseBuilding_Test() throws Exception {
-    Gold gold = new Gold(100);
     kingdomResource.add(gold);
-    assertEquals(0, purchaseService.purchaseBuilding(kingdom));
+    assertEquals(100, purchaseService.purchaseBuilding(kingdom));
   }
 
   @Test
   public void canUpgradeBuildingTest() throws Exception {
-    Gold gold = new Gold(200);
     kingdomResource.add(gold);
     Building farm = new Farm();
     farm.setLevel(1);
@@ -84,7 +84,6 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void canUpgradeTroopTest() throws Exception {
-    Gold gold = new Gold(200);
     kingdomResource.add(gold);
     Troop troop = new Troop();
     troop.setLevel(1);
@@ -96,11 +95,7 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void cantUpgradeAboveTownHall() throws Exception {
-    userService.initKingdom(kingdom);
-    Gold gold = new Gold(200);
     kingdomResource.add(gold);
-    Building townhHall = new TownHall();
-    Building farm = new Farm();
     townhHall.setId(1);
     farm.setId(2);
     buildings.add(townhHall);
@@ -116,11 +111,7 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void upgradeBuildingProperly() throws Exception {
-    userService.initKingdom(kingdom);
-    Gold gold = new Gold(200);
     kingdomResource.add(gold);
-    Building townhHall = new TownHall();
-    Building farm = new Farm();
     townhHall.setId(1);
     farm.setId(2);
     buildings.add(townhHall);
@@ -132,6 +123,30 @@ public class PurchaseServiceImplTest {
     when(buildingService.findBuildingById(2)).thenReturn(farm);
     purchaseService.purchaseBuildingUpgrade(kingdom, farm.getId(), 3L);
     assertEquals(3, farm.getLevel());
+  }
+
+  @Test
+  public void cantUpgradeTroopAboveLevel3 () throws Exception {
+    kingdomResource.add(gold);
+    Troop troop = new Troop();
+    troop.setLevel(3);
+    List<Troop> kingdomTroops = kingdom.getTroops();
+    kingdomTroops.add(troop);
+    when(troopService.findTroopById(1)).thenReturn(troop);
+    purchaseService.purchaseTroopUpgrade(kingdom, 1L, 4L);
+    assertEquals(3, troop.getLevel());
+  }
+
+  @Test
+  public void upgradeTroopLevelProperly () throws Exception {
+    kingdomResource.add(gold);
+    Troop troop = new Troop();
+    troop.setLevel(1);
+    List<Troop> kingdomTroops = kingdom.getTroops();
+    kingdomTroops.add(troop);
+    when(troopService.findTroopById(1)).thenReturn(troop);
+    purchaseService.purchaseTroopUpgrade(kingdom, 1L, 2L);
+    assertEquals(2, troop.getLevel());
   }
 
 }
