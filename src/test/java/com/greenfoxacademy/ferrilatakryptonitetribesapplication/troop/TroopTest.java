@@ -1,12 +1,11 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Food;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,7 +58,7 @@ public class TroopTest {
   }
 
   @Test
-  public void createTroopDecreaseFood(){
+  public void createTroopDecreaseFood() {
     Kingdom kingdom = new Kingdom("empire", new User("geri", "password"));
     kingdom.getResourceList().add(0, new Gold());
     kingdom.getResourceList().add(1, new Food());

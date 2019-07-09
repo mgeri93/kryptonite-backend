@@ -40,13 +40,15 @@ public class KingdomServiceImpl implements KingdomService {
   }
 
   @Override
-  public void updateGold(Kingdom kingdom){
-    if ((resourceService.timeDifference(kingdom.getResourceList().get(0)) /60000) / /*UpgradeTime*/60 < 1 ) {
+  public void updateGold(Kingdom kingdom) {
+    if ((resourceService.timeDifference(kingdom.getResourceList().get(0)) / 60000)
+        /        /*UpgradeTime*/60 < 1) {
       kingdom.getResourceList().get(0).setAmount(kingdom.getResourceList().get(0).getAmount()
           - (int) (
           ((int) ((resourceService.timeDifference(kingdom.getResourceList().get(0)) / 60000)
               / /*Upgradetime:*/60)) * /*UpgradeCost:*/10));
-    } else if ((resourceService.timeDifference(kingdom.getResourceList().get(0)) /60000) / /*UpgradeTime*/60 == 1) {
+    } else if ((resourceService.timeDifference(kingdom.getResourceList().get(0)) / 60000)
+        /        /*UpgradeTime*/60 == 1) {
       kingdom.getResourceList().get(0).setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
     }
     kingdomRepository.save(kingdom);

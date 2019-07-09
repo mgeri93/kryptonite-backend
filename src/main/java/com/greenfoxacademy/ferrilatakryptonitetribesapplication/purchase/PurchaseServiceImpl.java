@@ -52,10 +52,11 @@ public class PurchaseServiceImpl implements PurchaseService {
     if (building.getBuildingType() != BuildingType.TownHall) {
       building.setLevel(Math.min(upgradeLevelTo, townHallLevel(kingdom)));
       return purchaseIfEnoughGold(gold, upgradeLevelTo, buildingCreateCost);
-    } else if (building.getLevel() < 10L ){
+    } else if (building.getLevel() < 10L) {
       building.setLevel(upgradeLevelTo);
       return purchaseIfEnoughGold(gold, upgradeLevelTo, buildingCreateCost);
-    } else return gold.getAmount();
+    }
+    return gold.getAmount();
   }
 
   @Override
@@ -76,7 +77,8 @@ public class PurchaseServiceImpl implements PurchaseService {
     if (troop.getLevel() < 3) {
       troop.setLevel(upgradeLevelTo);
       return purchaseIfEnoughGold(gold, upgradeLevelTo, troopCreateCost);
-    } else return gold.getAmount();
+    }
+    return gold.getAmount();
   }
 
   @Override
@@ -104,12 +106,13 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
   }
 
-  public long townHallLevel(Kingdom kingdom){
+  public long townHallLevel(Kingdom kingdom) {
     Building townhHall = new TownHall();
-    for (Building building : kingdom.getBuildings()){
-      if (building.getBuildingType() == BuildingType.TownHall){
+    for (Building building : kingdom.getBuildings()) {
+      if (building.getBuildingType() == BuildingType.TownHall) {
         townhHall = building;
       }
-    } return townhHall.getLevel();
+    }
+    return townhHall.getLevel();
   }
 }

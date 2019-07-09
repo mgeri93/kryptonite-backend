@@ -126,7 +126,7 @@ public class PurchaseServiceImplTest {
   }
 
   @Test
-  public void cantUpgradeTroopAboveLevel3 () throws Exception {
+  public void cantUpgradeTroopAboveLevel3() throws Exception {
     kingdomResource.add(gold);
     Troop troop = new Troop();
     troop.setLevel(3);
@@ -138,7 +138,7 @@ public class PurchaseServiceImplTest {
   }
 
   @Test
-  public void upgradeTroopLevelProperly () throws Exception {
+  public void upgradeTroopLevelProperly() throws Exception {
     kingdomResource.add(gold);
     Troop troop = new Troop();
     troop.setLevel(1);
@@ -148,5 +148,4 @@ public class PurchaseServiceImplTest {
     purchaseService.purchaseTroopUpgrade(kingdom, 1L, 2L);
     assertEquals(2, troop.getLevel());
   }
-
 }
