@@ -105,8 +105,11 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   public long townHallLevel(Kingdom kingdom){
-    Building building = (Building) kingdom.getBuildings().stream().filter(b -> b instanceof TownHall);
-    return building.getLevel();
+    Building townhHall = new TownHall();
+    for (Building building : kingdom.getBuildings()){
+      if (building.getBuildingType() == BuildingType.TownHall){
+        building = townhHall;
+      }
+    } return townhHall.getLevel();
   }
-
 }
