@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.time;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.TimeRelatedException;
 import java.sql.Timestamp;
 
 import static org.junit.Assert.assertEquals;
@@ -48,11 +49,13 @@ public class TimeServiceImpTest {
   @Test
   public void timeLeftWithFinishEarlierThanStart() {
     boolean thrown = false;
+    String testMessage = "Start time is later than finish time!";
     try {
       timeServiceImp.timeLeft(Timestamp.valueOf("2019-07-02 18:51:03.098"),
           Timestamp.valueOf("2018-07-02 18:51:03.098"));
-    } catch (Exception e) {
+    } catch (TimeRelatedException e) {
       thrown = true;
+      assertEquals(e.getMessage(), testMessage);
     }
     assertTrue(thrown);
   }
