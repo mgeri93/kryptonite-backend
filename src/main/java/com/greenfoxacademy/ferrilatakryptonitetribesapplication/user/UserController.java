@@ -1,7 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.UserRelatedException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,13 +20,9 @@ public class UserController {
   @PostMapping("/login")
   ResponseEntity login(@RequestBody UserDTO userDTO) {
     if (userDTO != null) {
-      try {
         return userService.loginResponse(userDTO.getUsername(), userDTO.getPassword());
-      } catch (Exception e) {
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
-      }
     }
-    return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    throw new UserRelatedException("Invalid user details!", "/login");
   }
 
   @PostMapping("/register")

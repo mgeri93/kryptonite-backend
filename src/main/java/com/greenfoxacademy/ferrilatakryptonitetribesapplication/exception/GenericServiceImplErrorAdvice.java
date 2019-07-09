@@ -69,13 +69,12 @@ public class GenericServiceImplErrorAdvice {
   public ResponseEntity<ErrorResponseModel> handleResourceRelatedException(
       ResourceRelatedException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
-        "Resource-related error", "");
+        e.getMessage(), "");
     return error(e, errorResponseModel);
   }
 
   private ResponseEntity<ErrorResponseModel> error(Exception e,
       ErrorResponseModel errorResponseModel) {
-    log.error("Exception : ", e);
     return ResponseEntity.status(errorResponseModel.getStatus()).body(errorResponseModel);
   }
 }

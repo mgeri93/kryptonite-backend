@@ -1,10 +1,8 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.UserRelatedException;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.WrongPasswordException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.ErrorMessage;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.UserWithKingdomDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -122,9 +120,9 @@ public class UserServiceImpl implements UserService {
       return new ResponseEntity<>(userRepository.findByUsername(username), HttpStatus.OK);
     }
     if (!userRepository.existsByUsername(username)) {
-      throw new UserRelatedException("No such user in database, please register first", "/register");
+      throw new UserRelatedException("No such user in database, please register first", "/login");
     } else {
-      throw new WrongPasswordException("Invalid password, please try to log-in again.");
+      throw new UserRelatedException("Invalid password, please try to log-in again.", "/login");
     }
   }
 
@@ -133,9 +131,9 @@ public class UserServiceImpl implements UserService {
     if ((username.equals("")) && (password.equals(""))) {
       throw new UserRelatedException("Missing parameter(s): username, password", "/login");
     } else if ((username.equals(""))) {
-      return new ResponseEntity<>("Missing parameter(s): username", HttpStatus.BAD_REQUEST);
+      throw new UserRelatedException("Missing parameter(s): username", "/login");
     } else {
-      return new ResponseEntity<>("Missing parameter(s): password", HttpStatus.BAD_REQUEST);
+      throw new UserRelatedException("Missing parameter(s): password", "/login");
     }
   }
 }
