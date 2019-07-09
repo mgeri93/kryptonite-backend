@@ -21,8 +21,9 @@ public abstract class Building {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  private long level;
+  private long level = Math.min(getLevel(), 10);
   private double hp;
+  private BuildingType buildingType;
 
   @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "kingdom_id", referencedColumnName = "id")
