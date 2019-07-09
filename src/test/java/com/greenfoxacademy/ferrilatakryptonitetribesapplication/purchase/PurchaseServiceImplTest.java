@@ -2,7 +2,9 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingType;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Farm;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.TownHall;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
@@ -10,6 +12,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resourc
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.UserServiceImpl;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 
@@ -39,10 +42,14 @@ public class PurchaseServiceImplTest {
   private TroopServiceImp troopService;
 
   @Mock
+  private UserServiceImpl userService;
+
+  @Mock
   private ResourceServiceImpl resourceService;
 
   private Kingdom kingdom = new Kingdom("Stormwind", new User("Dani", "lel"));
   private List<Resource> kingdomResource = kingdom.getResourceList();
+  private List<Building> buildings = kingdom.getBuildings();
 
   @Before
   public void init() {
@@ -86,4 +93,28 @@ public class PurchaseServiceImplTest {
     when(troopService.findTroopById(1)).thenReturn(troop);
     assertEquals(170, purchaseService.purchaseTroopUpgrade(kingdom, (long) 1, (long) 3));
   }
+
+  @Test
+  public void cantUpgradeAboveTownHall() throws Exception {
+    userService.initKingdom(kingdom);
+    Gold gold = new Gold(200);
+    kingdomResource.add(gold);
+    Building townhHall = new TownHall();
+    Building farm = new Farm();
+    townhHall.setId(1);
+    farm.setId(2);
+    buildings.add(townhHall);
+    buildings.add(farm);
+    townhHall.setLevel(2);
+    townhHall.setBuildingType(BuildingType.TownHall);
+    farm.setLevel(2);
+    farm.setBuildingType(BuildingType.Farm);
+    when(buildingService.findBuildingById(2)).thenReturn(farm);
+    purchaseService.purchaseBuildingUpgrade(kingdom, farm.getId(), 3L);
+    assertEquals(2, farm.getLevel());
+  }
+
+  @Test
+  public void   
+
 }

@@ -108,7 +108,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     Building townhHall = new TownHall();
     for (Building building : kingdom.getBuildings()){
       if (building.getBuildingType() == BuildingType.TownHall){
-        building = townhHall;
+        townhHall = building;
       }
     } return townhHall.getLevel();
   }
