@@ -1,11 +1,11 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.UserRelatedException;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingFactory;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingType;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.UserRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.UserWithKingdomDTO;
 import java.util.ArrayList;
@@ -60,7 +60,8 @@ public class UserServiceImpl implements UserService {
     if (!credentialsProvided(userName, password)) {
       return registerUserWithMissingCredentials(userDTO);
     } else if (userRepository.existsByUsername(userName)) {
-      throw new UserRelatedException("Username already taken, please choose another one!", "/register");
+      throw new UserRelatedException("Username already taken, please choose another one!",
+          "/register");
     } else {
       User userToBeSaved = createUserFromDTO(userDTO);
       Kingdom kingdom = initKingdom(createKingdom(userDTO.getKingdom(),

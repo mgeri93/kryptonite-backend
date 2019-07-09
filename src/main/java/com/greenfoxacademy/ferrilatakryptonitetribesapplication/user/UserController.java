@@ -20,7 +20,7 @@ public class UserController {
   @PostMapping("/login")
   ResponseEntity login(@RequestBody UserDTO userDTO) {
     if (userDTO != null) {
-        return userService.loginResponse(userDTO.getUsername(), userDTO.getPassword());
+      return userService.loginResponse(userDTO.getUsername(), userDTO.getPassword());
     }
     throw new UserRelatedException("Invalid user details!", "/login");
   }

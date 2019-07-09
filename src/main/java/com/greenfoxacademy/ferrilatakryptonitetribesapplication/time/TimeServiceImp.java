@@ -1,7 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.time;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.TimeRelatedException;
-import java.io.IOException;
 import java.sql.Timestamp;
 import org.springframework.stereotype.Service;
 

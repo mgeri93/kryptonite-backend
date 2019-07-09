@@ -1,14 +1,13 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 @Slf4j
@@ -37,14 +36,16 @@ public class GenericServiceImplErrorAdvice {
   }
 
   @ExceptionHandler({UnauthorizedRequestException.class})
-  public ResponseEntity<ErrorResponseModel> handleUnauthorizedRequestException(UnauthorizedRequestException e) {
+  public ResponseEntity<ErrorResponseModel> handleUnauthorizedRequestException(
+      UnauthorizedRequestException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(UNAUTHORIZED,
         "Unauthorized request error", "");
     return error(e, errorResponseModel);
   }
 
   @ExceptionHandler({KingdomRelatedException.class})
-  public ResponseEntity<ErrorResponseModel> handleKingdomRelatedException(KingdomRelatedException e) {
+  public ResponseEntity<ErrorResponseModel> handleKingdomRelatedException(
+      KingdomRelatedException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         "Kingdom-related error", "");
     return error(e, errorResponseModel);
