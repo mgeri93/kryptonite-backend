@@ -68,8 +68,8 @@ public class UserServiceImpl implements UserService {
       kingdom.setUser(userToBeSaved);
       kingdomRepository.save(kingdom);
       userRepository.save(userToBeSaved);
-      return ResponseEntity.status(200).
-          body(new UserWithKingdomDTO(
+      return ResponseEntity.status(200)
+          .body(new UserWithKingdomDTO(
               userToBeSaved.getId(), userToBeSaved.getUsername(), kingdom.getId()));
     }
   }
