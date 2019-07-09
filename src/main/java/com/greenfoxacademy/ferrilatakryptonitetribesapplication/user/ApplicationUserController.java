@@ -20,7 +20,7 @@ public class ApplicationUserController {
     this.passwordEncoder = passwordEncoder;
   }
 
-  /*@PostMapping("/login")
+  /*@PostMapping("/userlogin")
   ResponseEntity login(@RequestBody ApplicationUserDTO applicationUserDTO) {
     if (applicationUserDTO != null) {
       try {
