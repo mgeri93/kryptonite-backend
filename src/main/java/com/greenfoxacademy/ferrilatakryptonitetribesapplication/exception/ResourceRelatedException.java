@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class AlreadyExistingUserException extends RuntimeException{
+public class ResourceRelatedException extends RuntimeException {
 
-  public AlreadyExistingUserException(String message) {
+  public ResourceRelatedException(String message) {
     super(message);
   }
 }

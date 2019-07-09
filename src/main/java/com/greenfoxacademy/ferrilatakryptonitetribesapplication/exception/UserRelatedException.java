@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class InvalidBuildingException extends RuntimeException {
+public class UserRelatedException extends RuntimeException{
 
-  public InvalidBuildingException(String message) {
+  public UserRelatedException(String message) {
     super(message);
   }
 }

@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class InvalidKingdomException extends RuntimeException {
+public class BuildingRelatedException extends RuntimeException {
 
-  public InvalidKingdomException(String message) {
+  public BuildingRelatedException(String message) {
     super(message);
   }
 }
