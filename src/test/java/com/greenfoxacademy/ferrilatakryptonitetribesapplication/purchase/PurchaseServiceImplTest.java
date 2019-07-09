@@ -115,6 +115,23 @@ public class PurchaseServiceImplTest {
   }
 
   @Test
-  public void   
+  public void upgradeBuildingProperly() throws Exception {
+    userService.initKingdom(kingdom);
+    Gold gold = new Gold(200);
+    kingdomResource.add(gold);
+    Building townhHall = new TownHall();
+    Building farm = new Farm();
+    townhHall.setId(1);
+    farm.setId(2);
+    buildings.add(townhHall);
+    buildings.add(farm);
+    townhHall.setLevel(5);
+    townhHall.setBuildingType(BuildingType.TownHall);
+    farm.setLevel(2);
+    farm.setBuildingType(BuildingType.Farm);
+    when(buildingService.findBuildingById(2)).thenReturn(farm);
+    purchaseService.purchaseBuildingUpgrade(kingdom, farm.getId(), 3L);
+    assertEquals(3, farm.getLevel());
+  }
 
 }
