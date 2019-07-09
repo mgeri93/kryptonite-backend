@@ -60,8 +60,7 @@ public class UserServiceImpl implements UserService {
     if (!credentialsProvided(userName, password)) {
       return registerUserWithMissingCredentials(userDTO);
     } else if (userRepository.existsByUsername(userName)) {
-      throw new UserRelatedException("Username already taken, please choose another one!",
-          "/register");
+      throw new UserRelatedException("Username already taken, choose another one!", "/register");
     } else {
       User userToBeSaved = createUserFromDTO(userDTO);
       Kingdom kingdom = initKingdom(createKingdom(userDTO.getKingdom(),
@@ -69,9 +68,9 @@ public class UserServiceImpl implements UserService {
       kingdom.setUser(userToBeSaved);
       kingdomRepository.save(kingdom);
       userRepository.save(userToBeSaved);
-      return ResponseEntity.status(200)
-          .body(new UserWithKingdomDTO(
-                  userToBeSaved.getId(), userToBeSaved.getUsername(), kingdom.getId()));
+      return ResponseEntity.status(200).
+          body(new UserWithKingdomDTO(
+              userToBeSaved.getId(), userToBeSaved.getUsername(), kingdom.getId()));
     }
   }
 
