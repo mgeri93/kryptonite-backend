@@ -29,10 +29,10 @@ public class GenericServiceImplErrorAdvice {
   }
 
   @ExceptionHandler({UserRelatedException.class})
-  public ResponseEntity<ErrorResponseModel> handleAlreadyExistingUserException(
+  public ResponseEntity<ErrorResponseModel> handleUserRelatedException(
       UserRelatedException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
-        "User-related error", "");
+        e.getMessage(), e.getPath());
     return error(e, errorResponseModel);
   }
 
@@ -44,21 +44,21 @@ public class GenericServiceImplErrorAdvice {
   }
 
   @ExceptionHandler({KingdomRelatedException.class})
-  public ResponseEntity<ErrorResponseModel> handleInvalidKingdomException(KingdomRelatedException e) {
+  public ResponseEntity<ErrorResponseModel> handleKingdomRelatedException(KingdomRelatedException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         "Kingdom-related error", "");
     return error(e, errorResponseModel);
   }
 
   @ExceptionHandler({TimeRelatedException.class})
-  public ResponseEntity<ErrorResponseModel> handleInvalidTimeStampException(TimeRelatedException e) {
+  public ResponseEntity<ErrorResponseModel> handleTimeRelatedException(TimeRelatedException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         "Timestamp-related error", "");
     return error(e, errorResponseModel);
   }
 
   @ExceptionHandler({BuildingRelatedException.class})
-  public ResponseEntity<ErrorResponseModel> handleInvalidBuildingException(
+  public ResponseEntity<ErrorResponseModel> handleBuildingRelatedException(
       BuildingRelatedException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         "Building-related error", "");
@@ -66,7 +66,7 @@ public class GenericServiceImplErrorAdvice {
   }
 
   @ExceptionHandler({ResourceRelatedException.class})
-  public ResponseEntity<ErrorResponseModel> handleInvalidResourceException(
+  public ResponseEntity<ErrorResponseModel> handleResourceRelatedException(
       ResourceRelatedException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         "Resource-related error", "");

@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
     if (!credentialsProvided(userName, password)) {
       return registerUserWithMissingCredentials(userDTO);
     } else if (userRepository.existsByUsername(userName)) {
-      throw new UserRelatedException("Username already taken, please choose another one!");
+      throw new UserRelatedException("Username already taken, please choose another one!", "/register");
     } else {
       User userToBeSaved = createUserFromDTO(userDTO);
       Kingdom kingdom = createKingdom(userDTO.getKingdom(), userName);
@@ -75,12 +75,11 @@ public class UserServiceImpl implements UserService {
     String userName = userDTO.getUsername();
     String password = userDTO.getPassword();
     if ((userName == null || userName.isEmpty()) && (password == null || password.isEmpty())) {
-      return ResponseEntity.status(400)
-          .body(new ErrorMessage("Missing parameters: username, password!"));
+      throw new UserRelatedException("Invalid user details provided.", "/register");
     } else if (password == null || password.isEmpty()) {
-      return ResponseEntity.status(400).body(new ErrorMessage("Missing parameter: password!"));
+      throw new UserRelatedException("Missing parameter: password", "/register");
     } else {
-      return ResponseEntity.status(400).body(new ErrorMessage("Missing parameter: username!"));
+      throw new UserRelatedException("Missing parameter: username", "/register");
     }
   }
 
@@ -123,7 +122,7 @@ public class UserServiceImpl implements UserService {
       return new ResponseEntity<>(userRepository.findByUsername(username), HttpStatus.OK);
     }
     if (!userRepository.existsByUsername(username)) {
-      throw new NoSuchUserException("No such user in the database! Please register first!");
+      throw new UserRelatedException("No such user in database, please register first", "/register");
     } else {
       throw new WrongPasswordException("Invalid password, please try to log-in again.");
     }
@@ -132,8 +131,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public ResponseEntity loginResponseWithValidCredentials(String username, String password) {
     if ((username.equals("")) && (password.equals(""))) {
-      return new ResponseEntity<>(
-          "Missing parameter(s): username, password", HttpStatus.BAD_REQUEST);
+      throw new UserRelatedException("Missing parameter(s): username, password", "/login");
     } else if ((username.equals(""))) {
       return new ResponseEntity<>("Missing parameter(s): username", HttpStatus.BAD_REQUEST);
     } else {
