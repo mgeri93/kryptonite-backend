@@ -3,6 +3,10 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.UserRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingFactory;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingType;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.UserWithKingdomDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +63,8 @@ public class UserServiceImpl implements UserService {
       throw new UserRelatedException("Username already taken, please choose another one!", "/register");
     } else {
       User userToBeSaved = createUserFromDTO(userDTO);
-      Kingdom kingdom = createKingdom(userDTO.getKingdom(), userName);
+      Kingdom kingdom = initKingdom(createKingdom(userDTO.getKingdom(),
+          new User(userToBeSaved.getUsername(), userToBeSaved.getPassword())));
       kingdom.setUser(userToBeSaved);
       kingdomRepository.save(kingdom);
       userRepository.save(userToBeSaved);
@@ -85,11 +90,23 @@ public class UserServiceImpl implements UserService {
     return new ModelMapper().map(userDTO, User.class);
   }
 
-  public Kingdom createKingdom(String kingdomName, String username) {
-    if (isKingdomNameNullOrEmpty(kingdomName)) {
-      return new Kingdom(String.format("%s's kingdom", username));
+  public Kingdom initKingdom(Kingdom kingdom) {
+    Gold startingGold =  new Gold(100, kingdom);
+    kingdom.getResourceList().add(0,startingGold);
+    for (BuildingType buildingType : BuildingType.values()) {
+      kingdom.getBuildings().add(BuildingFactory.createBuilding(buildingType));
     }
-    return new Kingdom(kingdomName);
+    for (Building building : kingdom.getBuildings()) {
+      building.setKingdom(kingdom);
+    }
+    return kingdom;
+  }
+
+  public Kingdom createKingdom(String kingdomName, User user) {
+    if (isKingdomNameNullOrEmpty(kingdomName)) {
+      return new Kingdom(String.format("%s's kingdom", user.getUsername()), user);
+    }
+    return new Kingdom(kingdomName, user);
   }
 
   public Boolean isKingdomNameNullOrEmpty(String kingdomName) {
