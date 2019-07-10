@@ -17,66 +17,66 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-@Slf4j
 public class GenericServiceImplErrorAdvice {
 
-  @ExceptionHandler({RuntimeException.class})
+  ErrorResponseModel errorResponseModel;
+
+  @ExceptionHandler(RuntimeException.class)
   public ResponseEntity<ErrorResponseModel> handleRunTimeException(RuntimeException e) {
-    ErrorResponseModel errorResponseModel = new ErrorResponseModel(INTERNAL_SERVER_ERROR,
+    errorResponseModel = new ErrorResponseModel(INTERNAL_SERVER_ERROR,
         "Internal server error", "");
     return error(errorResponseModel);
   }
 
-  @ExceptionHandler({NotFoundException.class})
+  @ExceptionHandler(NotFoundException.class)
   public ResponseEntity<ErrorResponseModel> handleNotFoundException(NotFoundException e) {
-    ErrorResponseModel errorResponseModel = new ErrorResponseModel(NOT_FOUND,
+    errorResponseModel = new ErrorResponseModel(NOT_FOUND,
         "Not found exception", e.getPath());
     return error(errorResponseModel);
   }
 
-  @ExceptionHandler({UserRelatedException.class})
-  public ResponseEntity<ErrorResponseModel> handleUserRelatedException(
-      UserRelatedException e) {
-    ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
+  @ExceptionHandler(UserRelatedException.class)
+  public ResponseEntity<ErrorResponseModel> handleUserRelatedException(UserRelatedException e) {
+    errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         e.getMessage(), e.getPath());
     return error(errorResponseModel);
   }
 
-  @ExceptionHandler({UnauthorizedRequestException.class})
+  @ExceptionHandler(UnauthorizedRequestException.class)
   public ResponseEntity<ErrorResponseModel> handleUnauthorizedRequestException(
       UnauthorizedRequestException e) {
-    ErrorResponseModel errorResponseModel = new ErrorResponseModel(UNAUTHORIZED,
+    errorResponseModel = new ErrorResponseModel(UNAUTHORIZED,
         "Unauthorized request error", e.getPath());
     return error(errorResponseModel);
   }
 
-  @ExceptionHandler({KingdomRelatedException.class})
+  @ExceptionHandler(KingdomRelatedException.class)
   public ResponseEntity<ErrorResponseModel> handleKingdomRelatedException(
       KingdomRelatedException e) {
-    ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
+    errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         "Kingdom-related error", e.getPath());
     return error(errorResponseModel);
   }
 
-  @ExceptionHandler({TimeRelatedException.class})
+  @ExceptionHandler(TimeRelatedException.class)
   public ResponseEntity<ErrorResponseModel> handleTimeRelatedException(TimeRelatedException e) {
-    ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
+    errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         "Timestamp-related error", e.getPath());
     return error(errorResponseModel);
   }
 
-  @ExceptionHandler({BuildingRelatedException.class})
+  @ExceptionHandler(BuildingRelatedException.class)
   public ResponseEntity<ErrorResponseModel> handleBuildingRelatedException(
       BuildingRelatedException e) {
-    ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
+    errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         "Building-related error", e.getPath());
     return error(errorResponseModel);
   }
 
-  @ExceptionHandler({ResourceRelatedException.class})
+  @ExceptionHandler(ResourceRelatedException.class)
   public ResponseEntity<ErrorResponseModel> handleResourceRelatedException(
       ResourceRelatedException e) {
-    ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
+    errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         e.getMessage(), e.getPath());
     return error(errorResponseModel);
   }
