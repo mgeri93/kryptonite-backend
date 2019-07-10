@@ -1,6 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.UserRelatedException;
+import com.sun.net.httpserver.HttpContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ public class UserController {
 
   @PostMapping("/login")
   ResponseEntity login(@RequestBody UserDTO userDTO) {
+    HttpContext.c
     if (userDTO != null) {
       return userService.loginResponse(userDTO.getUsername(), userDTO.getPassword());
     }
