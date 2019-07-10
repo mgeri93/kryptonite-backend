@@ -1,7 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.time;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.TimeRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.TimeRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
 import java.sql.Timestamp;
 import java.util.concurrent.TimeUnit;
