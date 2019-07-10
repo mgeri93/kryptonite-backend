@@ -5,7 +5,6 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.EXPIRATION_TIME;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.HEADER_STRING;
-import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.SECRET;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.TOKEN_PREFIX;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.ApplicationUser;
 import java.io.IOException;
@@ -57,7 +56,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     String token = JWT.create()
         .withSubject(((User) auth.getPrincipal()).getUsername())
         .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-        .sign(HMAC512(SECRET.getBytes()));
+        .sign(HMAC512(System.getenv("SECRET_KEY").getBytes()));
     res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
   }
 }
