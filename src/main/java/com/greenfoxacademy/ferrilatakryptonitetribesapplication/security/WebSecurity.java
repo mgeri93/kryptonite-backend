@@ -2,7 +2,7 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.security;
 
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.REGISTER_URL;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.UserDetailsServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

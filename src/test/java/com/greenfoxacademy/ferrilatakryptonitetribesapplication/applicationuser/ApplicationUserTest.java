@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import static org.junit.Assert.assertEquals;

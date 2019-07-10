@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingType;
@@ -11,8 +12,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resourc
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.ApplicationUser;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.ApplicationUserServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUser;
 
 import java.util.List;
 import static org.junit.Assert.assertEquals;

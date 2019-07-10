@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser;
 
 import javax.validation.constraints.NotNull;
 import lombok.Builder;

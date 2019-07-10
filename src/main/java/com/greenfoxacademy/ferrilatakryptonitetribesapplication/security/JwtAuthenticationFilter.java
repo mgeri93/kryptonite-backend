@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.EXPIRATION_TIME;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.HEADER_STRING;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.TOKEN_PREFIX;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.ApplicationUser;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUser;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;

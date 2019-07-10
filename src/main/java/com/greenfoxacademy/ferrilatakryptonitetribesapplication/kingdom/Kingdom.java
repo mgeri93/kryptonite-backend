@@ -3,7 +3,7 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.ApplicationUser;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUser;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;

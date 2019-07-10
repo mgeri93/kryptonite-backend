@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingFactory;
@@ -6,8 +6,8 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Buildin
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.ErrorMessage;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.UserWithKingdomDTO;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.dto.ErrorMessage;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.dto.UserWithKingdomDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
