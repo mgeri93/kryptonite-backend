@@ -1,10 +1,13 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.UserRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.UserWithKingdomDTO;
 import java.nio.charset.Charset;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.when;
 
@@ -34,11 +37,14 @@ public class UserControllerTest {
   @Mock
   UserRepository userRepository;
 
-  @MockBean
+  @InjectMocks
   UserServiceImpl userService;
 
   @Autowired
   MockMvc mockMvc;
+
+  @Mock
+  IKingdomRepository kingdomRepository;
 
   @Before
   public void init() {
@@ -57,7 +63,7 @@ public class UserControllerTest {
         .andExpect(status().isOk());
   }
 
-  @Test
+  @Test(expected = UserRelatedException.class)
   public void postLoginWithMissingUsername() throws Exception {
     when(userService.loginResponse("", "password123", "/login"))
         .thenThrow(new UserRelatedException("Missing parameter(s): username", "/login"));
@@ -68,7 +74,7 @@ public class UserControllerTest {
         .andExpect(status().isBadRequest());
   }
 
-  @Test
+  @Test (expected = UserRelatedException.class)
   public void postLoginWithNonexistentUser() throws Exception {
     when(userService.loginResponse("Bond", "password123", "/login"))
         .thenThrow(new UserRelatedException("No such user in database, please register first",
@@ -80,7 +86,7 @@ public class UserControllerTest {
         .andExpect(status().isBadRequest());
   }
 
-  @Test
+  @Test(expected = UserRelatedException.class)
   public void postLoginWithWrongPassword() throws Exception {
     when(userService.loginResponse("Bond", "wrongpassword", "/login"))
         .thenThrow(new UserRelatedException("Invalid password, please try to log-in again.",
@@ -102,7 +108,7 @@ public class UserControllerTest {
         .andExpect(status().isOk());
   }
 
-  @Test
+  @Test(expected = UserRelatedException.class)
   public void registerWithoutUsernameAndPassword() throws Exception {
     when(userService.registerNewUser(new UserDTO(), "/register"))
         .thenReturn(new ResponseEntity<>("\"status\": \"error\",\n"
@@ -112,6 +118,25 @@ public class UserControllerTest {
         .contentType(contentType)
         .content("{\"id\": \"\", \"username\": \"\", \"kingdomId\": \"\"}"))
         .andDo(print())
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void registerWithValidCredentials() throws Exception {
+    UserDTO testUserDTO = new UserDTO();
+    testUserDTO.setUsername("Dani");
+    testUserDTO.setPassword("LOL");
+    when(userService.registerNewUser(testUserDTO, "/register"))
+        .thenReturn(new ResponseEntity<>(new UserWithKingdomDTO(1, "Dani", 1), HttpStatus.OK));
+    mockMvc.perform(post("/register")
+        .contentType(contentType)
+        .content("{\"username\": \"Dani\", \"password\": \"kutya\"}"))
+        .andDo(print())
+        .andExpect(status().isOk());
+  }
+
+  public void register_unsuccessful_withMissingJsonObject() throws Exception {
+    mockMvc.perform(post("/register"))
         .andExpect(status().isBadRequest());
   }
 }

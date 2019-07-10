@@ -22,7 +22,7 @@ public class GenericServiceImplErrorAdvice {
   ErrorResponseModel errorResponseModel;
 
   @ExceptionHandler(RuntimeException.class)
-  public ResponseEntity<ErrorResponseModel> handleRunTimeException(RuntimeException e) {
+  public ResponseEntity<ErrorResponseModel> handleRunTimeException() {
     errorResponseModel = new ErrorResponseModel(INTERNAL_SERVER_ERROR,
         "Internal server error", "");
     return error(errorResponseModel);
