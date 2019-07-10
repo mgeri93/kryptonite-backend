@@ -3,7 +3,7 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingFactory;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingType;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.UserRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.customexceptions.UserRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;

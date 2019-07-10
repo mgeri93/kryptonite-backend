@@ -1,6 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.UserRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.customexceptions.UserRelatedException;
 import java.nio.charset.Charset;
 import org.junit.Before;
 import org.junit.Test;

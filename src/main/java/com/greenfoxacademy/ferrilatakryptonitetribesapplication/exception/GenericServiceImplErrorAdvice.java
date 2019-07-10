@@ -1,5 +1,12 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.customexceptions.BuildingRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.customexceptions.KingdomRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.customexceptions.NotFoundException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.customexceptions.ResourceRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.customexceptions.TimeRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.customexceptions.UnauthorizedRequestException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.customexceptions.UserRelatedException;
 import lombok.extern.slf4j.Slf4j;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
