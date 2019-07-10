@@ -47,7 +47,7 @@ public class UserControllerTest {
 
   @Test
   public void postLoginWithValidCredentials() throws Exception {
-    when(userService.loginResponse("Bond", "password123"))
+    when(userService.loginResponse("Bond", "password123", "/login"))
         .thenReturn(new ResponseEntity<>(new User("Bond", "password123"),
             HttpStatus.OK));
     mockMvc.perform(post("/login")
@@ -59,7 +59,7 @@ public class UserControllerTest {
 
   @Test
   public void postLoginWithMissingUsername() throws Exception {
-    when(userService.loginResponse("", "password123"))
+    when(userService.loginResponse("", "password123", "/login"))
         .thenThrow(new UserRelatedException("Missing parameter(s): username", "/login"));
     mockMvc.perform(post("/login")
         .contentType(contentType)
@@ -70,7 +70,7 @@ public class UserControllerTest {
 
   @Test
   public void postLoginWithNonexistentUser() throws Exception {
-    when(userService.loginResponse("Bond", "password123"))
+    when(userService.loginResponse("Bond", "password123", "/login"))
         .thenThrow(new UserRelatedException("No such user in database, please register first",
             "/login"));
     mockMvc.perform(post("/login")
@@ -82,7 +82,7 @@ public class UserControllerTest {
 
   @Test
   public void postLoginWithWrongPassword() throws Exception {
-    when(userService.loginResponse("Bond", "wrongpassword"))
+    when(userService.loginResponse("Bond", "wrongpassword", "/login"))
         .thenThrow(new UserRelatedException("Invalid password, please try to log-in again.",
             "/login"));
     mockMvc.perform(post("/login")
@@ -104,7 +104,7 @@ public class UserControllerTest {
 
   @Test
   public void registerWithoutUsernameAndPassword() throws Exception {
-    when(userService.registerNewUser(new UserDTO()))
+    when(userService.registerNewUser(new UserDTO(), "/register"))
         .thenReturn(new ResponseEntity<>("\"status\": \"error\",\n"
             + "    \"message\": \"Missing parameters: username, password!\"",
             HttpStatus.BAD_REQUEST));

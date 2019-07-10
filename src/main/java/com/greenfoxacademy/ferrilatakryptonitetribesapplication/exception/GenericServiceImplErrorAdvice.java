@@ -24,14 +24,14 @@ public class GenericServiceImplErrorAdvice {
   public ResponseEntity<ErrorResponseModel> handleRunTimeException(RuntimeException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(INTERNAL_SERVER_ERROR,
         "Internal server error", "");
-    return error(e, errorResponseModel);
+    return error(errorResponseModel);
   }
 
   @ExceptionHandler({NotFoundException.class})
   public ResponseEntity<ErrorResponseModel> handleNotFoundException(NotFoundException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(NOT_FOUND,
-        "Not found exception", "");
-    return error(e, errorResponseModel);
+        "Not found exception", e.getPath());
+    return error(errorResponseModel);
   }
 
   @ExceptionHandler({UserRelatedException.class})
@@ -39,50 +39,49 @@ public class GenericServiceImplErrorAdvice {
       UserRelatedException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         e.getMessage(), e.getPath());
-    return error(e, errorResponseModel);
+    return error(errorResponseModel);
   }
 
   @ExceptionHandler({UnauthorizedRequestException.class})
   public ResponseEntity<ErrorResponseModel> handleUnauthorizedRequestException(
       UnauthorizedRequestException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(UNAUTHORIZED,
-        "Unauthorized request error", "");
-    return error(e, errorResponseModel);
+        "Unauthorized request error", e.getPath());
+    return error(errorResponseModel);
   }
 
   @ExceptionHandler({KingdomRelatedException.class})
   public ResponseEntity<ErrorResponseModel> handleKingdomRelatedException(
       KingdomRelatedException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
-        "Kingdom-related error", "");
-    return error(e, errorResponseModel);
+        "Kingdom-related error", e.getPath());
+    return error(errorResponseModel);
   }
 
   @ExceptionHandler({TimeRelatedException.class})
   public ResponseEntity<ErrorResponseModel> handleTimeRelatedException(TimeRelatedException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
-        "Timestamp-related error", "");
-    return error(e, errorResponseModel);
+        "Timestamp-related error", e.getPath());
+    return error(errorResponseModel);
   }
 
   @ExceptionHandler({BuildingRelatedException.class})
   public ResponseEntity<ErrorResponseModel> handleBuildingRelatedException(
       BuildingRelatedException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
-        "Building-related error", "");
-    return error(e, errorResponseModel);
+        "Building-related error", e.getPath());
+    return error(errorResponseModel);
   }
 
   @ExceptionHandler({ResourceRelatedException.class})
   public ResponseEntity<ErrorResponseModel> handleResourceRelatedException(
       ResourceRelatedException e) {
     ErrorResponseModel errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
-        e.getMessage(), "");
-    return error(e, errorResponseModel);
+        e.getMessage(), e.getPath());
+    return error(errorResponseModel);
   }
 
-  private ResponseEntity<ErrorResponseModel> error(Exception e,
-      ErrorResponseModel errorResponseModel) {
+  private ResponseEntity<ErrorResponseModel> error(ErrorResponseModel errorResponseModel) {
     return ResponseEntity.status(errorResponseModel.getStatus()).body(errorResponseModel);
   }
 }

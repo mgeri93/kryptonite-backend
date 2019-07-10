@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
 
   private UserRepository userRepository;
   private IKingdomRepository kingdomRepository;
-  private ErrorAttributes errorAttributes;
 
   @Autowired
   public UserServiceImpl(UserRepository userRepository, IKingdomRepository kingdomRepository) {
@@ -55,14 +54,14 @@ public class UserServiceImpl implements UserService {
     return userRepository.findById(id);
   }
 
-  public ResponseEntity registerNewUser(UserDTO userDTO) {
+  public ResponseEntity registerNewUser(UserDTO userDTO, String path) {
     String userName = userDTO.getUsername();
     String password = userDTO.getPassword();
 
     if (!credentialsProvided(userName, password)) {
-      return registerUserWithMissingCredentials(userDTO);
+      return registerUserWithMissingCredentials(userDTO, path);
     } else if (userRepository.existsByUsername(userName)) {
-      throw new UserRelatedException("Username already taken, choose another one!", "/register");
+      throw new UserRelatedException("Username already taken, choose another one!", path);
     } else {
       User userToBeSaved = createUserFromDTO(userDTO);
       Kingdom kingdom = initKingdom(createKingdom(userDTO.getKingdom(),
@@ -76,15 +75,15 @@ public class UserServiceImpl implements UserService {
     }
   }
 
-  public ResponseEntity registerUserWithMissingCredentials(UserDTO userDTO) {
+  public ResponseEntity registerUserWithMissingCredentials(UserDTO userDTO, String path) {
     String userName = userDTO.getUsername();
     String password = userDTO.getPassword();
     if ((userName == null || userName.isEmpty()) && (password == null || password.isEmpty())) {
-      throw new UserRelatedException("Invalid user details provided.", "/register");
+      throw new UserRelatedException("Invalid user details provided.", path);
     } else if (password == null || password.isEmpty()) {
-      throw new UserRelatedException("Missing parameter: password", "/register");
+      throw new UserRelatedException("Missing parameter: password", path);
     } else {
-      throw new UserRelatedException("Missing parameter: username", "/register");
+      throw new UserRelatedException("Missing parameter: username", path);
     }
   }
 
@@ -130,28 +129,29 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public ResponseEntity loginResponse(String username, String password) {
+  public ResponseEntity loginResponse(String username, String password, String path) {
     if (!credentialsProvided(username, password)) {
-      return loginResponseWithValidCredentials(username, password);
+      return loginResponseWithValidCredentials(username, password, path);
     }
     if (validCredentials(username, password)) {
       return new ResponseEntity<>(userRepository.findByUsername(username), HttpStatus.OK);
     }
     if (!userRepository.existsByUsername(username)) {
-      throw new UserRelatedException("No such user in database, please register first", "/login");
+      throw new UserRelatedException("No such user in database, please register first", path);
     } else {
-      throw new UserRelatedException("Invalid password, please try to log-in again.", "/login");
+      throw new UserRelatedException("Invalid password, please try to log-in again.", path);
     }
   }
 
   @Override
-  public ResponseEntity loginResponseWithValidCredentials(String username, String password) {
+  public ResponseEntity loginResponseWithValidCredentials(String username, String password,
+      String path) {
     if ((username.equals("")) && (password.equals(""))) {
-      throw new UserRelatedException("Missing parameter(s): username, password", "/login");
+      throw new UserRelatedException("Missing parameter(s): username, password", path);
     } else if ((username.equals(""))) {
-      throw new UserRelatedException("Missing parameter(s): username", "/login");
+      throw new UserRelatedException("Missing parameter(s): username", path);
     } else {
-      throw new UserRelatedException("Missing parameter(s): password", "/login");
+      throw new UserRelatedException("Missing parameter(s): password", path);
     }
   }
 }

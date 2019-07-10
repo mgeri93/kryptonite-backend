@@ -21,17 +21,15 @@ public class UserController {
 
   @PostMapping("/login")
   ResponseEntity login(@RequestBody UserDTO userDTO, HttpServletRequest httpServletRequest) {
-    System.out.println(httpServletRequest.getContextPath());
-    System.out.println(httpServletRequest.getServletPath());
-    System.out.println("tej");
     if (userDTO != null) {
-      return userService.loginResponse(userDTO.getUsername(), userDTO.getPassword());
+      return userService.loginResponse(userDTO.getUsername(), userDTO.getPassword(),
+          httpServletRequest.getServletPath());
     }
     throw new UserRelatedException("Invalid user details!", "/login");
   }
 
   @PostMapping("/register")
-  ResponseEntity register(@RequestBody UserDTO userDTO) {
-    return userService.registerNewUser(userDTO);
+  ResponseEntity register(@RequestBody UserDTO userDTO, HttpServletRequest httpServletRequest) {
+    return userService.registerNewUser(userDTO, httpServletRequest.getServletPath());
   }
 }

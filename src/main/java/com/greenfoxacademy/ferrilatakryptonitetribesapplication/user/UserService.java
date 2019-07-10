@@ -13,8 +13,8 @@ public interface UserService {
 
   boolean validCredentials(String username, String password);
 
-  ResponseEntity loginResponse(String username, String password);
+  ResponseEntity loginResponse(String username, String password, String path);
 
-  ResponseEntity loginResponseWithValidCredentials(String username, String password);
+  ResponseEntity loginResponseWithValidCredentials(String username, String password, String path);
 
 }

@@ -20,7 +20,4 @@ public class ErrorResponseModel {
     this.path = path;
     this.date = new Timestamp(System.currentTimeMillis());
   }
-
-  public ErrorResponseModel() {
-  }
 }
