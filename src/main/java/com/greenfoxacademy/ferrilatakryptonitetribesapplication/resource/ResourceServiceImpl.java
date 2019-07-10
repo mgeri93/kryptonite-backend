@@ -11,7 +11,8 @@ public class ResourceServiceImpl implements ResourceService {
   private IResourceRepository resourceRepository;
 
   @Autowired
-  public ResourceServiceImpl(KingdomServiceImpl kingdomService, IResourceRepository resourceRepository) {
+  public ResourceServiceImpl(KingdomServiceImpl kingdomService,
+      IResourceRepository resourceRepository) {
     this.kingdomService = kingdomService;
     this.resourceRepository = resourceRepository;
   }
