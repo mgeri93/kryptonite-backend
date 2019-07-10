@@ -1,6 +1,5 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.UserWithKingdomDTO;
 import java.nio.charset.Charset;
 import org.junit.Before;
 import org.junit.Test;
