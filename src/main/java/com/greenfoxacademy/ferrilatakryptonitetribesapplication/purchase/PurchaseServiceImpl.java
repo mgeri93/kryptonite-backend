@@ -2,6 +2,8 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingType;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.TownHall;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
@@ -45,16 +47,23 @@ public class PurchaseServiceImpl implements PurchaseService {
   public int purchaseBuildingUpgrade(Kingdom kingdom, Long buildingId, Long upgradeLevelTo)
       throws Exception {
     Building building = buildingService.findBuildingById(buildingId);
-    building.setLevel(upgradeLevelTo);
     List<Resource> kingdomResource = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResource);
-    return purchaseIfEnoughGold(gold, upgradeLevelTo, buildingCreateCost);
+    if (building.getBuildingType() != BuildingType.TownHall) {
+      building.setLevel(Math.min(upgradeLevelTo, townHallLevel(kingdom)));
+      return purchaseIfEnoughGold(gold, upgradeLevelTo, buildingCreateCost);
+    } else if (building.getLevel() < 10L) {
+      building.setLevel(upgradeLevelTo);
+      return purchaseIfEnoughGold(gold, upgradeLevelTo, buildingCreateCost);
+    }
+    return gold.getAmount();
   }
 
   @Override
   public int purchaseTroop(Kingdom kingdom) throws Exception {
     List<Resource> kingdomResources = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResources);
+    troopService.createTroop(kingdom);
     purchaseIfEnoughGold(gold, 1L, troopCreateCost);
     return gold.getAmount();
   }
@@ -63,10 +72,13 @@ public class PurchaseServiceImpl implements PurchaseService {
   public int purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo)
       throws Exception {
     Troop troop = troopService.findTroopById(troopId);
-    troop.setLevel(upgradeLevelTo);
     List<Resource> kingdomResource = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResource);
-    return purchaseIfEnoughGold(gold, upgradeLevelTo, troopCreateCost);
+    if (troop.getLevel() < 3) {
+      troop.setLevel(upgradeLevelTo);
+      return purchaseIfEnoughGold(gold, upgradeLevelTo, troopCreateCost);
+    }
+    return gold.getAmount();
   }
 
   @Override
@@ -92,5 +104,15 @@ public class PurchaseServiceImpl implements PurchaseService {
     } else {
       throw new Exception("Not enough gold to purchase.");
     }
+  }
+
+  public long townHallLevel(Kingdom kingdom) {
+    Building townhHall = new TownHall();
+    for (Building building : kingdom.getBuildings()) {
+      if (building.getBuildingType() == BuildingType.TownHall) {
+        townhHall = building;
+      }
+    }
+    return townhHall.getLevel();
   }
 }
