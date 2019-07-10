@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.customexceptions;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Setter
 @Getter
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class TimeRelatedException extends RuntimeException {
+public class NotFoundException extends RuntimeException {
   private String path;
 
-  public TimeRelatedException(String message, String path) {
+  public NotFoundException(String message, String path) {
     super(message);
     this.path = path;
   }

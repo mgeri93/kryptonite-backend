@@ -1,6 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.time;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.customexceptions.TimeRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.TimeRelatedException;
 import java.sql.Timestamp;
 
 import static org.junit.Assert.assertEquals;

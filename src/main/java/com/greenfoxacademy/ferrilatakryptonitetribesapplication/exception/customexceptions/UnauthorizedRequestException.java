@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.customexceptions;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions;
 
 import lombok.Getter;
 import lombok.Setter;

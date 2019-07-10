@@ -1,6 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.customexceptions.UserRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.UserRelatedException;
 import java.nio.charset.Charset;
 import org.junit.Before;
 import org.junit.Test;
@@ -100,5 +100,18 @@ public class UserControllerTest {
         .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
         .andDo(print())
         .andExpect(status().isOk());
+  }
+
+  @Test
+  public void registerWithoutUsernameAndPassword() throws Exception {
+    when(userService.registerNewUser(new UserDTO()))
+        .thenReturn(new ResponseEntity<>("\"status\": \"error\",\n"
+            + "    \"message\": \"Missing parameters: username, password!\"",
+            HttpStatus.BAD_REQUEST));
+    mockMvc.perform(post("/register")
+        .contentType(contentType)
+        .content("{\"id\": \"\", \"username\": \"\", \"kingdomId\": \"\"}"))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
   }
 }
