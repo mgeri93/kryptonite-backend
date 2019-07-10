@@ -54,3 +54,4 @@ public class KingdomServiceImpl implements KingdomService {
     kingdomRepository.save(kingdom);
   }
 }
+
