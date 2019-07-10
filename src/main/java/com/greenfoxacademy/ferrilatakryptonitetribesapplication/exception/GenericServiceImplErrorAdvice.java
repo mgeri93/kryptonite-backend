@@ -7,7 +7,6 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.custom
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.TimeRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.UnauthorizedRequestException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.UserRelatedException;
-import com.sun.net.httpserver.HttpContext;
 import lombok.extern.slf4j.Slf4j;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;

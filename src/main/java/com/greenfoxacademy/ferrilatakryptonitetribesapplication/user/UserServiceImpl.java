@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
   private UserRepository userRepository;
   private IKingdomRepository kingdomRepository;
+  private ErrorAttributes errorAttributes;
 
   @Autowired
   public UserServiceImpl(UserRepository userRepository, IKingdomRepository kingdomRepository) {
@@ -129,7 +131,6 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public ResponseEntity loginResponse(String username, String password) {
-
     if (!credentialsProvided(username, password)) {
       return loginResponseWithValidCredentials(username, password);
     }
