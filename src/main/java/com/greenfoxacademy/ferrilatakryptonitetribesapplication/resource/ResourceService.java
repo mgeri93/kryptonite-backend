@@ -6,7 +6,5 @@ public interface ResourceService {
 
   boolean amountSpecified(Resource resource);
 
-  long timeDifference(Resource resource);
-
   void saveResource(Resource resource);
 }

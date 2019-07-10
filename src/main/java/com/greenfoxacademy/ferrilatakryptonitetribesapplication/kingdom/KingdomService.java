@@ -6,6 +6,4 @@ public interface KingdomService {
 
   boolean isValidKingdom(Kingdom kingdom);
 
-  void updateGold(Kingdom kingdom);
-
 }
