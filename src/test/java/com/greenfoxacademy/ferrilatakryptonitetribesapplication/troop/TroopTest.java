@@ -1,13 +1,19 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Food;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.mockito.Mockito.when;
+
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -15,8 +21,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureMockMvc
 public class TroopTest {
 
-  @MockBean
+  @InjectMocks
   private TroopServiceImp troopServiceImp;
+
+  @Before
+  public void init() {
+    MockitoAnnotations.initMocks(this);
+  }
+
 
   @Test
   public void constructorWithAllInvalidParameters() {
@@ -30,7 +42,8 @@ public class TroopTest {
   @Test
   public void troopValidityCheck() {
     Troop testTroop = new Troop(-1, -4, 0, 0);
-    when(troopServiceImp.isValidTroop(testTroop)).thenReturn(true);
+    Kingdom kingdom = new Kingdom("empire", new User("geri", "password"));
+    testTroop.setKingdom(kingdom);
     assertTrue(troopServiceImp.isValidTroop(testTroop));
   }
 
@@ -42,5 +55,14 @@ public class TroopTest {
     assertEquals(testTroop.getHp(), defaultTroop.getHp());
     assertEquals(testTroop.getAttack(), defaultTroop.getAttack());
     assertEquals(testTroop.getDefense(), defaultTroop.getDefense());
+  }
+
+  @Test
+  public void createTroopDecreaseFood() {
+    Kingdom kingdom = new Kingdom("empire", new User("geri", "password"));
+    kingdom.getResourceList().add(0, new Gold());
+    kingdom.getResourceList().add(1, new Food(20));
+    troopServiceImp.createTroop(kingdom);
+    assertEquals(19, kingdom.getResourceList().get(1).getAmount());
   }
 }
