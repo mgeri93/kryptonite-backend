@@ -21,7 +21,7 @@ public class Troop {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   @NotNull
-  private long level = Math.min(getLevel(),3);
+  private long level;
   private long hp;
   private long attack;
   private long defense;

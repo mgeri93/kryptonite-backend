@@ -21,7 +21,7 @@ public abstract class Building {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  private long level = Math.min(getLevel(), 10);
+  private long level;
   private double hp;
   private BuildingType buildingType;
 
