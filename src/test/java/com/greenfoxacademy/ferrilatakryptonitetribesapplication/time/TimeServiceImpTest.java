@@ -85,10 +85,10 @@ public class TimeServiceImpTest {
   @Test
   public void calculatesCorrectTroopUpgradeTime() {
     Troop troop = new Troop();
-    troop.setLevel(5);
+    troop.setLevel(3);
     Mockito.when(troopService.findTroopById(1)).thenReturn(troop);
     assertEquals(
-        new Timestamp(timeServiceImp.getCurrentTime() + TimeUnit.MINUTES.toMillis(5)),
+        new Timestamp(timeServiceImp.getCurrentTime() + TimeUnit.MINUTES.toMillis(3)),
         timeServiceImp.calculateCompletionTimeOfTroop(1));
   }
 
