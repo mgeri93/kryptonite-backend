@@ -1,5 +1,8 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.time.TimeServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,11 +10,21 @@ import org.springframework.stereotype.Service;
 public class KingdomServiceImpl implements KingdomService {
 
   private IKingdomRepository kingdomRepository;
+  private ResourceServiceImpl resourceService;
+  private TimeServiceImp timeService;
+  private PurchaseServiceImpl purchaseService;
 
   @Autowired
   public KingdomServiceImpl(
-      IKingdomRepository kingdomRepository) {
+      IKingdomRepository kingdomRepository, TimeServiceImp timeService) {
     this.kingdomRepository = kingdomRepository;
+    this.timeService = timeService;
+  }
+
+  public void setServices(ResourceServiceImpl resourceService,
+      PurchaseServiceImpl purchaseService) {
+    this.resourceService = resourceService;
+    this.purchaseService = purchaseService;
   }
 
   @Override

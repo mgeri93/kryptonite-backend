@@ -23,6 +23,7 @@ public abstract class Building {
 
   private long level;
   private double hp;
+  private BuildingType buildingType;
 
   @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "kingdom_id", referencedColumnName = "id")

@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
       userRepository.save(userToBeSaved);
       return ResponseEntity.status(200)
           .body(new UserWithKingdomDTO(
-                  userToBeSaved.getId(), userToBeSaved.getUsername(), kingdom.getId()));
+              userToBeSaved.getId(), userToBeSaved.getUsername(), kingdom.getId()));
     }
   }
 
@@ -92,10 +92,11 @@ public class UserServiceImpl implements UserService {
   }
 
   public Kingdom initKingdom(Kingdom kingdom) {
-    Gold startingGold =  new Gold(100, kingdom);
-    kingdom.getResourceList().add(0,startingGold);
+    Gold startingGold = new Gold(100, kingdom);
+    kingdom.getResourceList().add(0, startingGold);
     for (BuildingType buildingType : BuildingType.values()) {
       kingdom.getBuildings().add(BuildingFactory.createBuilding(buildingType));
+      kingdom.getBuildings().get(kingdom.getBuildings().size() - 1).setBuildingType(buildingType);
     }
     for (Building building : kingdom.getBuildings()) {
       building.setKingdom(kingdom);
