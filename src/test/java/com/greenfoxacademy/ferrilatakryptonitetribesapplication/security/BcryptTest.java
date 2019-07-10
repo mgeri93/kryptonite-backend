@@ -10,7 +10,7 @@ public class BcryptTest {
   public void emptyPasswordDoesNotMatchPassword() {
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     String result = encoder.encode("password");
-    assertThat(encoder.matches("", result)).isFalse();
+    assertThat(encoder.matches("rdzfzzftd", result)).isFalse();
   }
 
   @Test

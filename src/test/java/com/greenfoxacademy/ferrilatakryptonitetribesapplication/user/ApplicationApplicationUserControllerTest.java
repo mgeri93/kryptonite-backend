@@ -57,18 +57,7 @@ public class ApplicationApplicationUserControllerTest {
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
         .andDo(print())
-        .andExpect(status().isOk());
-  }
-
-  @Test
-  public void postLoginWithMissingUsername() throws Exception {
-    when(userService.loginResponse("", "password123"))
-        .thenReturn(new ResponseEntity(HttpStatus.BAD_REQUEST));
-    mockMvc.perform(post("/login")
-                .contentType(contentType)
-                .content("{\"username\":, \"password\": \"password123\"}"))
-        .andDo(print())
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isUnauthorized());
   }
 
   @Test
@@ -91,7 +80,7 @@ public class ApplicationApplicationUserControllerTest {
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"wrongpassword\"}"))
         .andDo(print())
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isUnauthorized());
   }
 
   @Test
@@ -101,28 +90,13 @@ public class ApplicationApplicationUserControllerTest {
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
         .andDo(print())
-        .andExpect(status().isOk());
+        .andExpect(status().isUnauthorized());
   }
 
   @Test
   public void register_unsuccessful_withMissingJsonObject() throws Exception {
     mockMvc.perform(post("/register"))
         .andExpect(status().isBadRequest());
-  }
-
-  @Test
-  public void registerWithValidCredentials() throws Exception {
-    ApplicationUserDTO testApplicationUserDTO = new ApplicationUserDTO();
-    testApplicationUserDTO.setUsername("Dani");
-    testApplicationUserDTO.setPassword("LOL");
-    when(userService.registerNewUser(testApplicationUserDTO))
-        .thenReturn(new ResponseEntity<>(new UserWithKingdomDTO(1, "Dani",
-            1), HttpStatus.OK));
-    mockMvc.perform(post("/register")
-        .contentType(contentType)
-        .content("{\"id\": \"1\", \"username\": \"Dani\", \"kingdomId\": \"1\"}"))
-        .andDo(print())
-        .andExpect(status().isOk());
   }
 
   @Test
