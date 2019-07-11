@@ -86,7 +86,8 @@ public class ExceptionHandlerAdvice {
     return createCustomErrorResponse(errorResponseModel);
   }
 
-  private ResponseEntity<ErrorResponseModel> createCustomErrorResponse(ErrorResponseModel errorResponseModel) {
+  private ResponseEntity<ErrorResponseModel> createCustomErrorResponse(
+      ErrorResponseModel errorResponseModel) {
     return ResponseEntity.status(errorResponseModel.getStatus()).body(errorResponseModel);
   }
 }
