@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -29,13 +30,17 @@ public class ApplicationUserTest {
   @MockBean
   IKingdomRepository kingdomRepository;
 
+  @MockBean
+  BCryptPasswordEncoder encoder;
+
   @Autowired
   MockMvc mockMvc;
 
   @Before
   public void init() {
     MockitoAnnotations.initMocks(this);
-    userService = new ApplicationUserServiceImpl(applicationUserRepository, kingdomRepository);
+    userService = new ApplicationUserServiceImpl(applicationUserRepository, kingdomRepository,
+        encoder);
   }
 
   @Test

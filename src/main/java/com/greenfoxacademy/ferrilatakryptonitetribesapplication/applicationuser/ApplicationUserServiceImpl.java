@@ -1,13 +1,13 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.dto.ErrorMessage;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.dto.UserWithKingdomDTO;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingFactory;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingType;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.dto.ErrorMessage;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.dto.UserWithKingdomDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,19 +15,21 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ApplicationUserServiceImpl implements ApplicationUserService {
-
+  private BCryptPasswordEncoder encoder;
   private ApplicationUserRepository applicationUserRepository;
   private IKingdomRepository kingdomRepository;
 
   @Autowired
   public ApplicationUserServiceImpl(ApplicationUserRepository applicationUserRepository,
-      IKingdomRepository kingdomRepository) {
+      IKingdomRepository kingdomRepository, BCryptPasswordEncoder encoder) {
     this.applicationUserRepository = applicationUserRepository;
     this.kingdomRepository = kingdomRepository;
+    this.encoder = encoder;
   }
 
   public boolean isValidUser(ApplicationUser applicationUser) {
@@ -56,8 +58,8 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
 
   public ResponseEntity registerNewUser(ApplicationUserDTO applicationUserDTO) {
     String userName = applicationUserDTO.getUsername();
-    String password = applicationUserDTO.getPassword();
-    if (!credentialsProvided(userName, password)) {
+    applicationUserDTO.setPassword(encoder.encode(applicationUserDTO.getPassword()));
+    if (!credentialsProvided(applicationUserDTO.getUsername(), applicationUserDTO.getPassword())) {
       return registerUserWithMissingCredentials(applicationUserDTO);
     } else if (applicationUserRepository.existsByUsername(userName)) {
       return ResponseEntity.status(409).body(new ErrorMessage("Username already taken!"));
