@@ -1,5 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUser;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingType;
@@ -11,8 +13,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resourc
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.UserServiceImpl;
+
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 
@@ -42,12 +43,12 @@ public class PurchaseServiceImplTest {
   private TroopServiceImp troopService;
 
   @Mock
-  private UserServiceImpl userService;
+  private ApplicationUserServiceImpl userService;
 
   @Mock
   private ResourceServiceImpl resourceService;
 
-  private Kingdom kingdom = new Kingdom("Stormwind", new User("Dani", "lel"));
+  private Kingdom kingdom = new Kingdom("Stormwind", new ApplicationUser("Dani", "lel"));
   private List<Resource> kingdomResource = kingdom.getResourceList();
   private List<Building> buildings = kingdom.getBuildings();
   private Building townhHall = new TownHall();
