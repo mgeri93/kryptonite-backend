@@ -1,10 +1,10 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.dto.ErrorMessage;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.dto.UserWithKingdomDTO;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingFactory;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingType;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.UserRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
@@ -56,13 +56,14 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     return applicationUserRepository.findById(id);
   }
 
+
   public ResponseEntity registerNewUser(ApplicationUserDTO applicationUserDTO) {
     String userName = applicationUserDTO.getUsername();
     applicationUserDTO.setPassword(encoder.encode(applicationUserDTO.getPassword()));
     if (!credentialsProvided(applicationUserDTO.getUsername(), applicationUserDTO.getPassword())) {
       return registerUserWithMissingCredentials(applicationUserDTO);
     } else if (applicationUserRepository.existsByUsername(userName)) {
-      return ResponseEntity.status(409).body(new ErrorMessage("Username already taken!"));
+      throw new UserRelatedException("Username already taken, choose another one!");
     } else {
       ApplicationUser applicationUserToBeSaved = createUserFromDTO(applicationUserDTO);
       Kingdom kingdom = initKingdom(createKingdom(applicationUserDTO.getKingdom(),
@@ -81,12 +82,11 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     String userName = applicationUserDTO.getUsername();
     String password = applicationUserDTO.getPassword();
     if ((userName == null || userName.isEmpty()) && (password == null || password.isEmpty())) {
-      return ResponseEntity.status(400)
-          .body(new ErrorMessage("Missing parameters: username, password!"));
+      throw new UserRelatedException("Invalid user details provided.");
     } else if (password == null || password.isEmpty()) {
-      return ResponseEntity.status(400).body(new ErrorMessage("Missing parameter: password!"));
+      throw new UserRelatedException("Missing parameter: password");
     } else {
-      return ResponseEntity.status(400).body(new ErrorMessage("Missing parameter: username!"));
+      throw new UserRelatedException("Missing parameter: username");
     }
   }
 
@@ -135,7 +135,6 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
 
   @Override
   public ResponseEntity loginResponse(String username, String password) {
-
     if (!credentialsProvided(username, password)) {
       return loginResponseWithValidCredentials(username, password);
     }
@@ -144,22 +143,20 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
           HttpStatus.OK);
     }
     if (!applicationUserRepository.existsByUsername(username)) {
-      return new ResponseEntity<>("No such applicationUser: " + username + "!",
-          HttpStatus.UNAUTHORIZED);
+      throw new UserRelatedException("No such user in database, please register first");
     } else {
-      return new ResponseEntity<>("Wrong password!", HttpStatus.UNAUTHORIZED);
+      throw new UserRelatedException("Invalid password, please try to log-in again.");
     }
   }
 
   @Override
   public ResponseEntity loginResponseWithValidCredentials(String username, String password) {
     if ((username.equals("")) && (password.equals(""))) {
-      return new ResponseEntity<>(
-          "Missing parameter(s): username, password", HttpStatus.BAD_REQUEST);
+      throw new UserRelatedException("Missing parameter(s): username, password");
     } else if ((username.equals(""))) {
-      return new ResponseEntity<>("Missing parameter(s): username", HttpStatus.BAD_REQUEST);
+      throw new UserRelatedException("Missing parameter(s): username");
     } else {
-      return new ResponseEntity<>("Missing parameter(s): password", HttpStatus.BAD_REQUEST);
+      throw new UserRelatedException("Missing parameter(s): password");
     }
   }
 }
