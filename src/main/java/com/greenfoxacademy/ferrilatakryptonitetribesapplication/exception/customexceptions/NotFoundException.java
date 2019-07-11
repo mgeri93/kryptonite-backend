@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Setter
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class NotFoundException extends RuntimeException {
-  private String path;
 
-  public NotFoundException(String message, String path) {
+  public NotFoundException(String message) {
     super(message);
-    this.path = path;
   }
 }

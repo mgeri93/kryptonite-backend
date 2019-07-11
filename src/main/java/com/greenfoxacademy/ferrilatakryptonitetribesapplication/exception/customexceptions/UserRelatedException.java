@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class UserRelatedException extends RuntimeException {
 
-  private String path;
-
-  public UserRelatedException(String message, String path) {
+  public UserRelatedException(String message) {
     super(message);
-    this.path = path;
   }
 }

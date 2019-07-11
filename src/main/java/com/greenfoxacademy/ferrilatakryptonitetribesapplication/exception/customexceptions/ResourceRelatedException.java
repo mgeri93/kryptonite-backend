@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Setter
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class ResourceRelatedException extends RuntimeException {
-  private String path;
 
-  public ResourceRelatedException(String message, String path) {
+  public ResourceRelatedException(String message) {
     super(message);
-    this.path = path;
   }
 }

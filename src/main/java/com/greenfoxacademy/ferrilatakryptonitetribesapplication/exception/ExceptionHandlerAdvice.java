@@ -11,6 +11,8 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,65 +20,69 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
 
-  ErrorResponseModel errorResponseModel;
+  private ErrorResponseModel errorResponseModel;
 
   @ExceptionHandler(RuntimeException.class)
-  public ResponseEntity<ErrorResponseModel> handleRunTimeException() {
+  public ResponseEntity<ErrorResponseModel> handleRunTimeException(
+      HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(INTERNAL_SERVER_ERROR,
-        "Internal server error", "");
+        "Internal server error", httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
 
   @ExceptionHandler(NotFoundException.class)
-  public ResponseEntity<ErrorResponseModel> handleNotFoundException(NotFoundException e) {
-    errorResponseModel = new ErrorResponseModel(NOT_FOUND,
-        "Not found exception", e.getPath());
+  public ResponseEntity<ErrorResponseModel> handleNotFoundException(
+      HttpServletRequest httpServletRequest) {
+    errorResponseModel = new ErrorResponseModel(NOT_FOUND, "Not found exception",
+        httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
 
   @ExceptionHandler(UserRelatedException.class)
-  public ResponseEntity<ErrorResponseModel> handleUserRelatedException(UserRelatedException e) {
+  public ResponseEntity<ErrorResponseModel> handleUserRelatedException(UserRelatedException e,
+      HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
-        e.getMessage(), e.getPath());
+        e.getMessage(), httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
 
   @ExceptionHandler(UnauthorizedRequestException.class)
   public ResponseEntity<ErrorResponseModel> handleUnauthorizedRequestException(
-      UnauthorizedRequestException e) {
+      HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(UNAUTHORIZED,
-        "Unauthorized request error", e.getPath());
+        "Unauthorized request error", httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
 
   @ExceptionHandler(KingdomRelatedException.class)
   public ResponseEntity<ErrorResponseModel> handleKingdomRelatedException(
-      KingdomRelatedException e) {
+      HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
-        "Kingdom-related error", e.getPath());
+        "Kingdom-related error", httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
 
   @ExceptionHandler(TimeRelatedException.class)
-  public ResponseEntity<ErrorResponseModel> handleTimeRelatedException(TimeRelatedException e) {
+  public ResponseEntity<ErrorResponseModel> handleTimeRelatedException(
+      HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
-        "Timestamp-related error", e.getPath());
+        "Timestamp-related error", httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
 
   @ExceptionHandler(BuildingRelatedException.class)
   public ResponseEntity<ErrorResponseModel> handleBuildingRelatedException(
-      BuildingRelatedException e) {
+      HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
-        "Building-related error", e.getPath());
+        "Building-related error", httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
 
   @ExceptionHandler(ResourceRelatedException.class)
   public ResponseEntity<ErrorResponseModel> handleResourceRelatedException(
-      ResourceRelatedException e) {
-    errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
-        e.getMessage(), e.getPath());
+      HttpServletRequest httpServletRequest) {
+    errorResponseModel = new ErrorResponseModel(BAD_REQUEST, "Resource-related error",
+        httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
 

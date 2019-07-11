@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Setter
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class KingdomRelatedException extends RuntimeException {
-  private String path;
 
-  public KingdomRelatedException(String message, String path) {
+  public KingdomRelatedException(String message) {
     super(message);
-    this.path = path;
   }
 }

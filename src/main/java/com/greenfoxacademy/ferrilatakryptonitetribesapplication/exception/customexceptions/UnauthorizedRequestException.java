@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Setter
 @ResponseStatus(HttpStatus.UNAUTHORIZED)
 public class UnauthorizedRequestException extends RuntimeException {
-  private String path;
 
-  public UnauthorizedRequestException(String message, String path) {
+  public UnauthorizedRequestException(String message) {
     super(message);
-    this.path = path;
   }
 }

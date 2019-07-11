@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Setter
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class TimeRelatedException extends RuntimeException {
-  private String path;
 
-  public TimeRelatedException(String message, String path) {
+  public TimeRelatedException(String message) {
     super(message);
-    this.path = path;
   }
 }
