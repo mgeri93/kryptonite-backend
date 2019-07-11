@@ -22,17 +22,17 @@ public class ExceptionHandlerAdvice {
   private ErrorResponseModel errorResponseModel;
 
   @ExceptionHandler(RuntimeException.class)
-  public ResponseEntity<ErrorResponseModel> handleRunTimeException(
+  public ResponseEntity<ErrorResponseModel> handleRunTimeException(RuntimeException e,
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(INTERNAL_SERVER_ERROR,
-        "Internal server error", httpServletRequest.getServletPath());
+        e.getMessage(), httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
 
   @ExceptionHandler(NotFoundException.class)
-  public ResponseEntity<ErrorResponseModel> handleNotFoundException(
+  public ResponseEntity<ErrorResponseModel> handleNotFoundException(NotFoundException e,
       HttpServletRequest httpServletRequest) {
-    errorResponseModel = new ErrorResponseModel(NOT_FOUND, "Not found exception",
+    errorResponseModel = new ErrorResponseModel(NOT_FOUND, e.getMessage(),
         httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
@@ -47,40 +47,41 @@ public class ExceptionHandlerAdvice {
 
   @ExceptionHandler(UnauthorizedRequestException.class)
   public ResponseEntity<ErrorResponseModel> handleUnauthorizedRequestException(
-      HttpServletRequest httpServletRequest) {
+      UnauthorizedRequestException e, HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(UNAUTHORIZED,
-        "Unauthorized request error", httpServletRequest.getServletPath());
+        e.getMessage(), httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
 
   @ExceptionHandler(KingdomRelatedException.class)
-  public ResponseEntity<ErrorResponseModel> handleKingdomRelatedException(
+  public ResponseEntity<ErrorResponseModel> handleKingdomRelatedException(KingdomRelatedException e,
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
-        "Kingdom-related error", httpServletRequest.getServletPath());
+        e.getMessage(), httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
 
   @ExceptionHandler(TimeRelatedException.class)
-  public ResponseEntity<ErrorResponseModel> handleTimeRelatedException(
+  public ResponseEntity<ErrorResponseModel> handleTimeRelatedException(TimeRelatedException e,
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
-        "Timestamp-related error", httpServletRequest.getServletPath());
+        e.getMessage(), httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
 
   @ExceptionHandler(BuildingRelatedException.class)
   public ResponseEntity<ErrorResponseModel> handleBuildingRelatedException(
+      BuildingRelatedException e,
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
-        "Building-related error", httpServletRequest.getServletPath());
+        e.getMessage(), httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
 
   @ExceptionHandler(ResourceRelatedException.class)
   public ResponseEntity<ErrorResponseModel> handleResourceRelatedException(
-      HttpServletRequest httpServletRequest) {
-    errorResponseModel = new ErrorResponseModel(BAD_REQUEST, "Resource-related error",
+      ResourceRelatedException e, HttpServletRequest httpServletRequest) {
+    errorResponseModel = new ErrorResponseModel(BAD_REQUEST, e.getMessage(),
         httpServletRequest.getServletPath());
     return error(errorResponseModel);
   }
