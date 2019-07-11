@@ -24,7 +24,7 @@ public class TimeServiceImp implements TimeService {
   @Override
   public Timestamp timeLeft(Timestamp start, Timestamp finish) {
     if (finish.getTime() < start.getTime()) {
-      throw new TimeRelatedException("Start time is later than finish time!", "");
+      throw new TimeRelatedException("Start time is later than finish time!");
     }
     return new Timestamp(finish.getTime() - start.getTime());
   }

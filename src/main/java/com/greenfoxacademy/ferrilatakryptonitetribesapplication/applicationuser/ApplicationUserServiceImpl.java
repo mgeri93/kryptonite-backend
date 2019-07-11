@@ -63,7 +63,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     if (!credentialsProvided(applicationUserDTO.getUsername(), applicationUserDTO.getPassword())) {
       return registerUserWithMissingCredentials(applicationUserDTO);
     } else if (applicationUserRepository.existsByUsername(userName)) {
-      throw new UserRelatedException("Username already taken, choose another one!", "/register");
+      throw new UserRelatedException("Username already taken, choose another one!");
     } else {
       ApplicationUser applicationUserToBeSaved = createUserFromDTO(applicationUserDTO);
       Kingdom kingdom = initKingdom(createKingdom(applicationUserDTO.getKingdom(),
@@ -82,11 +82,11 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     String userName = applicationUserDTO.getUsername();
     String password = applicationUserDTO.getPassword();
     if ((userName == null || userName.isEmpty()) && (password == null || password.isEmpty())) {
-      throw new UserRelatedException("Invalid user details provided.", "/register");
+      throw new UserRelatedException("Invalid user details provided.");
     } else if (password == null || password.isEmpty()) {
-      throw new UserRelatedException("Missing parameter: password", "/register");
+      throw new UserRelatedException("Missing parameter: password");
     } else {
-      throw new UserRelatedException("Missing parameter: username", "/register");
+      throw new UserRelatedException("Missing parameter: username");
     }
   }
 
@@ -134,30 +134,29 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
   }
 
   @Override
-  public ResponseEntity loginResponse(String username, String password, String path) {
+  public ResponseEntity loginResponse(String username, String password) {
     if (!credentialsProvided(username, password)) {
-      return loginResponseWithValidCredentials(username, password, path);
+      return loginResponseWithValidCredentials(username, password);
     }
     if (validCredentials(username, password)) {
       return new ResponseEntity<>(applicationUserRepository.findByUsername(username),
           HttpStatus.OK);
     }
     if (!applicationUserRepository.existsByUsername(username)) {
-      throw new UserRelatedException("No such user in database, please register first", path);
+      throw new UserRelatedException("No such user in database, please register first");
     } else {
-      throw new UserRelatedException("Invalid password, please try to log-in again.", path);
+      throw new UserRelatedException("Invalid password, please try to log-in again.");
     }
   }
 
   @Override
-  public ResponseEntity loginResponseWithValidCredentials(String username, String password,
-      String path) {
+  public ResponseEntity loginResponseWithValidCredentials(String username, String password) {
     if ((username.equals("")) && (password.equals(""))) {
-      throw new UserRelatedException("Missing parameter(s): username, password", path);
+      throw new UserRelatedException("Missing parameter(s): username, password");
     } else if ((username.equals(""))) {
-      throw new UserRelatedException("Missing parameter(s): username", path);
+      throw new UserRelatedException("Missing parameter(s): username");
     } else {
-      throw new UserRelatedException("Missing parameter(s): password", path);
+      throw new UserRelatedException("Missing parameter(s): password");
     }
   }
 }

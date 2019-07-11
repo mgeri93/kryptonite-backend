@@ -57,7 +57,7 @@ public class ApplicationUserControllerTest {
 
   @Test
   public void postLoginWithValidCredentials() throws Exception {
-    when(userService.loginResponse("Bond", "password123", "/register"))
+    when(userService.loginResponse("Bond", "password123"))
         .thenReturn(new ResponseEntity<>(new ApplicationUser("Bond",
             "password123"), HttpStatus.OK));
     mockMvc.perform(post("/login")
@@ -69,7 +69,7 @@ public class ApplicationUserControllerTest {
 
   @Test
   public void postLoginWithMissingUsername() throws Exception {
-    when(userService.loginResponse(" ", "password123", "/login"))
+    when(userService.loginResponse(" ", "password123"))
         .thenReturn(new ResponseEntity(HttpStatus.BAD_REQUEST));
     mockMvc.perform(post("/login")
         .contentType(contentType)
@@ -80,7 +80,7 @@ public class ApplicationUserControllerTest {
 
   @Test
   public void postLoginWithNonexistentUser() throws Exception {
-    when(userService.loginResponse("Bond", "password123", "/login"))
+    when(userService.loginResponse("Bond", "password123"))
         .thenReturn(new ResponseEntity<>(new ApplicationUser("Bond",
             "password123"), HttpStatus.UNAUTHORIZED));
     mockMvc.perform(post("/login")
@@ -92,9 +92,8 @@ public class ApplicationUserControllerTest {
 
   @Test
   public void postLoginWithWrongPassword() throws Exception {
-    when(userService.loginResponse("Bond", "wrongpassword", "/login"))
-        .thenThrow(new UserRelatedException("Invalid password, please try to log-in again.",
-            "/login"));
+    when(userService.loginResponse("Bond", "wrongpassword"))
+        .thenThrow(new UserRelatedException("Invalid password, please try to log-in again."));
     mockMvc.perform(post("/login")
         .contentType(contentType)
         .content("{\"username\": \"Bond\", \"password\": \"wrongpassword\"}"))
