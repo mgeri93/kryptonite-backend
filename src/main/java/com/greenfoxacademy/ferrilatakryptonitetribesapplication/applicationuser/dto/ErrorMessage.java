@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.dto;
 
 import lombok.Getter;
 import lombok.Setter;

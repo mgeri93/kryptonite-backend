@@ -1,9 +1,9 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUser;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Food;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.User;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -42,7 +42,7 @@ public class TroopTest {
   @Test
   public void troopValidityCheck() {
     Troop testTroop = new Troop(-1, -4, 0, 0);
-    Kingdom kingdom = new Kingdom("empire", new User("geri", "password"));
+    Kingdom kingdom = new Kingdom("empire", new ApplicationUser("geri", "password"));
     testTroop.setKingdom(kingdom);
     assertTrue(troopServiceImp.isValidTroop(testTroop));
   }
@@ -59,7 +59,7 @@ public class TroopTest {
 
   @Test
   public void createTroopDecreaseFood() {
-    Kingdom kingdom = new Kingdom("empire", new User("geri", "password"));
+    Kingdom kingdom = new Kingdom("empire", new ApplicationUser("geri", "password"));
     kingdom.getResourceList().add(0, new Gold());
     kingdom.getResourceList().add(1, new Food(20));
     troopServiceImp.createTroop(kingdom);

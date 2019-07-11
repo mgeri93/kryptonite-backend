@@ -1,4 +1,4 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class User {
+public class ApplicationUser {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +19,11 @@ public class User {
   private String username;
   private String password;
 
-  public User() {
+  public ApplicationUser() {
 
   }
 
-  public User(String username, String password) {
+  public ApplicationUser(String username, String password) {
     this.username = username;
     this.password = password;
   }

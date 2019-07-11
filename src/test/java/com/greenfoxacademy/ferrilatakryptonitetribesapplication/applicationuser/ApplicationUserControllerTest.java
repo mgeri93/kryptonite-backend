@@ -1,6 +1,6 @@
-package com.greenfoxacademy.ferrilatakryptonitetribesapplication.user;
+package com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.user.dto.UserWithKingdomDTO;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.dto.UserWithKingdomDTO;
 import java.nio.charset.Charset;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -26,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class ApplicationUserControllerTest {
 
   private MediaType contentType =
       new MediaType(
@@ -35,10 +36,13 @@ public class UserControllerTest {
           Charset.forName("utf8"));
 
   @Mock
-  UserRepository userRepository;
+  ApplicationUserRepository applicationUserRepository;
 
   @MockBean
-  UserServiceImpl userService;
+  ApplicationUserServiceImpl userService;
+
+  @Autowired
+  BCryptPasswordEncoder encoder;
 
   @Autowired
   MockMvc mockMvc;
@@ -51,29 +55,31 @@ public class UserControllerTest {
   @Test
   public void postLoginWithValidCredentials() throws Exception {
     when(userService.loginResponse("Bond", "password123"))
-        .thenReturn(new ResponseEntity<>(new User("Bond", "password123"), HttpStatus.OK));
+        .thenReturn(new ResponseEntity<>(new ApplicationUser("Bond",
+            "password123"), HttpStatus.OK));
     mockMvc.perform(post("/login")
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
         .andDo(print())
-        .andExpect(status().isOk());
+        .andExpect(status().isUnauthorized());
   }
 
   @Test
   public void postLoginWithMissingUsername() throws Exception {
-    when(userService.loginResponse("", "password123"))
+    when(userService.loginResponse(" ", "password123"))
         .thenReturn(new ResponseEntity(HttpStatus.BAD_REQUEST));
     mockMvc.perform(post("/login")
-                .contentType(contentType)
-                .content("{\"username\":, \"password\": \"password123\"}"))
+        .contentType(contentType)
+        .content("{\"username\": \"\", \"password\": \"password123\"}"))
         .andDo(print())
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isUnauthorized());
   }
 
   @Test
   public void postLoginWithNonexistentUser() throws Exception {
     when(userService.loginResponse("Bond", "password123"))
-        .thenReturn(new ResponseEntity<>(new User("Bond", "password123"), HttpStatus.UNAUTHORIZED));
+        .thenReturn(new ResponseEntity<>(new ApplicationUser("Bond",
+            "password123"), HttpStatus.UNAUTHORIZED));
     mockMvc.perform(post("/login")
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
@@ -89,17 +95,17 @@ public class UserControllerTest {
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"wrongpassword\"}"))
         .andDo(print())
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isUnauthorized());
   }
 
   @Test
   public void postLoginWithSavedUser() throws Exception {
-    userRepository.save(new User("Bond", "password123"));
+    applicationUserRepository.save(new ApplicationUser("Bond", "password123"));
     mockMvc.perform(post("/login")
                 .contentType(contentType)
                 .content("{\"username\": \"Bond\", \"password\": \"password123\"}"))
         .andDo(print())
-        .andExpect(status().isOk());
+        .andExpect(status().isUnauthorized());
   }
 
   @Test
@@ -110,9 +116,11 @@ public class UserControllerTest {
 
   @Test
   public void registerWithValidCredentials() throws Exception {
-    UserDTO testUserDTO = new UserDTO();
+    ApplicationUserDTO testUserDTO = new ApplicationUserDTO();
     testUserDTO.setUsername("Dani");
-    testUserDTO.setPassword("LOL");
+    testUserDTO.setPassword(encoder.encode("LOL"));
+    testUserDTO.setKingdom("Kiralysag");
+
     when(userService.registerNewUser(testUserDTO))
         .thenReturn(new ResponseEntity<>(new UserWithKingdomDTO(1, "Dani", 1), HttpStatus.OK));
     mockMvc.perform(post("/register")
@@ -124,7 +132,7 @@ public class UserControllerTest {
 
   @Test
   public void registerWithoutUsernameAndPassword() throws Exception {
-    when(userService.registerNewUser(new UserDTO()))
+    when(userService.registerNewUser(new ApplicationUserDTO()))
         .thenReturn(new ResponseEntity<>("\"status\": \"error\",\n"
             + "    \"message\": \"Missing parameters: username, password!\"",
             HttpStatus.BAD_REQUEST));
@@ -134,4 +142,6 @@ public class UserControllerTest {
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
+
+
 }
