@@ -7,4 +7,7 @@ public interface ResourceService {
   boolean amountSpecified(Resource resource);
 
   void saveResource(Resource resource);
+
+  void refresh(Resource resource) throws Exception;
+
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TimeServiceImp implements TimeService {
 
-  private TroopServiceImp troopService;
+  private static TroopServiceImp troopService;
 
   private BuildingServiceImpl buildingService;
 
@@ -21,11 +21,12 @@ public class TimeServiceImp implements TimeService {
   }
 
   @Override
-  public Timestamp timeLeft(Timestamp start, Timestamp finish) throws Exception {
+  public Long timeDiffeference(Timestamp start, Timestamp finish) throws Exception {
     if (finish.getTime() < start.getTime()) {
       throw new Exception("Start time is greater than finish time!");
     }
-    return new Timestamp(finish.getTime() - start.getTime());
+    long diff = finish.getTime() - start.getTime();
+    return TimeUnit.MILLISECONDS.toMinutes(diff);
   }
 
   @Override

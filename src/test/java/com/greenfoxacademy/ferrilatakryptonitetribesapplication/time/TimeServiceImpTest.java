@@ -44,12 +44,13 @@ public class TimeServiceImpTest {
   @Test
   public void timeLeftWithFutureFinish() {
     Timestamp testStamp = Timestamp.valueOf("1970-01-01 01:08:57.975");
+    Long test = TimeUnit.MILLISECONDS.toMinutes(testStamp.getTime());
     try {
-      Timestamp myStamp =
-          timeServiceImp.timeLeft(
+      Long myStamp =
+          timeServiceImp.timeDiffeference(
               Timestamp.valueOf("2019-07-02 18:48:05.123"),
               Timestamp.valueOf("2019-07-02 18:57:03.098"));
-      assertEquals(myStamp, testStamp);
+      assertEquals(myStamp, test);
     } catch (Exception e) {
       System.out.println("Invalid input parameters");
     }
@@ -59,10 +60,10 @@ public class TimeServiceImpTest {
   public void timeLeftWithAssertNotSame() {
     Timestamp testStamp = Timestamp.valueOf("1970-01-01 01:08:57.975");
     try {
-      Timestamp myStamp =
-          timeServiceImp.timeLeft(
+      Timestamp myStamp = new Timestamp(
+          timeServiceImp.timeDiffeference(
               Timestamp.valueOf("2019-07-02 18:48:05.123"),
-              Timestamp.valueOf("2019-07-02 18:51:03.098"));
+              Timestamp.valueOf("2019-07-02 18:51:03.098")));
       assertNotSame(myStamp, testStamp);
     } catch (Exception e) {
       System.out.println("Invalid input parameters");
@@ -73,7 +74,7 @@ public class TimeServiceImpTest {
   public void timeLeftWithFinishEarlierThanStart() {
     boolean thrown = false;
     try {
-      timeServiceImp.timeLeft(
+      timeServiceImp.timeDiffeference(
           Timestamp.valueOf("2019-07-02 18:51:03.098"),
           Timestamp.valueOf("2018-07-02 18:51:03.098"));
     } catch (Exception e) {

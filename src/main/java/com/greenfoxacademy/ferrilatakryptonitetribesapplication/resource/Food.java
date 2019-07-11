@@ -19,5 +19,6 @@ public class Food extends Resource {
   }
 
   public Food() {
+    this.setAmountPerMinute(10);
   }
 }

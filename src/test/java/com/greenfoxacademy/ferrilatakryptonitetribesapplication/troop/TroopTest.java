@@ -61,8 +61,8 @@ public class TroopTest {
   public void createTroopDecreaseFood() {
     Kingdom kingdom = new Kingdom("empire", new User("geri", "password"));
     kingdom.getResourceList().add(0, new Gold());
-    kingdom.getResourceList().add(1, new Food(20));
+    kingdom.getResourceList().add(1, new Food());
     troopServiceImp.createTroop(kingdom);
-    assertEquals(19, kingdom.getResourceList().get(1).getAmount());
+    assertEquals(9, kingdom.getResourceList().get(1).getAmountPerMinute());
   }
 }
