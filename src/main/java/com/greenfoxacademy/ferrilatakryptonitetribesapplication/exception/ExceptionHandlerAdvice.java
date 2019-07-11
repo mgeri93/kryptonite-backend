@@ -26,7 +26,7 @@ public class ExceptionHandlerAdvice {
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(INTERNAL_SERVER_ERROR,
         e.getMessage(), httpServletRequest.getServletPath());
-    return error(errorResponseModel);
+    return createCustomErrorResponse(errorResponseModel);
   }
 
   @ExceptionHandler(NotFoundException.class)
@@ -34,7 +34,7 @@ public class ExceptionHandlerAdvice {
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(NOT_FOUND, e.getMessage(),
         httpServletRequest.getServletPath());
-    return error(errorResponseModel);
+    return createCustomErrorResponse(errorResponseModel);
   }
 
   @ExceptionHandler(UserRelatedException.class)
@@ -42,7 +42,7 @@ public class ExceptionHandlerAdvice {
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         e.getMessage(), httpServletRequest.getServletPath());
-    return error(errorResponseModel);
+    return createCustomErrorResponse(errorResponseModel);
   }
 
   @ExceptionHandler(UnauthorizedRequestException.class)
@@ -50,7 +50,7 @@ public class ExceptionHandlerAdvice {
       UnauthorizedRequestException e, HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(UNAUTHORIZED,
         e.getMessage(), httpServletRequest.getServletPath());
-    return error(errorResponseModel);
+    return createCustomErrorResponse(errorResponseModel);
   }
 
   @ExceptionHandler(KingdomRelatedException.class)
@@ -58,7 +58,7 @@ public class ExceptionHandlerAdvice {
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         e.getMessage(), httpServletRequest.getServletPath());
-    return error(errorResponseModel);
+    return createCustomErrorResponse(errorResponseModel);
   }
 
   @ExceptionHandler(TimeRelatedException.class)
@@ -66,7 +66,7 @@ public class ExceptionHandlerAdvice {
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         e.getMessage(), httpServletRequest.getServletPath());
-    return error(errorResponseModel);
+    return createCustomErrorResponse(errorResponseModel);
   }
 
   @ExceptionHandler(BuildingRelatedException.class)
@@ -75,7 +75,7 @@ public class ExceptionHandlerAdvice {
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         e.getMessage(), httpServletRequest.getServletPath());
-    return error(errorResponseModel);
+    return createCustomErrorResponse(errorResponseModel);
   }
 
   @ExceptionHandler(ResourceRelatedException.class)
@@ -83,10 +83,10 @@ public class ExceptionHandlerAdvice {
       ResourceRelatedException e, HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST, e.getMessage(),
         httpServletRequest.getServletPath());
-    return error(errorResponseModel);
+    return createCustomErrorResponse(errorResponseModel);
   }
 
-  private ResponseEntity<ErrorResponseModel> error(ErrorResponseModel errorResponseModel) {
+  private ResponseEntity<ErrorResponseModel> createCustomErrorResponse(ErrorResponseModel errorResponseModel) {
     return ResponseEntity.status(errorResponseModel.getStatus()).body(errorResponseModel);
   }
 }
