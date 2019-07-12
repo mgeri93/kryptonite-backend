@@ -3,15 +3,14 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.time;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Farm;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.TimeRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
 import java.sql.Timestamp;
 import java.util.concurrent.TimeUnit;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,12 +72,14 @@ public class TimeServiceImpTest {
   @Test
   public void timeLeftWithFinishEarlierThanStart() {
     boolean thrown = false;
+    String testMessage = "Start time is later than finish time!";
     try {
       timeServiceImp.timeDifference(
           Timestamp.valueOf("2019-07-02 18:51:03.098"),
           Timestamp.valueOf("2018-07-02 18:51:03.098"));
-    } catch (Exception e) {
+    } catch (TimeRelatedException e) {
       thrown = true;
+      assertEquals(e.getMessage(), testMessage);
     }
     assertTrue(thrown);
   }

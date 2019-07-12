@@ -1,6 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.time;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.TimeRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
 import java.sql.Timestamp;
 import java.util.concurrent.TimeUnit;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TimeServiceImp implements TimeService {
 
-  private static TroopServiceImp troopService;
+  private TroopServiceImp troopService;
 
   private BuildingServiceImpl buildingService;
 
@@ -21,9 +22,9 @@ public class TimeServiceImp implements TimeService {
   }
 
   @Override
-  public Long timeDifference(Timestamp start, Timestamp finish) throws Exception {
+  public Long timeDifference(Timestamp start, Timestamp finish) {
     if (finish.getTime() < start.getTime()) {
-      throw new Exception("Start time is greater than finish time!");
+      throw new TimeRelatedException("Start time is later than finish time!");
     }
     long diff = finish.getTime() - start.getTime();
     return TimeUnit.MILLISECONDS.toMinutes(diff);
