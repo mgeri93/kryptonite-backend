@@ -39,6 +39,7 @@ public abstract class Resource {
   public Resource(int amount) {
     this.amount = amount;
     this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
+    this.amountPerMinute = 10;
   }
 
   public Resource() {
