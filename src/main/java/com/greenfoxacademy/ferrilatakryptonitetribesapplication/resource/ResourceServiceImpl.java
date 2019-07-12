@@ -39,7 +39,7 @@ public class ResourceServiceImpl implements ResourceService {
 
   @Override
   public void refresh(Resource resource) throws Exception {
-    Long difference = timeService.timeDiffeference(resource.getUpdatedAt(),
+    Long difference = timeService.timeDifference(resource.getUpdatedAt(),
         new Timestamp(System.currentTimeMillis()));
     if (difference > 0) {
       resource.update((int) (long) difference);

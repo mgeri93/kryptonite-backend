@@ -61,8 +61,10 @@ public class ResourceServiceImplTest {
 
   @Test
   public void refreshTest() throws Exception {
-    Gold gold = new Gold(100);
+    Resource gold = new Gold(100);
     gold.setUpdatedAt(new Timestamp(System.currentTimeMillis() - 600000L));
+    Mockito.when(timeService.timeDifference(resource.getUpdatedAt(),
+        new Timestamp(System.currentTimeMillis()))).thenReturn(10L);
     resourceService.refresh(gold);
     assertEquals(System.currentTimeMillis()/1000, gold.getUpdatedAt().getTime()/1000);
   }

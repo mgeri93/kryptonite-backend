@@ -47,7 +47,7 @@ public class TimeServiceImpTest {
     Long test = TimeUnit.MILLISECONDS.toMinutes(testStamp.getTime());
     try {
       Long myStamp =
-          timeServiceImp.timeDiffeference(
+          timeServiceImp.timeDifference(
               Timestamp.valueOf("2019-07-02 18:48:05.123"),
               Timestamp.valueOf("2019-07-02 18:57:03.098"));
       assertEquals(myStamp, test);
@@ -61,7 +61,7 @@ public class TimeServiceImpTest {
     Timestamp testStamp = Timestamp.valueOf("1970-01-01 01:08:57.975");
     try {
       Timestamp myStamp = new Timestamp(
-          timeServiceImp.timeDiffeference(
+          timeServiceImp.timeDifference(
               Timestamp.valueOf("2019-07-02 18:48:05.123"),
               Timestamp.valueOf("2019-07-02 18:51:03.098")));
       assertNotSame(myStamp, testStamp);
@@ -74,7 +74,7 @@ public class TimeServiceImpTest {
   public void timeLeftWithFinishEarlierThanStart() {
     boolean thrown = false;
     try {
-      timeServiceImp.timeDiffeference(
+      timeServiceImp.timeDifference(
           Timestamp.valueOf("2019-07-02 18:51:03.098"),
           Timestamp.valueOf("2018-07-02 18:51:03.098"));
     } catch (Exception e) {

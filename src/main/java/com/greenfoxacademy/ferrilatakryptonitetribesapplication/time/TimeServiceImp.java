@@ -21,7 +21,7 @@ public class TimeServiceImp implements TimeService {
   }
 
   @Override
-  public Long timeDiffeference(Timestamp start, Timestamp finish) throws Exception {
+  public Long timeDifference(Timestamp start, Timestamp finish) throws Exception {
     if (finish.getTime() < start.getTime()) {
       throw new Exception("Start time is greater than finish time!");
     }
