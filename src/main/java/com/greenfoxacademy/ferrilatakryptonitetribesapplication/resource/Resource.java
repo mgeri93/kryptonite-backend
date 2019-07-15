@@ -51,5 +51,4 @@ public abstract class Resource {
         + getAmount());
     setUpdatedAt(new Timestamp(System.currentTimeMillis()));
   }
-
 }

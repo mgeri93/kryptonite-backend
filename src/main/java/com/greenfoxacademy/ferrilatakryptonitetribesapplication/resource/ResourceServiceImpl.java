@@ -46,5 +46,4 @@ public class ResourceServiceImpl implements ResourceService {
       resourceRepository.save(resource);
     }
   }
-
 }

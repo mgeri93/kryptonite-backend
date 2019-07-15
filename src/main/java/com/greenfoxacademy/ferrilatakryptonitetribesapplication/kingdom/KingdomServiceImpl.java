@@ -41,5 +41,4 @@ public class KingdomServiceImpl implements KingdomService {
   public Kingdom findKingdomById(long id) {
     return kingdomRepository.findById(id).orElse(null);
   }
-
 }

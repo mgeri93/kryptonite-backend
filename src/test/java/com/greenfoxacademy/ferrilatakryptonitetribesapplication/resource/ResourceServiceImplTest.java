@@ -64,5 +64,4 @@ public class ResourceServiceImplTest {
     gold.update(10);
     assertEquals(System.currentTimeMillis() / 1000, gold.getUpdatedAt().getTime() / 1000);
   }
-
 }
