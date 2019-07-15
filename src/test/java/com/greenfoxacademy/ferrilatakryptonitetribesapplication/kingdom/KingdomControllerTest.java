@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -51,6 +52,9 @@ public class KingdomControllerTest {
   BuildingFactory buildingFactory;
 
   @MockBean
+  KingdomController kingdomController;
+
+  @MockBean
   ApplicationUserServiceImpl applicationUserService;
 
   @Test
@@ -64,11 +68,11 @@ public class KingdomControllerTest {
   @Test
   public void listBuildingsOfKingdom() throws Exception {
     Kingdom kingdom = new Kingdom();
-    Building academy = new Academy();
-    kingdom.getBuildings().add(academy);
-    Mockito.when(kingdomService.findKingdomById((long) 0)).thenReturn(kingdom);
+    applicationUserService.initKingdom(kingdom);
+    Mockito.when(kingdomService.getBuildingsOfKingdom(0))
+        .thenReturn(ResponseEntity.status(200).body(kingdom.getBuildings()));
     mockMvc
-        .perform(get("kingdom/buildings/0").contentType(contentType).content(""))
+        .perform(get("/kingdom/buildings/0").contentType(contentType).content(""))
         .andDo(print())
         .andExpect(status().isOk());
   }
