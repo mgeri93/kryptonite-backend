@@ -1,6 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +27,7 @@ public class Troop {
   private long attack;
   private long defense;
 
-  @JsonIgnore
+  @JsonBackReference
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "kingdom_id")
   private Kingdom kingdom;

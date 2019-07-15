@@ -1,8 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserRepository;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.UserRelatedException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/kingdom")
 public class KingdomController {
 
-  @Autowired
-  private IKingdomRepository kingdomRepository;
+  private ApplicationUserServiceImpl applicationUserService;
 
-  @Autowired
-  private ApplicationUserRepository applicationUserRepository;
+  public KingdomController(
+      ApplicationUserServiceImpl applicationUserService) {
+    this.applicationUserService = applicationUserService;
+  }
 
   @GetMapping("/")
   ResponseEntity<String> kingdom() {
@@ -26,14 +26,7 @@ public class KingdomController {
   }
 
   @GetMapping("/{id}")
-  KingdomDTO getKingdomById(@PathVariable(name = "id") long id) {
-    if (applicationUserRepository.existsById(id)) {
-
-      return new KingdomDTO(id, kingdomRepository.findById(id).getName(),
-          kingdomRepository.findById(id).getBuildings(), 
-          kingdomRepository.findById(id).getTroops(),
-          kingdomRepository.findById(id).getResourceList());
-    }
-    throw new UserRelatedException("No User with this id: " + id);
+  List<Kingdom> getKingdomById(@PathVariable(name = "id") long id) {
+    return applicationUserService.getKingdomListByUserId(id);
   }
 }
