@@ -75,4 +75,15 @@ public class KingdomControllerTest {
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
+
+  @Test
+  public void troopsWithKingdomWithoutTroops() throws Exception {
+    Kingdom kingdom = new Kingdom();
+    Mockito.when(kingdomService.findKingdomById((long) 0))
+        .thenThrow((new KingdomRelatedException("There is no troops in this kingdom")));
+    mockMvc
+        .perform(get("/kingdom/troops/0").contentType(contentType).content(""))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+  }
 }

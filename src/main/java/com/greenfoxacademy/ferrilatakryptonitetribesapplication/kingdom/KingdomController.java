@@ -29,7 +29,9 @@ public class KingdomController {
   ResponseEntity troopsOfKingdom(@PathVariable(name = "kingdomId") long kingdomId) {
     Kingdom kingdom = kingdomService.findKingdomById(kingdomId);
 
-    if (kingdom.getId() == kingdomId) {
+    if (kingdom.getTroops().isEmpty()) {
+      throw new KingdomRelatedException("There is no troops in this kingdom");
+    } else if (kingdom.getId() == kingdomId) {
       return ResponseEntity.status(200).body(kingdom.getTroops());
     }
     throw new KingdomRelatedException("Kingdom ID not found: " + kingdomId);
