@@ -38,7 +38,7 @@ public class KingdomServiceImpl implements KingdomService {
   }
 
   @Override
-  public Kingdom findKingdomById(Long id) {
+  public Kingdom findKingdomById(long id) {
     return kingdomRepository.findKingdomById(id);
   }
 }
