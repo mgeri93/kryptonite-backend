@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/kingdom")
 public class KingdomController {
 
-  private IKingdomRepository kingdomRepository;
+  private KingdomServiceImpl kingdomService;
 
-  public KingdomController(IKingdomRepository kingdomRepository) {
-    this.kingdomRepository = kingdomRepository;
+  public KingdomController(KingdomServiceImpl kingdomService) {
+    this.kingdomService = kingdomService;
   }
 
   @GetMapping("/kingdom")
@@ -28,10 +28,7 @@ public class KingdomController {
   }
 
   @GetMapping("/{id}/resources")
-  List<Resource> getKingdomResources(@PathVariable (name = "id") long id) {
-    if (kingdomRepository.existsById(id)) {
-      return kingdomRepository.findById(id).getResourceList();
-    }
-    throw new KingdomRelatedException("No Kingdom exists with this id");
+  List<Resource> getKingdomResources(@PathVariable(name = "id") long id) {
+    return kingdomService.listKingdomsResources(id);
   }
 }

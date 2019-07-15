@@ -3,6 +3,7 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserDTO;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserService;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import org.junit.Test;
@@ -40,15 +41,15 @@ public class KingdomControllerTest {
   @Autowired
   MockMvc mockMvc;
 
-  @Mock
+  @MockBean
   KingdomServiceImpl kingdomService;
 
   @Test
   public void givenKingdomURL_whenMockMVC_thenStatusOK_andReturnsWithKingdom() throws Exception {
     mockMvc.perform(get("/kingdom"))
         .andDo(print())
-        .andExpect(status().isForbidden())
-        .andExpect(content().string(""));
+        .andExpect(status().isOk())
+        .andExpect(content().string("kingdom"));
   }
 
   @Test
@@ -60,5 +61,16 @@ public class KingdomControllerTest {
         .content(""))
         .andDo(print())
         .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getResourcesOfKingdomWithNonExistentID() throws Exception {
+    when(kingdomService.listKingdomsResources(3))
+        .thenThrow(new KingdomRelatedException("No Kingdom exists with this id"));
+    mockMvc.perform(get("/kingdom/3/resources")
+        .contentType(contentType)
+        .content(""))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
   }
 }
