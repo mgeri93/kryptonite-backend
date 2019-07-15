@@ -32,7 +32,6 @@ public class KingdomController {
     if (kingdomRepository.existsById(id)) {
       return kingdomRepository.findById(id).getResourceList();
     }
-    throw new KingdomRelatedException("No kingdom exists with this id");
-
+    throw new KingdomRelatedException("No Kingdom exists with this id");
   }
 }
