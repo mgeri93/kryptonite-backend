@@ -1,9 +1,11 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.time.TimeServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,4 +38,23 @@ public class KingdomServiceImpl implements KingdomService {
   public boolean isValidKingdom(Kingdom kingdom) {
     return (kingdom.getName() != null && !kingdom.getName().equals(""));
   }
+
+  @Override
+  public boolean existById(long id) {
+    return kingdomRepository.existsById(id);
+  }
+
+  @Override
+  public Kingdom findKingdomById(long id) {
+    return kingdomRepository.findKingdomById(id);
+  }
+
+  public ResponseEntity getBuildingsOfKingdom(long kingdomId) {
+    if (existById(kingdomId)) {
+      Kingdom kingdom = findKingdomById(kingdomId);
+      return ResponseEntity.status(200).body(kingdom.getBuildings());
+    }
+    throw new KingdomRelatedException("Kingdom ID not found: " + kingdomId);
+  }
+
 }
