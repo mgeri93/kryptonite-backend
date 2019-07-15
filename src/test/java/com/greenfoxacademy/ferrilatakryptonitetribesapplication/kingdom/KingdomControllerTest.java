@@ -58,9 +58,9 @@ public class KingdomControllerTest {
 
   @Test
   public void getKingdomWithNonExistentIdPathvariable() throws Exception {
-    when(applicationUserService.getKingdomListByUserId(2))
+    when(applicationUserService.getKingdomListByUserId(3))
         .thenThrow(new KingdomRelatedException("No user with this ID"));
-    mockMvc.perform(get("/kingdom/2")
+    mockMvc.perform(get("/kingdom/3")
         .contentType(contentType)
         .content(""))
         .andDo(print())
