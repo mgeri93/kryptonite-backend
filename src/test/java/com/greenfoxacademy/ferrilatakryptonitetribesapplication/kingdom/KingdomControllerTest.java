@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
 import java.nio.charset.Charset;
@@ -60,5 +61,18 @@ public class KingdomControllerTest {
         .perform(get("/kingdom/troops/0").contentType(contentType).content(""))
         .andDo(print())
         .andExpect(status().isOk());
+  }
+
+  @Test
+  public void troopsWithKingdomNonExistentIdReturnException() throws Exception {
+    Kingdom kingdom = new Kingdom();
+    Troop troop = new Troop();
+    Mockito.when(troopService.createTroop(kingdom)).thenReturn(troop);
+    Mockito.when(kingdomService.findKingdomById((long) 1))
+        .thenThrow((new KingdomRelatedException("Kingdom ID not found: " + 1)));
+    mockMvc
+        .perform(get("/kingdom/troops/1").contentType(contentType).content(""))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
   }
 }
