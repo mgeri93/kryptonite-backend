@@ -79,6 +79,7 @@ public class KingdomControllerTest {
   @Test
   public void troopsWithKingdomWithoutTroops() throws Exception {
     Kingdom kingdom = new Kingdom();
+    kingdom.setId(0);
     Mockito.when(kingdomService.findKingdomById((long) 0))
         .thenThrow((new KingdomRelatedException("There is no troops in this kingdom")));
     mockMvc
