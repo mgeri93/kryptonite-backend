@@ -20,7 +20,7 @@ public class KingdomController {
     this.applicationUserService = applicationUserService;
   }
 
-  @GetMapping("/")
+  @GetMapping("")
   ResponseEntity<String> kingdom() {
     return new ResponseEntity<>("kingdom", HttpStatus.OK);
   }

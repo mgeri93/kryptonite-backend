@@ -41,8 +41,8 @@ public class KingdomControllerTest {
   public void givenKingdomURL_whenMockMVC_thenStatusOK_andReturnsWithKingdom() throws Exception {
     mockMvc.perform(get("/kingdom"))
         .andDo(print())
-        .andExpect(status().isForbidden())
-        .andExpect(content().string(""));
+        .andExpect(status().isOk())
+        .andExpect(content().string("kingdom"));
   }
 
   @Test
