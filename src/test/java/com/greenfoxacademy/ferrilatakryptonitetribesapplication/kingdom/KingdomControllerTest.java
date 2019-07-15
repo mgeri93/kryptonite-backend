@@ -2,7 +2,6 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
 import java.nio.charset.Charset;
 import org.junit.Test;
 import org.junit.runner.RunWith;
