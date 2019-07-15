@@ -52,7 +52,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     applicationUserRepository.save(applicationUser);
   }
 
-  public Optional<ApplicationUser> findUserById(long id) {
+  public ApplicationUser findUserById(long id) {
     return applicationUserRepository.findById(id);
   }
 
