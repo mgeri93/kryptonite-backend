@@ -39,9 +39,6 @@ public class KingdomControllerTest {
   @MockBean
   KingdomServiceImpl kingdomService;
 
-  @MockBean
-  TroopServiceImp troopService;
-
   @Test
   public void givenKingdomURL_whenMockMVC_thenStatusOK_andReturnsWithKingdom() throws Exception {
     mockMvc
@@ -55,7 +52,7 @@ public class KingdomControllerTest {
   public void troopsWithKingdomIdReturnsTroopsOfKingdom() throws Exception {
     Kingdom kingdom = new Kingdom();
     Troop troop = new Troop();
-    Mockito.when(troopService.createTroop(kingdom)).thenReturn(troop);
+    kingdom.getTroops().add(troop);
     Mockito.when(kingdomService.findKingdomById((long) 0)).thenReturn(kingdom);
     mockMvc
         .perform(get("/kingdom/troops/0").contentType(contentType).content(""))
@@ -67,8 +64,8 @@ public class KingdomControllerTest {
   public void troopsWithKingdomNonExistentIdReturnException() throws Exception {
     Kingdom kingdom = new Kingdom();
     Troop troop = new Troop();
-    Mockito.when(troopService.createTroop(kingdom)).thenReturn(troop);
-    Mockito.when(kingdomService.findKingdomById((long) 1))
+    kingdom.getTroops().add(troop);
+    Mockito.when(kingdomService.findKingdomById((long) 1)).thenReturn(kingdom)
         .thenThrow((new KingdomRelatedException("Kingdom ID not found: " + 1)));
     mockMvc
         .perform(get("/kingdom/troops/1").contentType(contentType).content(""))
@@ -79,8 +76,7 @@ public class KingdomControllerTest {
   @Test
   public void troopsWithKingdomWithoutTroops() throws Exception {
     Kingdom kingdom = new Kingdom();
-    kingdom.setId(0);
-    Mockito.when(kingdomService.findKingdomById((long) 0))
+    Mockito.when(kingdomService.findKingdomById((long) 0)).thenReturn(kingdom)
         .thenThrow((new KingdomRelatedException("There is no troops in this kingdom")));
     mockMvc
         .perform(get("/kingdom/troops/0").contentType(contentType).content(""))
