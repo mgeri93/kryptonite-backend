@@ -1,22 +1,20 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.time.TimeServiceImp;
+import java.sql.Timestamp;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.time.TimeServiceImp;
-import java.sql.Timestamp;
-import java.util.concurrent.TimeUnit;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -60,13 +58,11 @@ public class ResourceServiceImplTest {
   }
 
   @Test
-  public void refreshTest() throws Exception {
+  public void updateTest() {
     Resource gold = new Gold(100);
     gold.setUpdatedAt(new Timestamp(System.currentTimeMillis() - 600000L));
-    Mockito.when(timeService.timeDifference(resource.getUpdatedAt(),
-        new Timestamp(System.currentTimeMillis()))).thenReturn(10L);
-    resourceService.refresh(gold);
-    assertEquals(System.currentTimeMillis()/1000, gold.getUpdatedAt().getTime()/1000);
+    gold.update(10);
+    assertEquals(System.currentTimeMillis() / 1000, gold.getUpdatedAt().getTime() / 1000);
   }
 
 }
