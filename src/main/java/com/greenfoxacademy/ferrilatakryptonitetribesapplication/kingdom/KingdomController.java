@@ -22,7 +22,7 @@ public class KingdomController {
     this.kingdomService = kingdomService;
   }
 
-  @GetMapping("/kingdom")
+  @GetMapping("")
   ResponseEntity<String> kingdom() {
     return new ResponseEntity<>("kingdom", HttpStatus.OK);
   }
