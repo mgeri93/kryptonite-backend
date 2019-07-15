@@ -6,5 +6,5 @@ public interface IKingdomRepository extends CrudRepository<Kingdom, Long> {
 
   public boolean existsByName(String name);
 
-  Kingdom findById(long id);
+  Kingdom findKingdomById(long id);
 }

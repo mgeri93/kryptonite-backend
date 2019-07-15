@@ -43,7 +43,7 @@ public class KingdomServiceImpl implements KingdomService {
   @Override
   public List<Resource> listKingdomsResources(long id) {
     if (kingdomRepository.existsById(id)) {
-      return kingdomRepository.findById(id).getResourceList();
+      return kingdomRepository.findKingdomById(id).getResourceList();
     }
     throw new KingdomRelatedException("No Kingdom exists with this id");
   }
