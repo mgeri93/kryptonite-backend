@@ -24,6 +24,7 @@ public abstract class Resource {
   private long id;
   private int amount;
   private Timestamp updatedAt;
+  private int amountPerMinute;
 
   @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "kingdom_id")
@@ -33,13 +34,21 @@ public abstract class Resource {
     this.amount = amount;
     this.kingdom = kingdom;
     this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
+    this.amountPerMinute = 10;
   }
 
   public Resource(int amount) {
     this.amount = amount;
     this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
+    this.amountPerMinute = 10;
   }
 
   public Resource() {
+  }
+
+  public void update(int difference) {
+    setAmount(getAmountPerMinute() * difference
+        + getAmount());
+    setUpdatedAt(new Timestamp(System.currentTimeMillis()));
   }
 }
