@@ -1,7 +1,10 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.security;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.UserDetailsServiceImpl;
+
+//import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.LOGIN_URL;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.REGISTER_URL;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,13 +20,18 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
+  private RestAccessDeniedHandler accessDeniedHandler;
   private UserDetailsServiceImpl userDetailsServiceImpl;
   private BCryptPasswordEncoder passwordEncoder;
+  private RestAuthenticationEntryPoint unauthorizedHandler;
 
   public WebSecurity(UserDetailsServiceImpl userDetailsServiceImpl,
-      BCryptPasswordEncoder passwordEncoder) {
+      BCryptPasswordEncoder passwordEncoder, RestAccessDeniedHandler accessDeniedHandler,
+      RestAuthenticationEntryPoint unauthorizedHandler) {
     this.userDetailsServiceImpl = userDetailsServiceImpl;
     this.passwordEncoder = passwordEncoder;
+    this.accessDeniedHandler = accessDeniedHandler;
+    this.unauthorizedHandler = unauthorizedHandler;
   }
 
   @Override
@@ -32,13 +40,21 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         .and()
         .csrf()
         .disable()
-        .authorizeRequests()
-        .antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
-        .anyRequest()
-        .authenticated()
+        .exceptionHandling().accessDeniedHandler(accessDeniedHandler).authenticationEntryPoint(unauthorizedHandler)
         .and()
         .addFilter(new JwtAuthenticationFilter(authenticationManager()))
         .addFilter(new JwtAuthorizationFilter(authenticationManager()))
+        .authorizeRequests()
+
+        .antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
+        //.antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
+        .anyRequest()
+        .authenticated()
+        .and()
+        /*.formLogin()
+        .loginPage("/login.html")
+        .loginProcessingUrl("/api/login")*/
+
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.NEVER);
   }

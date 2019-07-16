@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ForbiddenException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.BuildingRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.NotFoundException;
@@ -9,6 +10,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.custom
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.UserRelatedException;
 import javax.servlet.http.HttpServletRequest;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
@@ -20,6 +22,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionHandlerAdvice {
 
   private ErrorResponseModel errorResponseModel;
+
+  @ExceptionHandler(ForbiddenException.class)
+  public ResponseEntity<ErrorResponseModel> handleAccessDeniedException(ForbiddenException e,
+      HttpServletRequest httpServletRequest) {
+    errorResponseModel = new ErrorResponseModel(FORBIDDEN,
+        e.getMessage(), httpServletRequest.getServletPath());
+    return createCustomErrorResponse(errorResponseModel);
+  }
 
   @ExceptionHandler(RuntimeException.class)
   public ResponseEntity<ErrorResponseModel> handleRunTimeException(RuntimeException e,
