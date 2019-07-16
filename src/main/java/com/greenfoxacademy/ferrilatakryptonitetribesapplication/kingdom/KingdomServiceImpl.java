@@ -51,7 +51,7 @@ public class KingdomServiceImpl implements KingdomService {
     if ((kingdom.getId() == kingdomId) && !(kingdom.getTroops().isEmpty())) {
       return kingdom.getTroops();
     } else if (kingdom.getId() == kingdomId && kingdom.getTroops().isEmpty()) {
-      throw new KingdomRelatedException("There is no troops in this kingdom");
+      throw new KingdomRelatedException("There are no troops in this kingdom");
     }
     throw new KingdomRelatedException("Kingdom ID not found: " + kingdomId);
   }
