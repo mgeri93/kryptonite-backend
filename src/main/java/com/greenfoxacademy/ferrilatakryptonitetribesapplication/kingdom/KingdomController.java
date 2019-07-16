@@ -1,6 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +27,7 @@ public class KingdomController {
   }
 
   @GetMapping("/troops/{kingdomId}")
-  ResponseEntity troopsOfKingdom(@PathVariable(name = "kingdomId") long kingdomId) {
-    Kingdom kingdom = kingdomService.findKingdomById(kingdomId);
-
-    if ((kingdom.getId() == kingdomId) && !(kingdom.getTroops().isEmpty())) {
-      return ResponseEntity.status(200).body(kingdom.getTroops());
-    } else if (kingdom.getId() == kingdomId && kingdom.getTroops().isEmpty()) {
-      throw new KingdomRelatedException("There is no troops in this kingdom");
-    }
-    throw new KingdomRelatedException("Kingdom ID not found: " + kingdomId);
+  List<Troop> getTroopsOfKingdom(@PathVariable(name = "kingdomId") long kingdomId) {
+    return kingdomService.getTroopsOfKingdomById(kingdomId);
   }
 }
