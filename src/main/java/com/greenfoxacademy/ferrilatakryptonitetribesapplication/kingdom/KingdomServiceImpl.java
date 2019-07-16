@@ -40,13 +40,13 @@ public class KingdomServiceImpl implements KingdomService {
   }
 
   @Override
-  public boolean existById(long id) {
-    return kingdomRepository.existsById(id);
+  public Kingdom findKingdomById(long id) {
+    return kingdomRepository.findById(id).orElse(null);
   }
 
   @Override
-  public Kingdom findKingdomById(long id) {
-    return kingdomRepository.findKingdomById(id);
+  public boolean existById(long id) {
+    return kingdomRepository.existsById(id);
   }
 
   public ResponseEntity getBuildingsOfKingdom(long kingdomId) {
@@ -58,5 +58,4 @@ public class KingdomServiceImpl implements KingdomService {
     }
     throw new KingdomRelatedException("Kingdom ID not found: " + kingdomId);
   }
-
 }

@@ -1,6 +1,9 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.KingdomServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.time.TimeServiceImp;
+import java.sql.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,12 +12,14 @@ public class ResourceServiceImpl implements ResourceService {
 
   private KingdomServiceImpl kingdomService;
   private IResourceRepository resourceRepository;
+  private TimeServiceImp timeService;
 
   @Autowired
   public ResourceServiceImpl(KingdomServiceImpl kingdomService,
-      IResourceRepository resourceRepository) {
+      IResourceRepository resourceRepository, TimeServiceImp timeService) {
     this.kingdomService = kingdomService;
     this.resourceRepository = resourceRepository;
+    this.timeService = timeService;
   }
 
   @Override
@@ -33,4 +38,15 @@ public class ResourceServiceImpl implements ResourceService {
     resourceRepository.save(resource);
   }
 
+  @Override
+  public void refresh(Resource resource) {
+    Long difference = timeService.timeDifference(resource.getUpdatedAt(),
+        new Timestamp(System.currentTimeMillis()));
+    if (difference > 0) {
+      resource.update((int) (long) difference);
+      resourceRepository.save(resource);
+    } else {
+      throw new ResourceRelatedException("The start time cannot be higher than the finish time");
+    }
+  }
 }
