@@ -19,7 +19,7 @@ public class KingdomController {
     this.kingdomService = kingdomService;
   }
 
-  @GetMapping("/")
+  @GetMapping({"/", ""})
   ResponseEntity<String> kingdom() {
     resourceService.refresh(kingdomService.findKingdomById(1).getResourceList().get(0));
     return new ResponseEntity<>("kingdom", HttpStatus.OK);

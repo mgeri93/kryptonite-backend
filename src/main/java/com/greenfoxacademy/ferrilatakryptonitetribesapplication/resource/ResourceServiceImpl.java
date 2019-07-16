@@ -45,7 +45,8 @@ public class ResourceServiceImpl implements ResourceService {
     if (difference > 0) {
       resource.update((int) (long) difference);
       resourceRepository.save(resource);
+    } else {
+      throw new ResourceRelatedException("The start time cannot be higher than the finish time");
     }
-    throw new ResourceRelatedException("The start time cannot be higher than the finish time");
   }
 }
