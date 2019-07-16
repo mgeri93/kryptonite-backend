@@ -11,5 +11,8 @@ public interface KingdomService {
 
   Kingdom findKingdomById(long id);
 
+<<<<<<< HEAD
   List<Troop> getTroopsOfKingdomById(long id);
+=======
+>>>>>>> development
 }
