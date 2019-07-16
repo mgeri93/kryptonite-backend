@@ -2,6 +2,7 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import org.junit.Test;
@@ -37,9 +38,12 @@ public class KingdomControllerTest {
   @MockBean
   ApplicationUserServiceImpl applicationUserService;
 
+  @MockBean
+  ResourceServiceImpl resourceService;
+
   @Test
   public void givenKingdomURL_whenMockMVC_thenStatusOK_andReturnsWithKingdom() throws Exception {
-    mockMvc.perform(get("/kingdom"))
+    mockMvc.perform(get("/kingdom/"))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().string("kingdom"));

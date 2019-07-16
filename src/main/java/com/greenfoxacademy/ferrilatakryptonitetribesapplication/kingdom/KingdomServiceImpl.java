@@ -36,4 +36,9 @@ public class KingdomServiceImpl implements KingdomService {
   public boolean isValidKingdom(Kingdom kingdom) {
     return (kingdom.getName() != null && !kingdom.getName().equals(""));
   }
+
+  @Override
+  public Kingdom findKingdomById(long id) {
+    return kingdomRepository.findById(id).orElse(null);
+  }
 }

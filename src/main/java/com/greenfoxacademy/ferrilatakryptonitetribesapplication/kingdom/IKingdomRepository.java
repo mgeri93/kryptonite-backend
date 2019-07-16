@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface IKingdomRepository extends CrudRepository<Kingdom, Long> {
 
-  boolean existsByName(String name);
+  public boolean existsByName(String name);
 
 }

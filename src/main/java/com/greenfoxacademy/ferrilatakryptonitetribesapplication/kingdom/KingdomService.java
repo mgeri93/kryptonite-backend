@@ -6,4 +6,6 @@ public interface KingdomService {
 
   boolean isValidKingdom(Kingdom kingdom);
 
+  Kingdom findKingdomById(long id);
+
 }
