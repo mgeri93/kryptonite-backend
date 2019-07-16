@@ -50,9 +50,11 @@ public class KingdomServiceImpl implements KingdomService {
   }
 
   public ResponseEntity getBuildingsOfKingdom(long kingdomId) {
-    if (existById(kingdomId)) {
-      Kingdom kingdom = findKingdomById(kingdomId);
+    Kingdom kingdom = findKingdomById(kingdomId);
+    if (existById(kingdomId) && !kingdom.getBuildings().isEmpty()) {
       return ResponseEntity.status(200).body(kingdom.getBuildings());
+    } else if (existById(kingdomId) && kingdom.getBuildings().isEmpty()) {
+      throw new KingdomRelatedException("Oops, this kingdom has no buildings. What have you done?");
     }
     throw new KingdomRelatedException("Kingdom ID not found: " + kingdomId);
   }

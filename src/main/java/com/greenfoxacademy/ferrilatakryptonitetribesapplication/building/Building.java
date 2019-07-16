@@ -1,6 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.building;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -28,6 +28,6 @@ public abstract class Building {
 
   @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "kingdom_id", referencedColumnName = "id")
-  @JsonIgnore
+  @JsonBackReference
   private Kingdom kingdom;
 }
