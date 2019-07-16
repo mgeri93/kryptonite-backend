@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 interface TimeService {
 
-  Long timeDifference(Timestamp start, Timestamp finish) throws Exception;
+  Long timeDifference(Timestamp start, Timestamp finish);
 
   long getCurrentTime();
 

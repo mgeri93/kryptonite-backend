@@ -8,6 +8,6 @@ public interface ResourceService {
 
   void saveResource(Resource resource);
 
-  void refresh(Resource resource) throws Exception;
+  void refresh(Resource resource);
 
 }

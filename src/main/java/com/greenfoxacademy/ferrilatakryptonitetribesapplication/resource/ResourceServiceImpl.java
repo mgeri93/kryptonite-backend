@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.KingdomServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.time.TimeServiceImp;
 import java.sql.Timestamp;
@@ -45,5 +46,6 @@ public class ResourceServiceImpl implements ResourceService {
       resource.update((int) (long) difference);
       resourceRepository.save(resource);
     }
+    throw new ResourceRelatedException("The start time cannot be higher than the finish time");
   }
 }
