@@ -1,12 +1,9 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import java.util.List;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.time.TimeServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -46,8 +43,10 @@ public class KingdomServiceImpl implements KingdomService {
     Kingdom kingdom = findKingdomById(kingdomId);
 
     if (kingdomRepository.existsById(kingdomId) && !(kingdom.getTroops().isEmpty())) {
+      resourceService.refresh(findKingdomById(kingdomId).getResourceList().get(0));
       return kingdom.getTroops();
     } else if (kingdomRepository.existsById(kingdomId) && kingdom.getTroops().isEmpty()) {
+      resourceService.refresh(findKingdomById(kingdomId).getResourceList().get(0));
       throw new KingdomRelatedException("There are no troops in this kingdom");
     } else {
       throw new KingdomRelatedException("Kingdom ID not found: " + kingdomId);
@@ -65,6 +64,7 @@ public class KingdomServiceImpl implements KingdomService {
       resourceService.refresh(kingdom.getResourceList().get(0));
       return ResponseEntity.status(200).body(kingdom.getBuildings());
     } else if (existById(kingdomId) && kingdom.getBuildings().isEmpty()) {
+      resourceService.refresh(kingdom.getResourceList().get(0));
       throw new KingdomRelatedException("Oops, this kingdom has no buildings. What have you done?");
     }
     throw new KingdomRelatedException("Kingdom ID not found: " + kingdomId);
