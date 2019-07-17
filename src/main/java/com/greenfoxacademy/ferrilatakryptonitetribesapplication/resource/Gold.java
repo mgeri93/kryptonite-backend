@@ -19,5 +19,6 @@ public class Gold extends Resource {
   }
 
   public Gold() {
+    this.setAmountPerMinute(10);
   }
 }

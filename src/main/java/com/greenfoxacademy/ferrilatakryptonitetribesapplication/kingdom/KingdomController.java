@@ -1,7 +1,10 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,18 +17,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class KingdomController {
 
   private KingdomServiceImpl kingdomService;
+  private  ResourceServiceImpl resourceService;
 
-  public KingdomController(KingdomServiceImpl kingdomService) {
+  @Autowired
+  public KingdomController(ResourceServiceImpl resourceService, KingdomServiceImpl kingdomService) {
+    this.resourceService = resourceService;
     this.kingdomService = kingdomService;
   }
 
-  @GetMapping("")
+  @GetMapping({"/", ""})
   ResponseEntity<String> kingdom() {
     return new ResponseEntity<>("kingdom", HttpStatus.OK);
   }
 
+
   @GetMapping("/{id}/resources")
   List<Resource> getKingdomResources(@PathVariable(name = "id") long id) {
     return kingdomService.listKingdomsResources(id);
+  }
+
+  @GetMapping("/troops/{kingdomId}")
+  List<Troop> getTroopsOfKingdom(@PathVariable(name = "kingdomId") long kingdomId) {
+    return kingdomService.getTroopsOfKingdomById(kingdomId);
+
   }
 }
