@@ -34,17 +34,17 @@ public class KingdomController {
     return new ResponseEntity<>("kingdom", HttpStatus.OK);
   }
 
-  @GetMapping("/{id}/resources")
-  List<Resource> getKingdomResources(@PathVariable(name = "id") long id) {
-    return kingdomService.listKingdomsResources(id);
-  }
-
   @GetMapping("/{id}")
   List<Kingdom> getKingdomById(@PathVariable(name = "id") long id) {
     return applicationUserService.getKingdomListByUserId(id);
   }
 
-  @GetMapping("/troops/{kingdomId}")
+  @GetMapping("/{id}/resources")
+  List<Resource> getKingdomResources(@PathVariable(name = "id") long id) {
+    return kingdomService.listKingdomsResources(id);
+  }
+  
+  @GetMapping("/{kingdomId}/troops")
   List<Troop> getTroopsOfKingdom(@PathVariable(name = "kingdomId") long kingdomId) {
     return kingdomService.getTroopsOfKingdomById(kingdomId);
 

@@ -89,7 +89,7 @@ public class KingdomControllerTest {
     Troop troop = new Troop();
     kingdom.getTroops().add(troop);
     Mockito.when(kingdomService.getTroopsOfKingdomById(0)).thenReturn(kingdom.getTroops());
-    mockMvc.perform(get("/kingdom/troops/0").contentType(contentType).content("")
+    mockMvc.perform(get("/kingdom/0/troops").contentType(contentType).content("")
         .contentType(contentType)
         .content(""))
         .andDo(print())
@@ -125,7 +125,7 @@ public class KingdomControllerTest {
     kingdom.getTroops().add(troop);
     Mockito.when(kingdomService.getTroopsOfKingdomById(1))
         .thenThrow((new KingdomRelatedException("Kingdom ID not found: " + 1)));
-    mockMvc.perform(get("/kingdom/troops/1").contentType(contentType).content(""))
+    mockMvc.perform(get("/kingdom/1/troops").contentType(contentType).content(""))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -136,7 +136,7 @@ public class KingdomControllerTest {
     kingdom.setId(1);
     Mockito.when(kingdomService.getTroopsOfKingdomById(1))
         .thenThrow((new KingdomRelatedException("There are no troops in this kingdom")));
-    mockMvc.perform(get("/kingdom/troops/1").contentType(contentType).content(""))
+    mockMvc.perform(get("/kingdom/1/troops").contentType(contentType).content(""))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
