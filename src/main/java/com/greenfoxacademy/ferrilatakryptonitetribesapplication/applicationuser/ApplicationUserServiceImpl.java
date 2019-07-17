@@ -8,6 +8,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.custom
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.JwtAuthenticationFilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -127,7 +128,8 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
   @Override
   public boolean validCredentials(String username, String password) {
     if (applicationUserRepository.existsByUsername(username)) {
-      return applicationUserRepository.findByUsername(username).getPassword().equals(password);
+
+      return encoder.matches(password, applicationUserRepository.findByUsername(username).getPassword());
     } else {
       return false;
     }

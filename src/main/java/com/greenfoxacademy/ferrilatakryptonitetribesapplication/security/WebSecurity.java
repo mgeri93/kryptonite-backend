@@ -2,7 +2,6 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.security;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.UserDetailsServiceImpl;
 
-//import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.LOGIN_URL;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.LOGIN_URL;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.REGISTER_URL;
 
@@ -37,19 +36,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.cors()
-        .and()
-        .csrf().disable()
-        .authorizeRequests()
-
+    http.cors().and().csrf().disable().authorizeRequests()
         .antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
         .antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
         .anyRequest()
-          .authenticated()
+        .authenticated()
         .and()
         .exceptionHandling()
-          .authenticationEntryPoint(unauthorizedHandler)
-          .accessDeniedHandler(accessDeniedHandler)
+        .authenticationEntryPoint(unauthorizedHandler)
+        .accessDeniedHandler(accessDeniedHandler)
         .and()
         .addFilter(new JwtAuthenticationFilter(authenticationManager()))
         .addFilter(new JwtAuthorizationFilter(authenticationManager()))
@@ -57,10 +52,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         .anyRequest()
         .authenticated()
         .and()
-        /*.formLogin()
-        .loginPage("/login.html")
-        .loginProcessingUrl("/api/login")*/
-
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.NEVER);
   }
