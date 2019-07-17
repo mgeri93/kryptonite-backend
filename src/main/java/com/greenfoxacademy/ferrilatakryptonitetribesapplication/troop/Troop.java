@@ -28,9 +28,10 @@ public class Troop {
   private long attack;
   private long defense;
 
+
+  @JsonBackReference
   @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "kingdom_id")
-  @JsonBackReference
   private Kingdom kingdom;
 
 
