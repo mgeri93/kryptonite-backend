@@ -3,6 +3,7 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.security;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.UserDetailsServiceImpl;
 
 //import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.LOGIN_URL;
+import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.LOGIN_URL;
 import static com.greenfoxacademy.ferrilatakryptonitetribesapplication.security.SecurityConstants.REGISTER_URL;
 
 import org.springframework.context.annotation.Bean;
@@ -38,16 +39,21 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.cors()
         .and()
-        .csrf()
-        .disable()
-        .exceptionHandling().accessDeniedHandler(accessDeniedHandler).authenticationEntryPoint(unauthorizedHandler)
+        .csrf().disable()
+        .authorizeRequests()
+
+        .antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
+        .antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
+        .anyRequest()
+          .authenticated()
+        .and()
+        .exceptionHandling()
+          .authenticationEntryPoint(unauthorizedHandler)
+          .accessDeniedHandler(accessDeniedHandler)
         .and()
         .addFilter(new JwtAuthenticationFilter(authenticationManager()))
         .addFilter(new JwtAuthorizationFilter(authenticationManager()))
         .authorizeRequests()
-
-        .antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
-        //.antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
         .anyRequest()
         .authenticated()
         .and()
