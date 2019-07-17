@@ -1,6 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
@@ -20,13 +21,15 @@ public class KingdomController {
   private ResourceServiceImpl resourceService;
   private KingdomServiceImpl kingdomService;
   private ApplicationUserServiceImpl applicationUserService;
+  private PurchaseServiceImpl purchaseService;
 
   @Autowired
   public KingdomController(ResourceServiceImpl resourceService, KingdomServiceImpl kingdomService,
-      ApplicationUserServiceImpl applicationUserService) {
+      ApplicationUserServiceImpl applicationUserService, PurchaseServiceImpl purchaseService) {
     this.resourceService = resourceService;
     this.kingdomService = kingdomService;
     this.applicationUserService = applicationUserService;
+    this.purchaseService = purchaseService;
   }
 
   @GetMapping({"/", ""})
@@ -47,6 +50,5 @@ public class KingdomController {
   @GetMapping("/{kingdomId}/troops")
   List<Troop> getTroopsOfKingdom(@PathVariable(name = "kingdomId") long kingdomId) {
     return kingdomService.getTroopsOfKingdomById(kingdomId);
-
   }
 }

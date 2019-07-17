@@ -7,4 +7,5 @@ public interface BuildingService {
   Building saveBuilding(Building building);
 
   Building findBuildingById(long id);
+
 }

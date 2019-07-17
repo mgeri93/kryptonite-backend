@@ -37,7 +37,6 @@ public class KingdomControllerTest {
           MediaType.APPLICATION_JSON.getSubtype(),
           Charset.forName("utf8"));
 
-
   @Autowired
   MockMvc mockMvc;
 
