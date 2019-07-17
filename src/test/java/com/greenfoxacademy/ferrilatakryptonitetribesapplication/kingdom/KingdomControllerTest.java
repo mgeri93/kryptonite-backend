@@ -1,13 +1,17 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,6 +43,12 @@ public class KingdomControllerTest {
   MockMvc mockMvc;
 
   @MockBean
+  ApplicationUserServiceImpl applicationUserService;
+
+  @MockBean
+  ResourceServiceImpl resourceService;
+
+  @MockBean
   KingdomServiceImpl kingdomService;
 
   @Test
@@ -51,6 +61,17 @@ public class KingdomControllerTest {
   }
 
   @Test
+  public void getKingdomWithPathvariable() throws Exception {
+    when(applicationUserService.getKingdomListByUserId(1))
+        .thenReturn(new ArrayList<>());
+    mockMvc.perform(get("/kingdom/1")
+        .contentType(contentType)
+        .content(""))
+        .andDo(print())
+        .andExpect(status().isOk());
+  }
+
+  @Test
   public void troopsWithKingdomIdReturnsTroopsOfKingdom() throws Exception {
     Kingdom kingdom = new Kingdom();
     Troop troop = new Troop();
@@ -60,6 +81,17 @@ public class KingdomControllerTest {
         .perform(get("/kingdom/troops/0").contentType(contentType).content(""))
         .andDo(print())
         .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getKingdomWithNonExistentIdPathvariable() throws Exception {
+    when(applicationUserService.getKingdomListByUserId(3))
+        .thenThrow(new KingdomRelatedException("No user with this ID"));
+    mockMvc.perform(get("/kingdom/3")
+        .contentType(contentType)
+        .content(""))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
   }
 
   @Test

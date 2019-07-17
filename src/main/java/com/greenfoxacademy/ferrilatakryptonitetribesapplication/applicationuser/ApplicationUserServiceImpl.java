@@ -10,7 +10,6 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,7 +51,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     applicationUserRepository.save(applicationUser);
   }
 
-  public Optional<ApplicationUser> findUserById(long id) {
+  public ApplicationUser findUserById(long id) {
     return applicationUserRepository.findById(id);
   }
 
@@ -72,9 +71,8 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
       kingdom.setApplicationUser(applicationUserToBeSaved);
       kingdomRepository.save(kingdom);
       applicationUserRepository.save(applicationUserToBeSaved);
-      return ResponseEntity.status(200).body(new UserWithKingdomDTO(
-                  applicationUserToBeSaved.getId(), applicationUserToBeSaved.getUsername(),
-              kingdom.getId()));
+      return ResponseEntity.status(200).body(new UserWithKingdomDTO(applicationUserToBeSaved
+          .getId(), applicationUserToBeSaved.getUsername(), kingdom.getId()));
     }
   }
 
@@ -158,5 +156,13 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     } else {
       throw new UserRelatedException("Missing parameter(s): password");
     }
+  }
+
+  @Override
+  public List<Kingdom> getKingdomListByUserId(long id) {
+    if (applicationUserRepository.existsById(id)) {
+      return applicationUserRepository.findById(id).getKingdoms();
+    }
+    throw new UserRelatedException("No User with this id: " + id);
   }
 }

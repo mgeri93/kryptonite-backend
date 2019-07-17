@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUser;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
@@ -34,6 +35,7 @@ public class Kingdom {
       mappedBy = "kingdom",fetch = FetchType.EAGER)
   private List<Resource> resourceList;
 
+  @JsonIgnore
   @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
   private ApplicationUser applicationUser;

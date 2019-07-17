@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import java.util.List;
@@ -17,11 +18,14 @@ public class KingdomController {
 
   private ResourceServiceImpl resourceService;
   private KingdomServiceImpl kingdomService;
+  private ApplicationUserServiceImpl applicationUserService;
 
   @Autowired
-  public KingdomController(ResourceServiceImpl resourceService, KingdomServiceImpl kingdomService) {
+  public KingdomController(ResourceServiceImpl resourceService, KingdomServiceImpl kingdomService,
+      ApplicationUserServiceImpl applicationUserService) {
     this.resourceService = resourceService;
     this.kingdomService = kingdomService;
+    this.applicationUserService = applicationUserService;
   }
 
   @GetMapping({"/", ""})
@@ -29,12 +33,17 @@ public class KingdomController {
     return new ResponseEntity<>("kingdom", HttpStatus.OK);
   }
 
-  @GetMapping("/buildings/{kingdomId}")
+  @GetMapping("/{id}")
+  List<Kingdom> getKingdomById(@PathVariable(name = "id") long id) {
+    return applicationUserService.getKingdomListByUserId(id);
+  }
+
+  @GetMapping("/{kingdomId}/buildings")
   ResponseEntity buildingsOfKingdom(@PathVariable(name = "kingdomId") long kingdomId) {
     return kingdomService.getBuildingsOfKingdom(kingdomId);
   }
 
-  @GetMapping("/troops/{kingdomId}")
+  @GetMapping("/{kingdomId}/troops")
   List<Troop> getTroopsOfKingdom(@PathVariable(name = "kingdomId") long kingdomId) {
     return kingdomService.getTroopsOfKingdomById(kingdomId);
   }
