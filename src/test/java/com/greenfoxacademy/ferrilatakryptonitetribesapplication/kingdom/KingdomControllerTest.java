@@ -65,6 +65,7 @@ public class KingdomControllerTest {
     mockMvc.perform(get("/kingdom/1")
         .contentType(contentType)
         .content(""))
+        .andDo(print())
         .andExpect(status().isOk());
   }
 
@@ -87,6 +88,7 @@ public class KingdomControllerTest {
     mockMvc.perform(get("/kingdom/3")
         .contentType(contentType)
         .content(""))
+        .andDo(print())
         .andExpect(status().isBadRequest());
   }
 
