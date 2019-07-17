@@ -9,7 +9,6 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdom
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
