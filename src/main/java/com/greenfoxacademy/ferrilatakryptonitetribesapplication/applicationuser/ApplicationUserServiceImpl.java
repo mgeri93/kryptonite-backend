@@ -71,7 +71,6 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
               applicationUserToBeSaved.getPassword())));
       kingdom.setApplicationUser(applicationUserToBeSaved);
       kingdomRepository.save(kingdom);
-      applicationUserToBeSaved.setKingdoms(Arrays.asList(kingdom));
       applicationUserRepository.save(applicationUserToBeSaved);
       return ResponseEntity.status(200).body(new UserWithKingdomDTO(applicationUserToBeSaved
           .getId(), applicationUserToBeSaved.getUsername(), kingdom.getId()));
