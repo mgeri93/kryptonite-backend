@@ -52,6 +52,7 @@ public class KingdomServiceImpl implements KingdomService {
   public ResponseEntity getBuildingsOfKingdom(long kingdomId) {
     Kingdom kingdom = findKingdomById(kingdomId);
     if (existById(kingdomId) && !kingdom.getBuildings().isEmpty()) {
+      resourceService.refresh(kingdom.getResourceList().get(0));
       return ResponseEntity.status(200).body(kingdom.getBuildings());
     } else if (existById(kingdomId) && kingdom.getBuildings().isEmpty()) {
       throw new KingdomRelatedException("Oops, this kingdom has no buildings. What have you done?");
