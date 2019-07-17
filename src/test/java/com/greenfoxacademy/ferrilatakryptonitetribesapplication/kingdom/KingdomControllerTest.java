@@ -1,5 +1,8 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
+import java.nio.charset.Charset;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
@@ -13,6 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -43,10 +49,48 @@ public class KingdomControllerTest {
 
   @Test
   public void givenKingdomURL_whenMockMVC_thenStatusOK_andReturnsWithKingdom() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/kingdom/"))
+    mockMvc
+        .perform(get("/kingdom/"))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().string("kingdom"));
+  }
+
+  @Test
+  public void troopsWithKingdomIdReturnsTroopsOfKingdom() throws Exception {
+    Kingdom kingdom = new Kingdom();
+    Troop troop = new Troop();
+    kingdom.getTroops().add(troop);
+    Mockito.when(kingdomService.getTroopsOfKingdomById(0)).thenReturn(kingdom.getTroops());
+    mockMvc
+        .perform(get("/kingdom/troops/0").contentType(contentType).content(""))
+        .andDo(print())
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void troopsWithKingdomNonExistentIdReturnException() throws Exception {
+    Kingdom kingdom = new Kingdom();
+    Troop troop = new Troop();
+    kingdom.getTroops().add(troop);
+    Mockito.when(kingdomService.getTroopsOfKingdomById(1))
+        .thenThrow((new KingdomRelatedException("Kingdom ID not found: " + 1)));
+    mockMvc
+        .perform(get("/kingdom/troops/1").contentType(contentType).content(""))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void troopsWithKingdomWithoutTroops() throws Exception {
+    Kingdom kingdom = new Kingdom();
+    kingdom.setId(1);
+    Mockito.when(kingdomService.getTroopsOfKingdomById(1))
+        .thenThrow((new KingdomRelatedException("There are no troops in this kingdom")));
+    mockMvc
+        .perform(get("/kingdom/troops/1").contentType(contentType).content(""))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
   }
 
   @Test
