@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -26,7 +27,8 @@ public abstract class Resource {
   private Timestamp updatedAt;
   private int amountPerMinute;
 
-  @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+  @JsonBackReference
+  @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
   @JoinColumn(name = "kingdom_id")
   private Kingdom kingdom;
 
