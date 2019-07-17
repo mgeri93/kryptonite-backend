@@ -78,7 +78,7 @@ public class KingdomControllerTest {
     kingdom.getTroops().add(troop);
     Mockito.when(kingdomService.getTroopsOfKingdomById(0)).thenReturn(kingdom.getTroops());
     mockMvc
-        .perform(get("/kingdom/troops/0").contentType(contentType).content(""))
+        .perform(get("/kingdom/0/troops").contentType(contentType).content(""))
         .andDo(print())
         .andExpect(status().isOk());
   }
@@ -102,7 +102,7 @@ public class KingdomControllerTest {
     Mockito.when(kingdomService.getTroopsOfKingdomById(1))
         .thenThrow((new KingdomRelatedException("Kingdom ID not found: " + 1)));
     mockMvc
-        .perform(get("/kingdom/troops/1").contentType(contentType).content(""))
+        .perform(get("/kingdom/1/troops").contentType(contentType).content(""))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -114,7 +114,7 @@ public class KingdomControllerTest {
     Mockito.when(kingdomService.getTroopsOfKingdomById(1))
         .thenThrow((new KingdomRelatedException("There are no troops in this kingdom")));
     mockMvc
-        .perform(get("/kingdom/troops/1").contentType(contentType).content(""))
+        .perform(get("/kingdom/1/troops").contentType(contentType).content(""))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -127,7 +127,7 @@ public class KingdomControllerTest {
     Mockito.when(kingdomService.getBuildingsOfKingdom(0))
         .thenReturn(ResponseEntity.status(200).body(kingdom.getBuildings()));
     mockMvc
-        .perform(get("/kingdom/buildings/0").contentType(contentType).content(""))
+        .perform(get("/kingdom/0/buildings").contentType(contentType).content(""))
         .andDo(print())
         .andExpect(status().isOk());
   }
@@ -140,7 +140,7 @@ public class KingdomControllerTest {
     Mockito.when(kingdomService.getBuildingsOfKingdom(99))
         .thenThrow((new KingdomRelatedException("Kingdom ID not found:" + 99)));
     mockMvc
-        .perform(get("/kingdom/buildings/99").contentType(contentType).content(""))
+        .perform(get("/kingdom/99/buildings").contentType(contentType).content(""))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -152,7 +152,7 @@ public class KingdomControllerTest {
         .thenThrow((new KingdomRelatedException(
             "Oops, this kingdom has no buildings. What have you done?")));
     mockMvc
-        .perform(get("/kingdom/buildings/0").contentType(contentType).content(""))
+        .perform(get("/kingdom/0/buildings").contentType(contentType).content(""))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
