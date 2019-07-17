@@ -51,6 +51,7 @@ public class KingdomControllerTest {
   @MockBean
   KingdomServiceImpl kingdomService;
 
+
   @Test
   public void givenKingdomURL_whenMockMVC_thenStatusOK_andReturnsWithKingdom() throws Exception {
     mockMvc
@@ -58,6 +59,18 @@ public class KingdomControllerTest {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().string("kingdom"));
+  }
+
+  @Test
+
+  public void getResourcesOfKingdomWithExistingId() throws Exception {
+    when(kingdomService.listKingdomsResources(1))
+        .thenReturn(new ArrayList<>());
+    mockMvc.perform(get("/kingdom/1/resources")
+        .contentType(contentType)
+        .content(""))
+        .andDo(print())
+        .andExpect(status().isOk());
   }
 
   @Test
@@ -77,10 +90,22 @@ public class KingdomControllerTest {
     Troop troop = new Troop();
     kingdom.getTroops().add(troop);
     Mockito.when(kingdomService.getTroopsOfKingdomById(0)).thenReturn(kingdom.getTroops());
-    mockMvc
-        .perform(get("/kingdom/0/troops").contentType(contentType).content(""))
+    mockMvc.perform(get("/kingdom/0/troops").contentType(contentType).content("")
+        .contentType(contentType)
+        .content(""))
         .andDo(print())
         .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getResourcesOfKingdomWithNonExistentID() throws Exception {
+    when(kingdomService.listKingdomsResources(3))
+        .thenThrow(new KingdomRelatedException("No Kingdom exists with this id"));
+    mockMvc.perform(get("/kingdom/3/resources")
+        .contentType(contentType)
+        .content(""))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
   }
 
   @Test
@@ -101,8 +126,7 @@ public class KingdomControllerTest {
     kingdom.getTroops().add(troop);
     Mockito.when(kingdomService.getTroopsOfKingdomById(1))
         .thenThrow((new KingdomRelatedException("Kingdom ID not found: " + 1)));
-    mockMvc
-        .perform(get("/kingdom/1/troops").contentType(contentType).content(""))
+    mockMvc.perform(get("/kingdom/1/troops").contentType(contentType).content(""))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }

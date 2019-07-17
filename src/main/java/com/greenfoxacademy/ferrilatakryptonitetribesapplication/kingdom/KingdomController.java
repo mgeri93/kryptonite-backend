@@ -1,6 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import java.util.List;
@@ -46,5 +47,10 @@ public class KingdomController {
   @GetMapping("/{kingdomId}/troops")
   List<Troop> getTroopsOfKingdom(@PathVariable(name = "kingdomId") long kingdomId) {
     return kingdomService.getTroopsOfKingdomById(kingdomId);
+  }
+
+  @GetMapping("/{id}/resources")
+  List<Resource> getKingdomResources(@PathVariable(name = "id") long id) {
+    return kingdomService.listKingdomsResources(id);
   }
 }
