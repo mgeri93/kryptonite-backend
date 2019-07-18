@@ -39,14 +39,18 @@ public class KingdomController {
     return applicationUserService.getKingdomListByUserId(id);
   }
 
-  @GetMapping("/{id}/resources")
-  List<Resource> getKingdomResources(@PathVariable(name = "id") long id) {
-    return kingdomService.listKingdomsResources(id);
+  @GetMapping("/{kingdomId}/buildings")
+  ResponseEntity buildingsOfKingdom(@PathVariable(name = "kingdomId") long kingdomId) {
+    return kingdomService.getBuildingsOfKingdom(kingdomId);
   }
-  
+
   @GetMapping("/{kingdomId}/troops")
   List<Troop> getTroopsOfKingdom(@PathVariable(name = "kingdomId") long kingdomId) {
     return kingdomService.getTroopsOfKingdomById(kingdomId);
+  }
 
+  @GetMapping("/{id}/resources")
+  List<Resource> getKingdomResources(@PathVariable(name = "id") long id) {
+    return kingdomService.listKingdomsResources(id);
   }
 }

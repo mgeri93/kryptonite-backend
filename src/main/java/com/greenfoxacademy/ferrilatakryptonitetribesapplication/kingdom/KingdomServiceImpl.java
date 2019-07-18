@@ -2,19 +2,26 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public class KingdomServiceImpl implements KingdomService {
 
   private IKingdomRepository kingdomRepository;
+  private ResourceServiceImpl resourceService;
 
   @Autowired
   public KingdomServiceImpl(IKingdomRepository kingdomRepository) {
     this.kingdomRepository = kingdomRepository;
+  }
+
+  public void setServices(ResourceServiceImpl resourceService) {
+    this.resourceService = resourceService;
   }
 
   @Override
@@ -51,5 +58,20 @@ public class KingdomServiceImpl implements KingdomService {
     } else {
       throw new KingdomRelatedException("Kingdom ID not found: " + kingdomId);
     }
+  }
+
+  @Override
+  public boolean existById(long id) {
+    return kingdomRepository.existsById(id);
+  }
+
+  public ResponseEntity getBuildingsOfKingdom(long kingdomId) {
+    Kingdom kingdom = findKingdomById(kingdomId);
+    if (existById(kingdomId) && !kingdom.getBuildings().isEmpty()) {
+      return ResponseEntity.status(200).body(kingdom.getBuildings());
+    } else if (existById(kingdomId) && kingdom.getBuildings().isEmpty()) {
+      throw new KingdomRelatedException("Oops, this kingdom has no buildings. What have you done?");
+    }
+    throw new KingdomRelatedException("Kingdom ID not found: " + kingdomId);
   }
 }
