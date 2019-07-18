@@ -1,7 +1,6 @@
 plugins {
     id 'org.springframework.boot' version '2.1.3.RELEASE'
     id 'java'
-    id 'org.flywaydb.flyway' version '5.2.4'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -19,21 +18,16 @@ repositories {
     mavenCentral()
 }
 
-flyway {
-    url = 'jdbc:mysql://localhost/tribes?serverTimezone\\=GMT-6'
-    user = 'root'
-    password = 'password'
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.modelmapper:modelmapper:2.3.0'
     implementation 'com.auth0:java-jwt:3.4.0'
     implementation 'javax.xml.bind:jaxb-api:2.3.0'
     implementation 'com.h2database:h2'
-    classpath 'com.h2database:h2:1.4.197'
+    implementation 'org.flywaydb:flyway-core:5.2.4'
     runtimeOnly 'mysql:mysql-connector-java'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     compileOnly 'org.projectlombok:lombok'
