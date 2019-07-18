@@ -4,11 +4,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.time.TimeServiceImp;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -24,18 +20,15 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -60,12 +53,6 @@ public class KingdomControllerTest {
 
   @Mock
   KingdomServiceImpl kingdomService;
-
-  @Mock
-  TimeServiceImp timeService;
-
-  @Mock
-  Resource resource;
 
   @InjectMocks
   KingdomController kingdomController;
@@ -172,13 +159,7 @@ public class KingdomControllerTest {
   public void listBuildingsOfKingdom() throws Exception {
     Kingdom kingdom = new Kingdom();
     Building academy = new Academy();
-    Gold gold = new Gold(100);
-    kingdom.getResourceList().add(0,gold);
     kingdom.getBuildings().add(academy);
-    Mockito.doNothing().when(resourceService).refresh(gold);
-    Mockito.when(kingdomService.getBuildingsOfKingdom(0))
-        .thenReturn(ResponseEntity.status(200).body(kingdom.getBuildings()));
-    /*Mockito.verify(resourceService, Mockito.times(1)).refresh(gold);*/
     mockMvc
         .perform(get("/kingdom/0/buildings").contentType(contentType).content(""))
         .andDo(print())

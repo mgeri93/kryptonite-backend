@@ -41,7 +41,6 @@ public class KingdomController {
 
   @GetMapping("/{kingdomId}/buildings")
   ResponseEntity buildingsOfKingdom(@PathVariable(name = "kingdomId") long kingdomId) {
-    resourceService.refresh(kingdomService.findKingdomById(kingdomId).getResourceList().get(0));
     return kingdomService.getBuildingsOfKingdom(kingdomId);
   }
 
