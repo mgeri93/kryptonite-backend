@@ -37,7 +37,7 @@ public class Kingdom {
 
   @JsonIgnore
   @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "applicationUser_id")
   private ApplicationUser applicationUser;
 
   @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
