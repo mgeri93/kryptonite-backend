@@ -19,7 +19,7 @@ public class BuildingController {
   }
 
   @PostMapping("/building")
-  public String constructBuilding(@RequestBody BuildingDTO buildingDTO) throws Exception {
+  public String constructBuilding(@RequestBody BuildingDTO buildingDTO) {
     return purchaseService.constructNewBuilding(buildingDTO);
   }
 }

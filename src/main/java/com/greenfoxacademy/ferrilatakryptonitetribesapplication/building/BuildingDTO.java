@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BuildingDTO {
+
   private String type;
   private long level;
   private long kingdomId;

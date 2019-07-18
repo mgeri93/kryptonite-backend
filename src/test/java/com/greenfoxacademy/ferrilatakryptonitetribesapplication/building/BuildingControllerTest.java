@@ -53,19 +53,4 @@ public class BuildingControllerTest {
         .andDo(print())
         .andExpect(status().isOk());
   }
-
-  /*@Test
-  public void buildingEndpointWithInsufficientGold() throws Exception {
-    Kingdom testKingdom = new Kingdom();
-    testKingdom.setId(1);
-    testKingdom.setResourceList(new ArrayList<>());
-    when(purchaseService.purchaseBuilding(
-        testKingdom, new BuildingDTO("Farm", 5, 1)))
-        .thenThrow(new ResourceRelatedException("Not enough gold to purchase building"));
-    mockMvc.perform(post("/building")
-        .contentType(contentType)
-        .content("{\"type\": \"Farm\", \"level\": \"5\", \"kingdomId\": \"1\"}"))
-        .andDo(print())
-        .andExpect(status().isBadRequest());
-  }*/
 }

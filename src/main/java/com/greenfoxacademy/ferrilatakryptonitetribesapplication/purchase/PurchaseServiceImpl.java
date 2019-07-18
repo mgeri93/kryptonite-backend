@@ -146,6 +146,12 @@ public class PurchaseServiceImpl implements PurchaseService {
 
   @Override
   public String constructNewBuilding(BuildingDTO buildingDTO) {
+    if (buildingDTO == null) {
+      throw new BuildingRelatedException("Missing type, level, kingdomId parameters");
+    }
+    if (buildingDTO.getType().equals(null) || buildingDTO.getType().equals("")) {
+      throw new BuildingRelatedException("Building type was not provided");
+    }
     if (!(buildingDTO.getType().equals("Mine") || buildingDTO.getType().equals("Academy")
         || buildingDTO.getType().equals("Farm"))) {
       throw new BuildingRelatedException(buildingDTO.getType() + " is not a valid building type");
