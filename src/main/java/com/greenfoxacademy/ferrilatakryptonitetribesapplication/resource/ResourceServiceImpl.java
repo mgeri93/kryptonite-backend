@@ -42,7 +42,7 @@ public class ResourceServiceImpl implements ResourceService {
   public void refresh(Resource resource) {
     Long difference = timeService.timeDifference(resource.getUpdatedAt(),
         new Timestamp(System.currentTimeMillis()));
-    if (difference > 0) {
+    if (difference >= 0) {
       resource.update((int) (long) difference);
       resourceRepository.save(resource);
     } else {

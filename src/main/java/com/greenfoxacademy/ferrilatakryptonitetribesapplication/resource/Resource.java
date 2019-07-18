@@ -49,8 +49,10 @@ public abstract class Resource {
   }
 
   public void update(int difference) {
-    setAmount(getAmountPerMinute() * difference
-        + getAmount());
-    setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+    if (difference > 0) {
+      setAmount(getAmountPerMinute() * difference
+          + getAmount());
+      setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+    }
   }
 }
