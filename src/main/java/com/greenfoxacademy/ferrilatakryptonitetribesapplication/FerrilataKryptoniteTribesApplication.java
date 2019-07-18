@@ -12,6 +12,7 @@ public class FerrilataKryptoniteTribesApplication {
     SpringApplication.run(FerrilataKryptoniteTribesApplication.class, args);
   }
 
+
   @Bean
   public BCryptPasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
