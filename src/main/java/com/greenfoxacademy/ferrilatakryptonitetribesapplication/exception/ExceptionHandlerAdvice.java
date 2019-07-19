@@ -8,24 +8,31 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.custom
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.UnauthorizedRequestException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.UserRelatedException;
 import javax.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class ExceptionHandlerAdvice {
+public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
   private ErrorResponseModel errorResponseModel;
+
+  private static final Logger log = LoggerFactory.getLogger(ExceptionHandlerAdvice.class);
 
   @ExceptionHandler(RuntimeException.class)
   public ResponseEntity<ErrorResponseModel> handleRunTimeException(RuntimeException e,
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(INTERNAL_SERVER_ERROR,
         e.getMessage(), httpServletRequest.getServletPath());
+    log.error(e.getMessage());
     return createCustomErrorResponse(errorResponseModel);
   }
 
@@ -34,6 +41,7 @@ public class ExceptionHandlerAdvice {
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(NOT_FOUND, e.getMessage(),
         httpServletRequest.getServletPath());
+    log.error(e.getMessage());
     return createCustomErrorResponse(errorResponseModel);
   }
 
@@ -42,6 +50,7 @@ public class ExceptionHandlerAdvice {
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         e.getMessage(), httpServletRequest.getServletPath());
+    log.error(e.getMessage());
     return createCustomErrorResponse(errorResponseModel);
   }
 
@@ -50,6 +59,7 @@ public class ExceptionHandlerAdvice {
       UnauthorizedRequestException e, HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(UNAUTHORIZED,
         e.getMessage(), httpServletRequest.getServletPath());
+    log.error(e.getMessage());
     return createCustomErrorResponse(errorResponseModel);
   }
 
@@ -58,6 +68,7 @@ public class ExceptionHandlerAdvice {
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         e.getMessage(), httpServletRequest.getServletPath());
+    log.error(e.getMessage());
     return createCustomErrorResponse(errorResponseModel);
   }
 
@@ -66,6 +77,7 @@ public class ExceptionHandlerAdvice {
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         e.getMessage(), httpServletRequest.getServletPath());
+    log.error(e.getMessage());
     return createCustomErrorResponse(errorResponseModel);
   }
 
@@ -75,6 +87,7 @@ public class ExceptionHandlerAdvice {
       HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST,
         e.getMessage(), httpServletRequest.getServletPath());
+    log.error(e.getMessage());
     return createCustomErrorResponse(errorResponseModel);
   }
 
@@ -83,6 +96,7 @@ public class ExceptionHandlerAdvice {
       ResourceRelatedException e, HttpServletRequest httpServletRequest) {
     errorResponseModel = new ErrorResponseModel(BAD_REQUEST, e.getMessage(),
         httpServletRequest.getServletPath());
+    log.error(e.getMessage());
     return createCustomErrorResponse(errorResponseModel);
   }
 
