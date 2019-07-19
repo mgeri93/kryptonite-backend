@@ -8,8 +8,9 @@ Before running the application, set up your local environment variables as per b
 
 | Variable name  | Variable value |
 | ------------- | ------------- |
-| DATASOURCE_URL  | jdbc:mysql://localhost/tribes?serverTimezone=GMT-6  |
+| DATASOURCE_URL  | {your database url}  |
 | DATASOURCE_USERNAME | {your local mysql username} |
 | DATASOURCE_PASSWORD  | {your local mysql password}  |
 | HIBERNATE_DIALECT | org.hibernate.dialect.MySQL5Dialect  |
 | SECRET_KEY | {your local secret key} | 
+ 
