@@ -6,5 +6,5 @@ CREATE TABLE building
     hp            INT,
     level         INT,
     kingdom_id    INT,
-    CONSTRAINT kingdom_id FOREIGN KEY (kingdom_id) REFERENCES kingdom (id)
+    FOREIGN KEY (kingdom_id) REFERENCES kingdom (id)
 );

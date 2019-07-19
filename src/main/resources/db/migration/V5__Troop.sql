@@ -4,7 +4,7 @@ create table troop
     attack  int,
     defense int,
     hp      int,
-    level   int
-        kingdom_id INT,
-    CONSTRAINT kingdom_id FOREIGN KEY (kingdom_id) REFERENCES kingdom (id)
-)
+    level   int,
+    kingdom_id INT,
+    FOREIGN KEY (kingdom_id) REFERENCES kingdom (id)
+);
