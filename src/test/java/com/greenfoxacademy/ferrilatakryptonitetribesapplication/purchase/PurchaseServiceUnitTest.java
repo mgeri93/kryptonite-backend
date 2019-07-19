@@ -20,14 +20,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureMockMvc
 public class PurchaseServiceUnitTest {
 
-  Kingdom myKingdom;
-
   @Autowired
   private PurchaseService purchaseService;
 
   @Test(expected = KingdomRelatedException.class)
   public void purchaseBuildingWithInsufficientGold() {
-    myKingdom = new Kingdom();
+    Kingdom myKingdom = new Kingdom();
     myKingdom.setResourceList(new ArrayList<>());
     purchaseService.constructNewBuilding(new BuildingDTO("Mine", 0, 1));
   }
@@ -36,21 +34,21 @@ public class PurchaseServiceUnitTest {
   public void purchaseBuildingHigherLevelThanTownhall() {
     List<Resource> testResources = new ArrayList<>();
     testResources.add(new Gold(1000));
-    myKingdom = new Kingdom();
+    Kingdom myKingdom = new Kingdom();
     myKingdom.setResourceList(testResources);
     purchaseService.constructNewBuilding(new BuildingDTO("Mine", 6, 1));
   }
 
   @Test(expected = BuildingRelatedException.class)
   public void purchaseBuildingWithInvalidType() {
-    myKingdom = new Kingdom();
+    Kingdom myKingdom = new Kingdom();
     myKingdom.setResourceList(new ArrayList<>());
     purchaseService.constructNewBuilding(new BuildingDTO("Hospital", 0, 1));
   }
 
   @Test(expected = KingdomRelatedException.class)
   public void purchaseBuildingForNonExistentKingdom() {
-    myKingdom = new Kingdom();
+    Kingdom myKingdom = new Kingdom();
     myKingdom.setResourceList(new ArrayList<>());
     purchaseService.constructNewBuilding(new BuildingDTO("Mine", 0, 5));
   }
@@ -58,14 +56,13 @@ public class PurchaseServiceUnitTest {
   @Test(expected = BuildingRelatedException.class)
   public void purchaseBuildingWithEmptyBody() {
     BuildingDTO testDTO = null;
-    myKingdom = new Kingdom();
+    Kingdom myKingdom = new Kingdom();
     myKingdom.setResourceList(new ArrayList<>());
     purchaseService.constructNewBuilding(testDTO);
   }
 
   @Test(expected = BuildingRelatedException.class)
   public void purchaseBuildingForTownhall() {
-    myKingdom = new Kingdom();
     purchaseService.constructNewBuilding(new BuildingDTO("Townhall", 0, 1));
   }
 }

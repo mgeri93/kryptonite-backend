@@ -1,7 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.building;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.KingdomServiceImpl;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -28,9 +27,6 @@ public class BuildingServiceImplTest {
 
   @Mock
   private KingdomServiceImpl kingdomService;
-
-  @Mock
-  private PurchaseServiceImpl purchaseService;
 
   @Before
   public void init() {

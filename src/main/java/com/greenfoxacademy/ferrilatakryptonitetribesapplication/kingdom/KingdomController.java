@@ -1,9 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/kingdom")
 public class KingdomController {
 
-  private ResourceServiceImpl resourceService;
   private KingdomServiceImpl kingdomService;
   private ApplicationUserServiceImpl applicationUserService;
-  private PurchaseServiceImpl purchaseService;
 
   @Autowired
-  public KingdomController(ResourceServiceImpl resourceService, KingdomServiceImpl kingdomService,
-      ApplicationUserServiceImpl applicationUserService, PurchaseServiceImpl purchaseService) {
-    this.resourceService = resourceService;
+  public KingdomController(KingdomServiceImpl kingdomService,
+      ApplicationUserServiceImpl applicationUserService) {
     this.kingdomService = kingdomService;
     this.applicationUserService = applicationUserService;
-    this.purchaseService = purchaseService;
   }
 
   @GetMapping({"/", ""})

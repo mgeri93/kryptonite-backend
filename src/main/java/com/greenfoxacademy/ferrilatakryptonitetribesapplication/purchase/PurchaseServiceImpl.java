@@ -149,7 +149,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     if (buildingDTO == null) {
       throw new BuildingRelatedException("Missing type, level, kingdomId parameters");
     }
-    if (buildingDTO.getType().equals(null) || buildingDTO.getType().equals("")) {
+    if (buildingDTO.getType() == null || buildingDTO.getType().equals("")) {
       throw new BuildingRelatedException("Building type was not provided");
     }
     if (!(buildingDTO.getType().equals("Mine") || buildingDTO.getType().equals("Academy")
