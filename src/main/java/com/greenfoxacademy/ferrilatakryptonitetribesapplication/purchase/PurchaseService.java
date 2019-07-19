@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingDTO;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
@@ -15,10 +16,17 @@ public interface PurchaseService {
 
   int purchaseTroop(Kingdom kingdom) throws Exception;
 
-  int purchaseBuilding(Kingdom kingdom) throws Exception;
+  int purchaseBuilding(Kingdom kingdom, BuildingDTO buildingDTO) throws Exception;
 
   int purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo) throws Exception;
 
   int purchaseBuildingUpgrade(Kingdom kingdom, Long buildingId, Long upgradeLevelTo)
       throws Exception;
+
+  int purchaseBuildingIfEnoughGold(Kingdom kingdom, BuildingDTO buildingDTO,
+      Gold gold) throws Exception;
+
+  String constructNewBuilding(BuildingDTO buildingDTO);
+
+  void buildingToSaveInit(BuildingDTO buildingDTO, Kingdom kingdom);
 }

@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.building;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.KingdomServiceImpl;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -24,10 +25,13 @@ public class BuildingServiceImplTest {
   @Mock
   private BuildingRepository buildingRepository;
 
+  @Mock
+  private KingdomServiceImpl kingdomService;
+
   @Before
   public void init() {
     MockitoAnnotations.initMocks(this);
-    buildingService = new BuildingServiceImpl(buildingRepository);
+    buildingService = new BuildingServiceImpl(buildingRepository, kingdomService);
   }
 
   @Test

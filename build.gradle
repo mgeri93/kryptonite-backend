@@ -28,10 +28,15 @@ dependencies {
     implementation 'javax.xml.bind:jaxb-api:2.3.0'
     implementation 'com.h2database:h2'
     implementation 'org.flywaydb:flyway-core:5.2.4'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
     runtimeOnly 'mysql:mysql-connector-java'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+}
+
+configurations {
+    compile.exclude module: 'spring-boot-starter-logging'
 }

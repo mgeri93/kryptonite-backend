@@ -14,6 +14,8 @@ public interface KingdomService {
 
   Kingdom findKingdomById(long id);
 
+  boolean existById(long id);
+
   List<Troop> getTroopsOfKingdomById(long id);
 
 }
