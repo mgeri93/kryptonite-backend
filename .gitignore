@@ -26,4 +26,5 @@ hs_err_pid*
 out/
 .gradle/
 build/
+logs/
 !gradle/wrapper/gradle-wrapper.jar
