@@ -18,10 +18,9 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
+public class ExceptionHandlerAdvice {
 
   private ErrorResponseModel errorResponseModel;
 
