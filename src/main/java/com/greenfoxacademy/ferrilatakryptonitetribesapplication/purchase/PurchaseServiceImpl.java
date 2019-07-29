@@ -99,7 +99,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
   @Override
-  public String purchaseTroop(Kingdom kingdom) throws Exception {
+  public String purchaseTroop(Kingdom kingdom) {
     List<Resource> kingdomResources = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResources);
     if (isGoldEnough(gold, 10L)) {
@@ -108,12 +108,8 @@ public class PurchaseServiceImpl implements PurchaseService {
           .stream()
           .filter(p -> p instanceof Academy)
           .count() > 0) {
-        System.out.println("1");
-
         troopService.createTroop(kingdom);
-        System.out.println("2");
         purchaseIfEnoughGold(gold, 1L, troopCreateCost);
-
         return "Troop created, gold left: " + gold.getAmount();
       } else {
         throw new BuildingRelatedException("Kingdom has no Academy to train troops.");
@@ -124,8 +120,7 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   @Override
-  public int purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo)
-      throws Exception {
+  public int purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo) {
     Troop troop = troopService.findTroopById(troopId);
     List<Resource> kingdomResource = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResource);
@@ -149,15 +144,14 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   @Override
-  public int purchaseIfEnoughGold(Gold gold, Long upgradeLevelTo, Long upgradeCost)
-      throws Exception {
+  public int purchaseIfEnoughGold(Gold gold, Long upgradeLevelTo, Long upgradeCost) {
     if (isGoldEnough(gold, upgradeCost)) {
       long newGoldAmount = gold.getAmount() - (upgradeLevelTo * upgradeCost);
       gold.setAmount((int) newGoldAmount);
       resourceService.saveResource(gold);
       return gold.getAmount();
     } else {
-      throw new Exception("Not enough gold to purchase.");
+      throw new ResourceRelatedException("Not enough gold to purchase.");
     }
   }
 

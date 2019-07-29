@@ -21,14 +21,17 @@ public class KingdomController {
   private KingdomServiceImpl kingdomService;
   private ApplicationUserServiceImpl applicationUserService;
   private PurchaseServiceImpl purchaseService;
+  private IKingdomRepository kingdomRepository;
 
   @Autowired
   public KingdomController(KingdomServiceImpl kingdomService,
       ApplicationUserServiceImpl applicationUserService,
-      PurchaseServiceImpl purchaseService) {
+      PurchaseServiceImpl purchaseService,
+      IKingdomRepository kingdomRepository) {
     this.kingdomService = kingdomService;
     this.applicationUserService = applicationUserService;
     this.purchaseService = purchaseService;
+    this.kingdomRepository = kingdomRepository;
   }
 
   @GetMapping({"/", ""})
@@ -58,6 +61,6 @@ public class KingdomController {
 
   @PostMapping("/{kingdomId}/troops")
   String addNewTroopToKingdom(@PathVariable(name = "kingdomId") long id) throws Exception {
-    return purchaseService.purchaseTroop(kingdomService.findKingdomById(id));
+    return purchaseService.purchaseTroop(kingdomRepository.findKingdomById(id));
   }
 }

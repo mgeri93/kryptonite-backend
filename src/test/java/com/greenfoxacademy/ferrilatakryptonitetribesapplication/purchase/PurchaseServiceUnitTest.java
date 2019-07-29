@@ -3,6 +3,8 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingDTO;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.BuildingRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
@@ -22,6 +24,9 @@ public class PurchaseServiceUnitTest {
 
   @Autowired
   private PurchaseService purchaseService;
+
+  @Autowired
+  private IKingdomRepository kingdomRepository;
 
   @Test(expected = KingdomRelatedException.class)
   public void purchaseBuildingWithInsufficientGold() {
@@ -64,6 +69,16 @@ public class PurchaseServiceUnitTest {
   @Test(expected = BuildingRelatedException.class)
   public void purchaseBuildingForTownhall() {
     purchaseService.constructNewBuilding(new BuildingDTO("Townhall", 0, 1));
+  }
+
+  @Test(expected = ResourceRelatedException.class)
+  public void purchaseTroopWithoutResources() throws Exception{
+    Kingdom myKingdom = new Kingdom();
+    List<Resource> insufficient = new ArrayList<>();
+    insufficient.add(new Gold(5));
+    myKingdom.setId(1);
+    myKingdom.setResourceList(insufficient);
+    purchaseService.purchaseTroop(myKingdom);
   }
 }
 
