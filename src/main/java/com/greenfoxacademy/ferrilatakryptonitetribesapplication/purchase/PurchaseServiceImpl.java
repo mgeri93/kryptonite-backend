@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingDTO;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingFactory;
@@ -98,12 +99,28 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
   @Override
-  public int purchaseTroop(Kingdom kingdom) throws Exception {
+  public String purchaseTroop(Kingdom kingdom) throws Exception {
     List<Resource> kingdomResources = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResources);
-    troopService.createTroop(kingdom);
-    purchaseIfEnoughGold(gold, 1L, troopCreateCost);
-    return gold.getAmount();
+    if (isGoldEnough(gold, 10L)) {
+
+      if (kingdom.getBuildings()
+          .stream()
+          .filter(p -> p instanceof Academy)
+          .count() > 0) {
+        System.out.println("1");
+
+        troopService.createTroop(kingdom);
+        System.out.println("2");
+        purchaseIfEnoughGold(gold, 1L, troopCreateCost);
+
+        return "Troop created, gold left: " + gold.getAmount();
+      } else {
+        throw new BuildingRelatedException("Kingdom has no Academy to train troops.");
+      }
+    } else {
+      throw new ResourceRelatedException("Not enough gold to purchase troop.");
+    }
   }
 
   @Override

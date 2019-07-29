@@ -14,7 +14,7 @@ public interface PurchaseService {
 
   int purchaseIfEnoughGold(Gold gold, Long upgradeLevelTo, Long upgradeCost) throws Exception;
 
-  int purchaseTroop(Kingdom kingdom) throws Exception;
+  String purchaseTroop(Kingdom kingdom) throws Exception;
 
   int purchaseBuilding(Kingdom kingdom, BuildingDTO buildingDTO) throws Exception;
 
