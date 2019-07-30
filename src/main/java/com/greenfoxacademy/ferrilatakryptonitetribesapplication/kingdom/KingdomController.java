@@ -60,6 +60,6 @@ public class KingdomController {
   @PutMapping("/{kingdomId}/building/{buildingId}")
   Building initiateBuildingUpgrade(@PathVariable(name = "buildingId") long buildingId,
       @PathVariable(name = "kingdomId") long kingdomId) {
-    return purchaseService.upgradeBuildingByOneLevel(buildingId, kingdomId);
+    return purchaseService.upgradeBuildingByOneLevel(buildingId);
   }
 }

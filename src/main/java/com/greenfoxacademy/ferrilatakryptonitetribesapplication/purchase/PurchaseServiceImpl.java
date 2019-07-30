@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -183,6 +184,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     kingdomRepository.save(kingdom);
   }
 
+  @Transactional
   @Override
   public Building upgradeBuildingByOneLevel(long buildingId) {
     Building building = buildingRepository.findBuildingById(buildingId);
