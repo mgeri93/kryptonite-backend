@@ -109,16 +109,18 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   @Override
-  public int purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo)
+  public String purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo)
       throws Exception {
     Troop troop = troopService.findTroopById(troopId);
     List<Resource> kingdomResource = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResource);
     if (troop.getLevel() < 3) {
       troop.setLevel(upgradeLevelTo);
-      return purchaseIfEnoughGold(gold, upgradeLevelTo, troopCreateCost);
+      purchaseIfEnoughGold(gold, upgradeLevelTo, troopCreateCost);
+      return "Troop upgraded, level: " + troop.getLevel() + ", HP: " + troop.getHp() +
+          ", Attack: " + troop.getAttack() + ", Defense: " + troop.getDefense() + ".";
     }
-    return gold.getAmount();
+    return "Upgrade is not succesfull.";
   }
 
   @Override

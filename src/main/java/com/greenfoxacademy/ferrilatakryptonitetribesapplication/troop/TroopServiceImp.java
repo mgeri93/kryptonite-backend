@@ -11,12 +11,10 @@ import org.springframework.stereotype.Service;
 public class TroopServiceImp implements TroopService {
 
   private TroopRepository troopRepository;
-  private PurchaseServiceImpl purchaseService;
 
   @Autowired
-  public TroopServiceImp(TroopRepository troopRepository, PurchaseServiceImpl purchaseService) {
+  public TroopServiceImp(TroopRepository troopRepository) {
     this.troopRepository = troopRepository;
-    this.purchaseService = purchaseService;
   }
 
   @Override
@@ -43,14 +41,14 @@ public class TroopServiceImp implements TroopService {
     return  troopRepository.findTroopByLevel(level);
   }
 
-  public Troop upgradeTroop(TroopDTO troopDTO, Kingdom kingdom) throws Exception {
+/*  public Troop upgradeTroop(TroopDTO troopDTO, Kingdom kingdom) throws Exception {
     if (kingdom.getTroops().contains(findTroopByLevel(troopDTO.getLevel())) &&
         purchaseService.isGoldEnough((Gold)kingdom.getResourceList().get(0),
         (findTroopByLevel(troopDTO.getLevel()).getLevel() + 1) * purchaseService.getTroopCreateCost())) {
-      return findTroopByLevel(kingdom.getTroops().get(findTroopByLevel(troopDTO.getLevel()).getKingdom().getTroops().))/*contains(findTroopByLevel(level))*/;
+      return findTroopByLevel(kingdom.getTroops().get(findTroopByLevel(troopDTO.getLevel()).getKingdom().getTroops().))*//*contains(findTroopByLevel(level))*//*;
     } else {
       throw new Exception("Upgrade is not allowed");
     }
-  }
+  }*/
 
 }

@@ -18,7 +18,7 @@ public interface PurchaseService {
 
   int purchaseBuilding(Kingdom kingdom, BuildingDTO buildingDTO) throws Exception;
 
-  int purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo) throws Exception;
+  String purchaseTroopUpgrade(Kingdom kingdom, Long troopId, Long upgradeLevelTo) throws Exception;
 
   int purchaseBuildingUpgrade(Kingdom kingdom, Long buildingId, Long upgradeLevelTo)
       throws Exception;
