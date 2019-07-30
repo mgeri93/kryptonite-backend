@@ -14,10 +14,12 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdom
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.KingdomServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.IResourceRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ public class PurchaseServiceImpl implements PurchaseService {
   private IKingdomRepository kingdomRepository;
   private KingdomServiceImpl kingdomService;
   private BuildingRepository buildingRepository;
+  private IResourceRepository resourceRepository;
 
   private Long troopCreateCost = 10L;
   private Long buildingCreateCost = 100L;
@@ -43,13 +46,15 @@ public class PurchaseServiceImpl implements PurchaseService {
       ResourceServiceImpl resourceService,
       IKingdomRepository kingdomRepository,
       KingdomServiceImpl kingdomService,
-      BuildingRepository buildingRepository) {
+      BuildingRepository buildingRepository,
+      IResourceRepository resourceRepository) {
     this.buildingService = buildingService;
     this.troopService = troopService;
     this.resourceService = resourceService;
     this.kingdomRepository = kingdomRepository;
     this.kingdomService = kingdomService;
     this.buildingRepository = buildingRepository;
+    this.resourceRepository = resourceRepository;
   }
 
   @Override
@@ -185,21 +190,44 @@ public class PurchaseServiceImpl implements PurchaseService {
     Building building = buildingRepository.findBuildingById(buildingId);
     Kingdom kingdom = building.getKingdom();
     List<Resource> resources = kingdom.getResourceList();
-    if (kingdom.getBuildings().get(3).getLevel() >= building.getLevel() + 1) {
+    if (building instanceof TownHall || kingdom.getBuildings().get(3).getLevel() >= building.getLevel() + 1) {
       if (resources.get(0).getAmount() > 50) {
-        building.setLevel(building.getLevel() + 1);
-        buildingRepository.save(building);
-        Resource myGold = new Gold(resources.get(0).getAmount() - 50);
-        resources.add(0, myGold);
-        kingdom.setResourceList(resources);
-
-
+        executeBuildingUpgrade(building, buildingId, resources, kingdom);
       } else {
         throw new ResourceRelatedException("Insufficient gold");
       }
     } else {
       throw new BuildingRelatedException("Building can not be upgraded above Townhall level");
     }
+    return building;
+  }
+
+  @Override
+  public int findBuildingIndexByBuildingId(long buildingId, Kingdom kingdom) {
+    for (int i = 0; i < kingdom.getBuildings().size(); i++) {
+      if (kingdom.getBuildings().get(i).getId() == buildingId) {
+        return i;
+      }
+    }
+    throw new BuildingRelatedException("No such building exists");
+  }
+
+  @Override
+  public void executeBuildingUpgrade(Building building, long buildingId, List<Resource> resources,
+      Kingdom kingdom) {
+    building.setLevel(building.getLevel() + 1);
+    buildingRepository.save(building);
+    List<Building> myBuildings = kingdom.getBuildings();
+    myBuildings.remove(findBuildingIndexByBuildingId(buildingId, kingdom));
+    myBuildings.add(findBuildingIndexByBuildingId(buildingId, kingdom), building);
+    Resource myGold = new Gold(resources.get(0).getAmount() - 50);
+    resources.add(0, myGold);
+    resourceRepository.save(myGold);
+    kingdom.setResourceList(resources);
+    kingdom.getResourceList().get(0)
+        .setAmount(kingdom.getResourceList().get(0).getAmount() - 50);
+    kingdom.setBuildings(myBuildings);
+    kingdomRepository.save(kingdom);
   }
 
   public long townHallLevel(Kingdom kingdom) {

@@ -1,6 +1,8 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import java.util.List;
@@ -9,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,12 +21,15 @@ public class KingdomController {
 
   private KingdomServiceImpl kingdomService;
   private ApplicationUserServiceImpl applicationUserService;
+  private PurchaseServiceImpl purchaseService;
 
   @Autowired
   public KingdomController(KingdomServiceImpl kingdomService,
-      ApplicationUserServiceImpl applicationUserService) {
+      ApplicationUserServiceImpl applicationUserService,
+      PurchaseServiceImpl purchaseService) {
     this.kingdomService = kingdomService;
     this.applicationUserService = applicationUserService;
+    this.purchaseService = purchaseService;
   }
 
   @GetMapping({"/", ""})
@@ -49,5 +55,10 @@ public class KingdomController {
   @GetMapping("/{id}/resources")
   List<Resource> getKingdomResources(@PathVariable(name = "id") long id) {
     return kingdomService.listKingdomsResources(id);
+  }
+
+  @PutMapping("/building/{buildingId}")
+  Building initiateBuildingUpgrade(@PathVariable(name = "buildingId") long id) {
+    return purchaseService.upgradeBuildingByOneLevel(id);
   }
 }
