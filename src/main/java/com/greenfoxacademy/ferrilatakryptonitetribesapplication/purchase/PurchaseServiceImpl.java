@@ -186,12 +186,13 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   @Override
-  public Building upgradeBuildingByOneLevel(long buildingId) {
+  public Building upgradeBuildingByOneLevel(long buildingId, long kingdomId) {
     Building building = buildingRepository.findBuildingById(buildingId);
-    Kingdom kingdom = building.getKingdom();
+    Kingdom kingdom = kingdomRepository.findKingdomById(kingdomId);
     List<Resource> resources = kingdom.getResourceList();
     if (building instanceof TownHall || kingdom.getBuildings().get(3).getLevel() >= building.getLevel() + 1) {
       if (resources.get(0).getAmount() > 50) {
+        System.out.println(resources.get(0).getAmount());
         executeBuildingUpgrade(building, buildingId, resources, kingdom);
       } else {
         throw new ResourceRelatedException("Insufficient gold");
@@ -209,7 +210,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         return i;
       }
     }
-    throw new BuildingRelatedException("No such building exists");
+    return 0;
   }
 
   @Override
@@ -221,11 +222,12 @@ public class PurchaseServiceImpl implements PurchaseService {
     myBuildings.remove(findBuildingIndexByBuildingId(buildingId, kingdom));
     myBuildings.add(findBuildingIndexByBuildingId(buildingId, kingdom), building);
     Resource myGold = new Gold(resources.get(0).getAmount() - 50);
+    myGold.setKingdom(kingdom);
+    resources.remove(0);
     resources.add(0, myGold);
+    System.out.println(resources.get(0).getAmount());
     resourceRepository.save(myGold);
     kingdom.setResourceList(resources);
-    kingdom.getResourceList().get(0)
-        .setAmount(kingdom.getResourceList().get(0).getAmount() - 50);
     kingdom.setBuildings(myBuildings);
     kingdomRepository.save(kingdom);
   }

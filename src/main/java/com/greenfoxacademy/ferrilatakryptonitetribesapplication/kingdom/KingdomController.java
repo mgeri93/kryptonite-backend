@@ -57,8 +57,9 @@ public class KingdomController {
     return kingdomService.listKingdomsResources(id);
   }
 
-  @PutMapping("/building/{buildingId}")
-  Building initiateBuildingUpgrade(@PathVariable(name = "buildingId") long id) {
-    return purchaseService.upgradeBuildingByOneLevel(id);
+  @PutMapping("/{kingdomId}/building/{buildingId}")
+  Building initiateBuildingUpgrade(@PathVariable(name = "buildingId") long buildingId,
+      @PathVariable(name = "kingdomId") long kingdomId) {
+    return purchaseService.upgradeBuildingByOneLevel(buildingId, kingdomId);
   }
 }
