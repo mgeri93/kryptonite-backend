@@ -1,6 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
@@ -64,8 +65,11 @@ public class KingdomController {
   @PutMapping("/{kingdomId}/troop/{lvl}")
   public String upgradeTroop(@PathVariable(name = "kingdomId") long kingdomId,
       @PathVariable(name = "lvl") long lvl) throws Exception {
-    return purchaseService.purchaseTroopUpgrade(kingdomService.findKingdomById(kingdomId),
-        troopService.findTroopByLevel(lvl).getId(), lvl + 1);
+    if (troopService.getTroopToUpdate(kingdomService.findKingdomById(kingdomId), lvl) != null) {
+      return purchaseService.purchaseTroopUpgrade(kingdomService.findKingdomById(kingdomId),
+          troopService.getTroopToUpdate(kingdomService.findKingdomById(kingdomId), lvl).getId(),
+          lvl + 1);
+    } else throw new ResourceRelatedException("Upgrade is not succesfull.");
 
   }
 

@@ -1,9 +1,11 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.KingdomServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +13,12 @@ import org.springframework.stereotype.Service;
 public class TroopServiceImp implements TroopService {
 
   private TroopRepository troopRepository;
+  private KingdomServiceImpl kingdomService;
 
   @Autowired
-  public TroopServiceImp(TroopRepository troopRepository) {
+  public TroopServiceImp(TroopRepository troopRepository, KingdomServiceImpl kingdomService) {
     this.troopRepository = troopRepository;
+    this.kingdomService = kingdomService;
   }
 
   @Override
@@ -50,5 +54,13 @@ public class TroopServiceImp implements TroopService {
       throw new Exception("Upgrade is not allowed");
     }
   }*/
+
+  public Troop getTroopToUpdate(Kingdom kingdom, long level) {
+    List<Troop> sameLevelTroops = kingdom.getTroops()
+        .stream()
+        .filter(troop -> troop.getLevel() == level)
+        .collect(Collectors.toList());
+    return sameLevelTroops.get((int)Math.random()*(sameLevelTroops.size()+1));
+  }
 
 }
