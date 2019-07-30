@@ -19,10 +19,12 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Getter
 public class PurchaseServiceImpl implements PurchaseService {
 
   private BuildingServiceImpl buildingService;
