@@ -43,11 +43,11 @@ public class TroopServiceImp implements TroopService {
     return  troopRepository.findTroopByLevel(level);
   }
 
-  public Troop putTroop(long level, Kingdom kingdom) throws Exception {
-    if (kingdom.getTroops().contains(findTroopByLevel(level)) &&
+  public Troop upgradeTroop(TroopDTO troopDTO, Kingdom kingdom) throws Exception {
+    if (kingdom.getTroops().contains(findTroopByLevel(troopDTO.getLevel())) &&
         purchaseService.isGoldEnough((Gold)kingdom.getResourceList().get(0),
-        (findTroopByLevel(level).getLevel() + 1) * purchaseService.getTroopCreateCost())) {
-      return findTroopByLevel(kingdom.getTroops().get(findTroopByLevel(level).getKingdom().getTroops().))/*contains(findTroopByLevel(level))*/;
+        (findTroopByLevel(troopDTO.getLevel()).getLevel() + 1) * purchaseService.getTroopCreateCost())) {
+      return findTroopByLevel(kingdom.getTroops().get(findTroopByLevel(troopDTO.getLevel()).getKingdom().getTroops().))/*contains(findTroopByLevel(level))*/;
     } else {
       throw new Exception("Upgrade is not allowed");
     }
