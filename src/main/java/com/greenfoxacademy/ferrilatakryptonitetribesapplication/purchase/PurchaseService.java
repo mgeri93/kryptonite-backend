@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingDTO;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
@@ -29,4 +30,6 @@ public interface PurchaseService {
   String constructNewBuilding(BuildingDTO buildingDTO);
 
   void buildingToSaveInit(BuildingDTO buildingDTO, Kingdom kingdom);
+
+  Building upgradeBuildingByOneLevel(long buildingId);
 }

@@ -3,6 +3,7 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingDTO;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingFactory;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingType;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.TownHall;
@@ -30,6 +31,7 @@ public class PurchaseServiceImpl implements PurchaseService {
   private ResourceServiceImpl resourceService;
   private IKingdomRepository kingdomRepository;
   private KingdomServiceImpl kingdomService;
+  private BuildingRepository buildingRepository;
 
   private Long troopCreateCost = 10L;
   private Long buildingCreateCost = 100L;
@@ -40,12 +42,14 @@ public class PurchaseServiceImpl implements PurchaseService {
       TroopServiceImp troopService,
       ResourceServiceImpl resourceService,
       IKingdomRepository kingdomRepository,
-      KingdomServiceImpl kingdomService) {
+      KingdomServiceImpl kingdomService,
+      BuildingRepository buildingRepository) {
     this.buildingService = buildingService;
     this.troopService = troopService;
     this.resourceService = resourceService;
     this.kingdomRepository = kingdomRepository;
     this.kingdomService = kingdomService;
+    this.buildingRepository = buildingRepository;
   }
 
   @Override
@@ -174,6 +178,28 @@ public class PurchaseServiceImpl implements PurchaseService {
     buildingService.saveBuilding(buildingToSave);
     kingdom.getBuildings().add(buildingToSave);
     kingdomRepository.save(kingdom);
+  }
+
+  @Override
+  public Building upgradeBuildingByOneLevel(long buildingId) {
+    Building building = buildingRepository.findBuildingById(buildingId);
+    Kingdom kingdom = building.getKingdom();
+    List<Resource> resources = kingdom.getResourceList();
+    if (kingdom.getBuildings().get(3).getLevel() >= building.getLevel() + 1) {
+      if (resources.get(0).getAmount() > 50) {
+        building.setLevel(building.getLevel() + 1);
+        buildingRepository.save(building);
+        Resource myGold = new Gold(resources.get(0).getAmount() - 50);
+        resources.add(0, myGold);
+        kingdom.setResourceList(resources);
+
+
+      } else {
+        throw new ResourceRelatedException("Insufficient gold");
+      }
+    } else {
+      throw new BuildingRelatedException("Building can not be upgraded above Townhall level");
+    }
   }
 
   public long townHallLevel(Kingdom kingdom) {
