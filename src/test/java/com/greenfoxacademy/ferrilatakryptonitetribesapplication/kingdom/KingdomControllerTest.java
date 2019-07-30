@@ -59,6 +59,9 @@ public class KingdomControllerTest {
   @Mock
   PurchaseServiceImpl purchaseService;
 
+  @Mock
+  IKingdomRepository kingdomRepository;
+
   @InjectMocks
   KingdomController kingdomController;
 
@@ -196,16 +199,19 @@ public class KingdomControllerTest {
         .andExpect(status().isBadRequest());
   }
 
-  /*@Test
+  @Test
   public void buyingTroopWithEnoughGoldAndAcademy() throws Exception {
-    when(purchaseService.purchaseTroop(1L))
+    Kingdom myKingdom = new Kingdom();
+    when(purchaseService.purchaseTroop(myKingdom))
         .thenReturn("Troop created, gold left: 90");
+    when(kingdomRepository.findKingdomById(1))
+        .thenReturn(myKingdom);
     mockMvc.perform(post("/kingdom/1/troops")
     .contentType(contentType)
     .content(""))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().string("Troop created, gold left: 90"));
-  }*/
+  }
 
 }

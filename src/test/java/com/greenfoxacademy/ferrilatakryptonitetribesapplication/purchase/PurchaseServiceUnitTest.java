@@ -72,12 +72,22 @@ public class PurchaseServiceUnitTest {
   }
 
   @Test(expected = ResourceRelatedException.class)
-  public void purchaseTroopWithoutResources() throws Exception{
+  public void purchaseTroopWithoutResources() throws Exception {
     Kingdom myKingdom = new Kingdom();
     List<Resource> insufficient = new ArrayList<>();
     insufficient.add(new Gold(5));
     myKingdom.setId(1);
     myKingdom.setResourceList(insufficient);
+    purchaseService.purchaseTroop(myKingdom);
+  }
+
+  @Test(expected = BuildingRelatedException.class)
+  public void purchaseTroopWithoutTownhall() throws Exception {
+    Kingdom myKingdom = new Kingdom();
+    List<Resource> sufficient = new ArrayList<>();
+    myKingdom.setBuildings(new ArrayList<>());
+    myKingdom.setResourceList(sufficient);
+    sufficient.add(new Gold(10));
     purchaseService.purchaseTroop(myKingdom);
   }
 }
