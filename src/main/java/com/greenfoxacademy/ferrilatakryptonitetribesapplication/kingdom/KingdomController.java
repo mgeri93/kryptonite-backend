@@ -1,6 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopDTO;
@@ -23,13 +24,16 @@ public class KingdomController {
   private KingdomServiceImpl kingdomService;
   private ApplicationUserServiceImpl applicationUserService;
   private TroopServiceImp troopService;
+  private PurchaseServiceImpl purchaseService;
 
   @Autowired
   public KingdomController(KingdomServiceImpl kingdomService,
-      ApplicationUserServiceImpl applicationUserService, TroopServiceImp troopService) {
+      ApplicationUserServiceImpl applicationUserService,
+      TroopServiceImp troopService, PurchaseServiceImpl purchaseService) {
     this.kingdomService = kingdomService;
     this.applicationUserService = applicationUserService;
     this.troopService = troopService;
+    this.purchaseService = purchaseService;
   }
 
   @GetMapping({"/", ""})
@@ -60,7 +64,7 @@ public class KingdomController {
   @PutMapping("/{kingdomId}/troop/{lvl}")
   public String putTroop(@RequestBody TroopDTO troopDTO,@PathVariable(name = "kingdomId") long kingdomId,
       @PathVariable(name = "lvl") long lvl) throws Exception {
-    return troopService.putTroop(lvl, kingdomService.findKingdomById(kingdomId));
+    return purchaseService.purchaseTroopUpgrade(kingdomService.);
 
   }
 
