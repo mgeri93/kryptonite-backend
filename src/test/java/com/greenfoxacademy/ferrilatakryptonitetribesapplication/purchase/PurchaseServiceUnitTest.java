@@ -1,15 +1,18 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUser;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingDTO;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.BuildingRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Food;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
 import java.util.ArrayList;
 import java.util.List;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,7 @@ public class PurchaseServiceUnitTest {
   private PurchaseService purchaseService;
 
   @Autowired
-  private IKingdomRepository kingdomRepository;
+  private TroopServiceImp troopServiceImp;
 
   @Test(expected = KingdomRelatedException.class)
   public void purchaseBuildingWithInsufficientGold() {
@@ -89,6 +92,15 @@ public class PurchaseServiceUnitTest {
     myKingdom.setResourceList(sufficient);
     sufficient.add(new Gold(10));
     purchaseService.purchaseTroop(myKingdom);
+  }
+
+  @Test
+  public void createTroopDecreaseFood() {
+    Kingdom kingdom = new Kingdom("empire", new ApplicationUser("geri", "password"));
+    kingdom.getResourceList().add(0, new Gold(100));
+    kingdom.getResourceList().add(1, new Food(100));
+    troopServiceImp.createTroop(kingdom);
+    assertEquals(10, kingdom.getResourceList().get(1).getAmountPerMinute());
   }
 }
 
