@@ -31,7 +31,7 @@ public interface PurchaseService {
 
   void buildingToSaveInit(BuildingDTO buildingDTO, Kingdom kingdom);
 
-  Building upgradeBuildingByOneLevel(long buildingId, long kingdomId);
+  Building upgradeBuildingByOneLevel(long buildingId);
 
   int findBuildingIndexByBuildingId(long buildingId, Kingdom kingdom);
 

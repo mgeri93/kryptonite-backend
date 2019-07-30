@@ -34,10 +34,10 @@ public class PurchaseServiceImpl implements PurchaseService {
   private IKingdomRepository kingdomRepository;
   private KingdomServiceImpl kingdomService;
   private BuildingRepository buildingRepository;
-  private IResourceRepository resourceRepository;
 
   private Long troopCreateCost = 10L;
   private Long buildingCreateCost = 100L;
+  private int buildingUpgradeCost = 25;
 
   @Autowired
   public PurchaseServiceImpl(
@@ -46,15 +46,13 @@ public class PurchaseServiceImpl implements PurchaseService {
       ResourceServiceImpl resourceService,
       IKingdomRepository kingdomRepository,
       KingdomServiceImpl kingdomService,
-      BuildingRepository buildingRepository,
-      IResourceRepository resourceRepository) {
+      BuildingRepository buildingRepository) {
     this.buildingService = buildingService;
     this.troopService = troopService;
     this.resourceService = resourceService;
     this.kingdomRepository = kingdomRepository;
     this.kingdomService = kingdomService;
     this.buildingRepository = buildingRepository;
-    this.resourceRepository = resourceRepository;
   }
 
   @Override
@@ -186,19 +184,19 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   @Override
-  public Building upgradeBuildingByOneLevel(long buildingId, long kingdomId) {
+  public Building upgradeBuildingByOneLevel(long buildingId) {
     Building building = buildingRepository.findBuildingById(buildingId);
-    Kingdom kingdom = kingdomRepository.findKingdomById(kingdomId);
+    Kingdom kingdom = building.getKingdom();
     List<Resource> resources = kingdom.getResourceList();
-    if (building instanceof TownHall || kingdom.getBuildings().get(3).getLevel() >= building.getLevel() + 1) {
-      if (resources.get(0).getAmount() > 50) {
-        System.out.println(resources.get(0).getAmount());
+    if (building instanceof TownHall
+        || kingdom.getBuildings().get(3).getLevel() >= building.getLevel() + 1) {
+      if (resources.get(0).getAmount() >= buildingUpgradeCost) {
         executeBuildingUpgrade(building, buildingId, resources, kingdom);
       } else {
         throw new ResourceRelatedException("Insufficient gold");
       }
     } else {
-      throw new BuildingRelatedException("Building can not be upgraded above Townhall level");
+      throw new BuildingRelatedException("Upgrade is not allowed");
     }
     return building;
   }
@@ -219,14 +217,11 @@ public class PurchaseServiceImpl implements PurchaseService {
     building.setLevel(building.getLevel() + 1);
     buildingRepository.save(building);
     List<Building> myBuildings = kingdom.getBuildings();
-    myBuildings.remove(findBuildingIndexByBuildingId(buildingId, kingdom));
-    myBuildings.add(findBuildingIndexByBuildingId(buildingId, kingdom), building);
-    Resource myGold = new Gold(resources.get(0).getAmount() - 50);
-    myGold.setKingdom(kingdom);
-    resources.remove(0);
-    resources.add(0, myGold);
-    System.out.println(resources.get(0).getAmount());
-    resourceRepository.save(myGold);
+    myBuildings.set(findBuildingIndexByBuildingId(buildingId, kingdom), building);
+    Resource myGold = resources.get(0);
+    myGold.setAmount(resources.get(0).getAmount() - buildingUpgradeCost);
+    resources.set(0, myGold);
+    resourceService.saveResource(myGold);
     kingdom.setResourceList(resources);
     kingdom.setBuildings(myBuildings);
     kingdomRepository.save(kingdom);
