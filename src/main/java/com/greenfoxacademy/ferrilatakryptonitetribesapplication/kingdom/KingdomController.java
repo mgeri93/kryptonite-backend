@@ -60,7 +60,7 @@ public class KingdomController {
   }
 
   @PostMapping("/{kingdomId}/troops")
-  String addNewTroopToKingdom(@PathVariable(name = "kingdomId") long id) throws Exception {
+  String addNewTroopToKingdom(@PathVariable(name = "kingdomId") long id) {
     return purchaseService.purchaseTroop(kingdomRepository.findKingdomById(id));
   }
 }

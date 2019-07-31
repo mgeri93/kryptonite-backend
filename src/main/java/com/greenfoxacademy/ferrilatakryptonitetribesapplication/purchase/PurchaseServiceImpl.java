@@ -103,7 +103,6 @@ public class PurchaseServiceImpl implements PurchaseService {
     List<Resource> kingdomResources = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResources);
     if (isGoldEnough(gold, 10L)) {
-
       if (kingdom.getBuildings()
           .stream()
           .filter(p -> p instanceof Academy)
