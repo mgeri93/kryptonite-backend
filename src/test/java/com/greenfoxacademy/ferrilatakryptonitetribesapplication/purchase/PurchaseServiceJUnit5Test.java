@@ -1,7 +1,5 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Farm;
@@ -12,7 +10,6 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.custom
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
