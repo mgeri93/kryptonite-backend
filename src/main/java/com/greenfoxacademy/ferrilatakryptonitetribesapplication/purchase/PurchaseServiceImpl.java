@@ -20,7 +20,10 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -98,8 +101,9 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
 
+  @Transactional
   @Override
-  public String purchaseTroop(Kingdom kingdom) {
+  public ResponseEntity purchaseTroop(Kingdom kingdom) {
     List<Resource> kingdomResources = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResources);
     if (isGoldEnough(gold, 10L)) {
@@ -109,7 +113,8 @@ public class PurchaseServiceImpl implements PurchaseService {
           .count() > 0) {
         troopService.createTroop(kingdom);
         purchaseIfEnoughGold(gold, 1L, troopCreateCost);
-        return "Troop created, gold left: " + gold.getAmount();
+        return new ResponseEntity("Troop created, gold left: " + gold.getAmount(),
+            HttpStatus.OK);
       } else {
         throw new BuildingRelatedException("Kingdom has no Academy to train troops.");
       }

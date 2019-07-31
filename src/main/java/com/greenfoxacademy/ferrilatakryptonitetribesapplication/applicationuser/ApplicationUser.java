@@ -26,8 +26,7 @@ public class ApplicationUser {
   private String password;
 
   @JsonBackReference
-  @OneToMany(cascade = CascadeType.PERSIST,
-      mappedBy = "applicationUser", fetch = FetchType.LAZY)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "applicationUser", fetch = FetchType.LAZY)
   private List<Kingdom> kingdoms;
 
   public ApplicationUser() {
