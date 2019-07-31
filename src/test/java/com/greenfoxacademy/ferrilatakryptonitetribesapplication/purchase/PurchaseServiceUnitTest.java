@@ -8,7 +8,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Food;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -28,7 +28,7 @@ public class PurchaseServiceUnitTest {
   private PurchaseService purchaseService;
 
   @Autowired
-  private TroopServiceImp troopServiceImp;
+  private TroopServiceImpl troopServiceImpl;
 
   @Test(expected = KingdomRelatedException.class)
   public void purchaseBuildingWithInsufficientGold() {
@@ -78,7 +78,7 @@ public class PurchaseServiceUnitTest {
     Kingdom kingdom = new Kingdom("empire", new ApplicationUser("geri", "password"));
     kingdom.getResourceList().add(0, new Gold(100));
     kingdom.getResourceList().add(1, new Food(100));
-    troopServiceImp.createTroop(kingdom);
+    troopServiceImpl.createTroop(kingdom);
     assertEquals(10, kingdom.getResourceList().get(1).getAmountPerMinute());
   }
 }
