@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TroopServiceImp implements TroopService {
+public class TroopServiceImpl implements TroopService {
 
   private TroopRepository troopRepository;
 
   @Autowired
-  public TroopServiceImp(TroopRepository troopRepository) {
+  public TroopServiceImpl(TroopRepository troopRepository) {
     this.troopRepository = troopRepository;
   }
 

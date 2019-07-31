@@ -17,7 +17,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImpl;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 public class PurchaseServiceImpl implements PurchaseService {
 
   private BuildingServiceImpl buildingService;
-  private TroopServiceImp troopService;
+  private TroopServiceImpl troopService;
   private ResourceServiceImpl resourceService;
   private IKingdomRepository kingdomRepository;
   private KingdomServiceImpl kingdomService;
@@ -41,7 +41,7 @@ public class PurchaseServiceImpl implements PurchaseService {
   @Autowired
   public PurchaseServiceImpl(
       BuildingServiceImpl buildingService,
-      TroopServiceImp troopService,
+      TroopServiceImpl troopService,
       ResourceServiceImpl resourceService,
       IKingdomRepository kingdomRepository,
       KingdomServiceImpl kingdomService) {
