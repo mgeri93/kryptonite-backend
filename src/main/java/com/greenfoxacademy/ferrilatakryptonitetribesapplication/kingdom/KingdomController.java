@@ -5,7 +5,6 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.custom
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopDTO;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -69,7 +67,9 @@ public class KingdomController {
       return purchaseService.purchaseTroopUpgrade(kingdomService.findKingdomById(kingdomId),
           troopService.getTroopToUpdate(kingdomService.findKingdomById(kingdomId), lvl).getId(),
           lvl + 1);
-    } else throw new ResourceRelatedException("Upgrade is not succesfull.");
+    } else {
+      throw new ResourceRelatedException("Upgrade is not succesfull.");
+    }
 
   }
 

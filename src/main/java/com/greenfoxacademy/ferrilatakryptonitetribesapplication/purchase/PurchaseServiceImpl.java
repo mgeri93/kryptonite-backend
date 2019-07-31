@@ -117,8 +117,8 @@ public class PurchaseServiceImpl implements PurchaseService {
     if (troop.getLevel() < 3) {
       troop.setLevel(upgradeLevelTo);
       purchaseIfEnoughGold(gold, upgradeLevelTo, troopCreateCost);
-      return "Troop upgraded, level: " + troop.getLevel() + ", HP: " + troop.getHp() +
-          ", Attack: " + troop.getAttack() + ", Defense: " + troop.getDefense() + ".";
+      return "Troop upgraded, level: " + troop.getLevel() + ", HP: " + troop.getHp()
+          + ", Attack: " + troop.getAttack() + ", Defense: " + troop.getDefense() + ".";
     } else {
       throw new ResourceRelatedException("Upgrade is not succesfull.");
     }
