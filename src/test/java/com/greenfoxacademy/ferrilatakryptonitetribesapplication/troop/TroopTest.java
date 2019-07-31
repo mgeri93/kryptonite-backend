@@ -2,8 +2,6 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUser;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Food;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
