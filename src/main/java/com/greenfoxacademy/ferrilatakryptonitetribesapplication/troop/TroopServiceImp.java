@@ -24,9 +24,10 @@ public class TroopServiceImp implements TroopService {
   public Troop createTroop(Kingdom kingdom) {
     Troop newTroop = new Troop();
     newTroop.setKingdom(kingdom);
-    kingdom.getResourceList().get(1)
-        .setAmountPerMinute(kingdom.getResourceList().get(1).getAmountPerMinute() - 1);
+    kingdom.getResourceList().get(0)
+        .setAmountPerMinute(kingdom.getResourceList().get(0).getAmountPerMinute() - 1);
     newTroop.setKingdom(kingdom);
+    troopRepository.save(newTroop);
     return newTroop;
   }
 

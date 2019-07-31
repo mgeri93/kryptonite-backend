@@ -31,21 +31,18 @@ public class Kingdom {
 
   @NotNull private String name;
 
-  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
-      mappedBy = "kingdom",fetch = FetchType.EAGER)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "kingdom",fetch = FetchType.EAGER)
   private List<Resource> resourceList;
 
   @JsonIgnore
-  @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinColumn(name = "applicationUser_id")
   private ApplicationUser applicationUser;
 
-  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
-      mappedBy = "kingdom", fetch = FetchType.LAZY)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "kingdom", fetch = FetchType.LAZY)
   private List<Building> buildings;
 
-  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
-      mappedBy = "kingdom", fetch = FetchType.LAZY)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "kingdom", fetch = FetchType.LAZY)
   private List<Troop> troops;
 
   public Kingdom(String name, ApplicationUser applicationUser) {

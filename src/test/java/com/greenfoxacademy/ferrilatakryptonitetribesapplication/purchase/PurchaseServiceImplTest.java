@@ -61,12 +61,6 @@ public class PurchaseServiceImplTest {
   }
 
   @Test
-  public void canPurchaseTroop_Test() throws Exception {
-    kingdomResource.add(gold);
-    assertEquals(190, purchaseService.purchaseTroop(kingdom));
-  }
-
-  @Test
   public void canUpgradeBuildingTest() throws Exception {
     kingdomResource.add(gold);
     Building farm = new Farm();
