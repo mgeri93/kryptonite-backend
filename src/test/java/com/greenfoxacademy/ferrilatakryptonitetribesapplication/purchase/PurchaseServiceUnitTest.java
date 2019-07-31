@@ -104,10 +104,16 @@ public class PurchaseServiceUnitTest {
   @Test(expected = BuildingRelatedException.class)
   public void upgradeBuildingByOneLevelReturnsCorrectBuildingRelatedException() {
     Kingdom myKingdom = new Kingdom("Kutyavilág", new ApplicationUser());
-    Academy academy = new Academy();
-    academy.setKingdom(myKingdom);
-    List<Building> myBuildings = new ArrayList<>(Arrays.asList(new Mine(), academy,
-        new Farm(), new TownHall()));
+    Academy myAcademy = new Academy();
+    Farm myFarm = new Farm();
+    TownHall myTownhall = new TownHall();
+    Mine myMine = new Mine();
+    myAcademy.setKingdom(myKingdom);
+    myMine.setKingdom(myKingdom);
+    myFarm.setKingdom(myKingdom);
+    myTownhall.setKingdom(myKingdom);
+    List<Building> myBuildings = new ArrayList<>(Arrays.asList(myMine, myAcademy,
+        myFarm, myTownhall));
     List<Resource> myResources = new ArrayList<>(Arrays.asList(new Gold(5)));
     myKingdom.setResourceList(myResources);
     myKingdom.setBuildings(myBuildings);
