@@ -1,14 +1,14 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.UserRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
@@ -22,7 +22,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 class ApplicationUserServiceImplTestJunit5 {
@@ -39,7 +38,7 @@ class ApplicationUserServiceImplTestJunit5 {
   @Autowired
   BCryptPasswordEncoder encoder;
 
-  @Before
+  @BeforeEach
   public void init() {
     MockitoAnnotations.initMocks(this);
   }
@@ -124,5 +123,11 @@ class ApplicationUserServiceImplTestJunit5 {
     when(userService.getKingdomListByUserId(applicationUser.getId())).thenReturn(kingdoms);
 
     assertEquals(2, userService.getKingdomListByUserId(applicationUser.getId()).size());
+  }
+
+  @Test
+  void getKingdomListWithoutId(){
+    when(!applicationUserRepository.existsById(1)).thenThrow(new UserRelatedException("No User with this id: "));
+    assertThrows(UserRelatedException.class, this::getKingdomListWithoutId);
   }
 }

@@ -22,7 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class TroopTest {
 
   @InjectMocks
-  private TroopServiceImp troopServiceImp;
+  private TroopServiceImpl troopServiceImpl;
 
   @Before
   public void init() {
@@ -44,7 +44,7 @@ public class TroopTest {
     Troop testTroop = new Troop(-1, -4, 0, 0);
     Kingdom kingdom = new Kingdom("empire", new ApplicationUser("geri", "password"));
     testTroop.setKingdom(kingdom);
-    assertTrue(troopServiceImp.isValidTroop(testTroop));
+    assertTrue(troopServiceImpl.isValidTroop(testTroop));
   }
 
   @Test
@@ -62,7 +62,7 @@ public class TroopTest {
     Kingdom kingdom = new Kingdom("empire", new ApplicationUser("geri", "password"));
     kingdom.getResourceList().add(0, new Gold());
     kingdom.getResourceList().add(1, new Food());
-    troopServiceImp.createTroop(kingdom);
+    troopServiceImpl.createTroop(kingdom);
     assertEquals(9, kingdom.getResourceList().get(1).getAmountPerMinute());
   }
 }
