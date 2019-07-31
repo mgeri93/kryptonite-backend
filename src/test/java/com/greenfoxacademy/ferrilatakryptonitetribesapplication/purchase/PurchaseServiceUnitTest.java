@@ -1,7 +1,5 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
-import static org.junit.Assert.assertEquals;
-
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUser;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
@@ -12,7 +10,6 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Mine;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.TownHall;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.BuildingRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
@@ -20,6 +17,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resourc
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,13 +103,13 @@ public class PurchaseServiceUnitTest {
   public void upgradeBuildingByOneLevelReturnsCorrectBuildingRelatedException() {
     Kingdom myKingdom = new Kingdom("Kutyavilág", new ApplicationUser());
     Academy myAcademy = new Academy();
-    Farm myFarm = new Farm();
-    TownHall myTownhall = new TownHall();
-    Mine myMine = new Mine();
     myAcademy.setKingdom(myKingdom);
-    myMine.setKingdom(myKingdom);
+    Farm myFarm = new Farm();
     myFarm.setKingdom(myKingdom);
+    TownHall myTownhall = new TownHall();
     myTownhall.setKingdom(myKingdom);
+    Mine myMine = new Mine();
+    myMine.setKingdom(myKingdom);
     List<Building> myBuildings = new ArrayList<>(Arrays.asList(myMine, myAcademy,
         myFarm, myTownhall));
     List<Resource> myResources = new ArrayList<>(Arrays.asList(new Gold(5)));

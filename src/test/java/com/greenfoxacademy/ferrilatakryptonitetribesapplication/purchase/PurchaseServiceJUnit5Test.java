@@ -1,7 +1,5 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUser;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
@@ -10,7 +8,6 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Farm;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Mine;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.TownHall;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.BuildingRelatedException;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
@@ -65,16 +62,5 @@ public class PurchaseServiceJUnit5Test {
     Assertions.assertThrows(BuildingRelatedException.class, () -> {
       purchaseService.upgradeBuildingByOneLevel(2);
     });
-  }
-
-  @Test
-  public void upgradeBuildingByOneLevelReturnsCorrectResourceRelatedException() {
-    TownHall level5Townhall = new TownHall();
-    level5Townhall.setLevel(5);
-    setup(level5Townhall);
-    Assertions.assertThrows(ResourceRelatedException.class, () -> {
-      purchaseService.upgradeBuildingByOneLevel(2);
-    });
-
   }
 }

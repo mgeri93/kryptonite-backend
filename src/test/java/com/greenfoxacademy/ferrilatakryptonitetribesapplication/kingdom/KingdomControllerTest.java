@@ -4,6 +4,8 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import java.nio.charset.Charset;
@@ -25,6 +27,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -54,6 +57,9 @@ public class KingdomControllerTest {
   @Mock
   KingdomServiceImpl kingdomService;
 
+  @Mock
+  PurchaseServiceImpl purchaseService;
+
   @InjectMocks
   KingdomController kingdomController;
 
@@ -74,7 +80,6 @@ public class KingdomControllerTest {
   }
 
   @Test
-
   public void getResourcesOfKingdomWithExistingId() throws Exception {
     when(kingdomService.listKingdomsResources(1))
         .thenReturn(new ArrayList<>());
@@ -187,6 +192,16 @@ public class KingdomControllerTest {
             "Oops, this kingdom has no buildings. What have you done?")));
     mockMvc
         .perform(get("/kingdom/0/buildings").contentType(contentType).content(""))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void upgradingBuildingWithoutResources() throws Exception {
+    Kingdom kingdom = new Kingdom();
+    Mockito.when(purchaseService.upgradeBuildingByOneLevel(1))
+        .thenThrow(new ResourceRelatedException("Not enough gold to upgrade building"));
+    mockMvc.perform(put("/kingdom/1/building/1").contentType(contentType).content(""))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
