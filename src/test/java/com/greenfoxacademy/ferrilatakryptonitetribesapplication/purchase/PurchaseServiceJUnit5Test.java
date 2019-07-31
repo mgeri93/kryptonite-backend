@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class PurchaseServiceJUnit5Test {
+public class PurchaseServiceJUnit5Test {
 
   @Autowired
   PurchaseServiceImpl purchaseService;
