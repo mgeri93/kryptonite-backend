@@ -62,7 +62,6 @@ class KingdomServiceImplTest {
     resourceList.add(new Gold());
     when(kingdomService.listKingdomsResources(kingdom.getId())).thenReturn(resourceList);
     assertEquals(2, kingdomService.listKingdomsResources(kingdom.getId()).size());
-
   }
 
   @Test
