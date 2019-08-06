@@ -4,10 +4,13 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.UserRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import java.nio.charset.Charset;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.Mock;
+
 import static org.mockito.Mockito.when;
 
 import org.mockito.MockitoAnnotations;
@@ -23,6 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -115,18 +119,20 @@ public class ApplicationUserControllerTest {
 
   @Test
   public void registerWithValidCredentials() throws Exception {
-    ApplicationUserDTO testUserDTO = new ApplicationUserDTO();
-    testUserDTO.setUsername("Dani");
-    testUserDTO.setPassword(encoder.encode("LOL"));
-    testUserDTO.setKingdom("Kiralysag");
+    String result = new JSONObject()
+        .put("id", 1)
+        .put("username", "Dani")
+        .put("kingdomId", 1)
+        .toString();
 
-    when(userService.registerNewUser(testUserDTO))
-        .thenReturn(new ResponseEntity<>(new UserWithKingdomDTO(1, "Dani", 1),
-            HttpStatus.OK));
+    when(userService.registerNewUser(any(ApplicationUserDTO.class)))
+        .thenReturn(ResponseEntity.status(200).body(new UserWithKingdomDTO(1, "Dani", 1)));
     mockMvc.perform(post("/register")
         .contentType(contentType)
         .content("{\"username\": \"Dani\", \"password\": \"kutya\"}"))
         .andDo(print())
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(contentType))
+        .andExpect(content().json(result));
   }
 }
