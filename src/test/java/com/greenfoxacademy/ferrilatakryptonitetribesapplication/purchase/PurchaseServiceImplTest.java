@@ -12,7 +12,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImpl;
 
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -40,7 +40,7 @@ public class PurchaseServiceImplTest {
   private BuildingServiceImpl buildingService;
 
   @Mock
-  private TroopServiceImp troopService;
+  private TroopServiceImpl troopService;
 
   @Mock
   private ApplicationUserServiceImpl userService;
@@ -58,12 +58,6 @@ public class PurchaseServiceImplTest {
   @Before
   public void init() {
     MockitoAnnotations.initMocks(this);
-  }
-
-  @Test
-  public void canPurchaseTroop_Test() throws Exception {
-    kingdomResource.add(gold);
-    assertEquals(190, purchaseService.purchaseTroop(kingdom));
   }
 
   @Test
@@ -85,7 +79,8 @@ public class PurchaseServiceImplTest {
     List<Troop> kingdomTroops = kingdom.getTroops();
     kingdomTroops.add(troop);
     when(troopService.findTroopById(1)).thenReturn(troop);
-    assertEquals(170, purchaseService.purchaseTroopUpgrade(kingdom, (long) 1, (long) 3));
+    assertEquals("Troop upgraded, level: 3, HP: 1, Attack: 1, Defense: 1.",
+        purchaseService.purchaseTroopUpgrade(kingdom, (long) 1, (long) 3));
   }
 
   @Test
@@ -120,17 +115,6 @@ public class PurchaseServiceImplTest {
     assertEquals(3, farm.getLevel());
   }
 
-  @Test
-  public void cantUpgradeTroopAboveLevel3() throws Exception {
-    kingdomResource.add(gold);
-    Troop troop = new Troop();
-    troop.setLevel(3);
-    List<Troop> kingdomTroops = kingdom.getTroops();
-    kingdomTroops.add(troop);
-    when(troopService.findTroopById(1)).thenReturn(troop);
-    purchaseService.purchaseTroopUpgrade(kingdom, 1L, 4L);
-    assertEquals(3, troop.getLevel());
-  }
 
   @Test
   public void upgradeTroopLevelProperly() throws Exception {

@@ -5,7 +5,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Buildin
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Farm;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.TimeRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImpl;
 import java.sql.Timestamp;
 import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
@@ -30,7 +30,7 @@ public class TimeServiceImpTest {
   TimeServiceImp timeServiceImp;
 
   @Mock
-  TroopServiceImp troopService;
+  TroopServiceImpl troopService;
 
   @Mock
   BuildingServiceImpl buildingService;

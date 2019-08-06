@@ -4,6 +4,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import java.nio.charset.Charset;
@@ -14,20 +15,26 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+
 import static org.mockito.Mockito.when;
 
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @RunWith(SpringRunner.class)
@@ -53,6 +60,12 @@ public class KingdomControllerTest {
 
   @Mock
   KingdomServiceImpl kingdomService;
+
+  @Mock
+  PurchaseServiceImpl purchaseService;
+
+  @Mock
+  IKingdomRepository kingdomRepository;
 
   @InjectMocks
   KingdomController kingdomController;
@@ -181,7 +194,7 @@ public class KingdomControllerTest {
 
   @Test
   public void buildingsOfKingdomWithNoBuildings() throws Exception {
-    Kingdom kingdom =  new Kingdom();
+    Kingdom kingdom = new Kingdom();
     Mockito.when(kingdomService.getBuildingsOfKingdom(kingdom.getId()))
         .thenThrow((new KingdomRelatedException(
             "Oops, this kingdom has no buildings. What have you done?")));
@@ -189,5 +202,20 @@ public class KingdomControllerTest {
         .perform(get("/kingdom/0/buildings").contentType(contentType).content(""))
         .andDo(print())
         .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void buyingTroopWithEnoughGoldAndAcademy() throws Exception {
+    Kingdom myKingdom = new Kingdom();
+    when(purchaseService.purchaseTroop(myKingdom))
+        .thenReturn(new ResponseEntity("Troop created, gold left: 90", HttpStatus.OK));
+    when(kingdomRepository.findKingdomById(1))
+        .thenReturn(myKingdom);
+    mockMvc.perform(post("/kingdom/1/troops")
+        .contentType(contentType)
+        .content(""))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(content().string("Troop created, gold left: 90"));
   }
 }

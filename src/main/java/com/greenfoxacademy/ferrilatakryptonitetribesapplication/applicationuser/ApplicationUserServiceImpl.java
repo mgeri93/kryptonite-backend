@@ -51,11 +51,6 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     applicationUserRepository.save(applicationUser);
   }
 
-  public ApplicationUser findUserById(long id) {
-    return applicationUserRepository.findById(id);
-  }
-
-
   public ResponseEntity registerNewUser(ApplicationUserDTO applicationUserDTO) {
     String userName = applicationUserDTO.getUsername();
     applicationUserDTO.setPassword(encoder.encode(applicationUserDTO.getPassword()));

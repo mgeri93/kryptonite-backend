@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TroopServiceImp implements TroopService {
+public class TroopServiceImpl implements TroopService {
 
   private TroopRepository troopRepository;
 
   @Autowired
-  public TroopServiceImp(TroopRepository troopRepository) {
+  public TroopServiceImpl(TroopRepository troopRepository) {
     this.troopRepository = troopRepository;
   }
 
@@ -26,9 +26,10 @@ public class TroopServiceImp implements TroopService {
   public Troop createTroop(Kingdom kingdom) {
     Troop newTroop = new Troop();
     newTroop.setKingdom(kingdom);
-    kingdom.getResourceList().get(1)
-        .setAmountPerMinute(kingdom.getResourceList().get(1).getAmountPerMinute() - 1);
+    kingdom.getResourceList().get(0)
+        .setAmountPerMinute(kingdom.getResourceList().get(0).getAmountPerMinute() - 1);
     newTroop.setKingdom(kingdom);
+    troopRepository.save(newTroop);
     return newTroop;
   }
 

@@ -2,7 +2,7 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.time;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.TimeRelatedException;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImpl;
 import java.sql.Timestamp;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class TimeServiceImp implements TimeService {
 
-  private TroopServiceImp troopService;
+  private TroopServiceImpl troopService;
 
   private BuildingServiceImpl buildingService;
 
   @Autowired
-  public TimeServiceImp(TroopServiceImp troopService, BuildingServiceImpl buildingService) {
+  public TimeServiceImp(TroopServiceImpl troopService, BuildingServiceImpl buildingService) {
     this.troopService = troopService;
     this.buildingService = buildingService;
   }

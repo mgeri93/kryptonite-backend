@@ -5,6 +5,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 
 public interface PurchaseService {
 
@@ -14,7 +15,7 @@ public interface PurchaseService {
 
   int purchaseIfEnoughGold(Gold gold, Long upgradeLevelTo, Long upgradeCost) throws Exception;
 
-  int purchaseTroop(Kingdom kingdom) throws Exception;
+  ResponseEntity purchaseTroop(Kingdom kingdom) throws Exception;
 
   int purchaseBuilding(Kingdom kingdom, BuildingDTO buildingDTO) throws Exception;
 

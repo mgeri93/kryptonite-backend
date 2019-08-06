@@ -1,13 +1,17 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUser;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingDTO;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.BuildingRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Food;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,9 @@ public class PurchaseServiceUnitTest {
 
   @Autowired
   private PurchaseService purchaseService;
+
+  @Autowired
+  private TroopServiceImpl troopServiceImpl;
 
   @Test(expected = KingdomRelatedException.class)
   public void purchaseBuildingWithInsufficientGold() {
@@ -64,6 +71,15 @@ public class PurchaseServiceUnitTest {
   @Test(expected = BuildingRelatedException.class)
   public void purchaseBuildingForTownhall() {
     purchaseService.constructNewBuilding(new BuildingDTO("Townhall", 0, 1));
+  }
+
+  @Test
+  public void createTroopDecreaseFood() {
+    Kingdom kingdom = new Kingdom("empire", new ApplicationUser("geri", "password"));
+    kingdom.getResourceList().add(0, new Gold(100));
+    kingdom.getResourceList().add(1, new Food(100));
+    troopServiceImpl.createTroop(kingdom);
+    assertEquals(10, kingdom.getResourceList().get(1).getAmountPerMinute());
   }
 }
 

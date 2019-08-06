@@ -5,13 +5,14 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.custom
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,17 +23,20 @@ public class KingdomController {
 
   private KingdomServiceImpl kingdomService;
   private ApplicationUserServiceImpl applicationUserService;
-  private TroopServiceImp troopService;
+  private TroopServiceImpl troopService;
   private PurchaseServiceImpl purchaseService;
+  private IKingdomRepository kingdomRepository;
 
   @Autowired
   public KingdomController(KingdomServiceImpl kingdomService,
       ApplicationUserServiceImpl applicationUserService,
-      TroopServiceImp troopService, PurchaseServiceImpl purchaseService) {
+      TroopServiceImpl troopService, PurchaseServiceImpl purchaseService,
+      IKingdomRepository kingdomRepository) {
     this.kingdomService = kingdomService;
     this.applicationUserService = applicationUserService;
     this.troopService = troopService;
     this.purchaseService = purchaseService;
+    this.kingdomRepository = kingdomRepository;
   }
 
   @GetMapping({"/", ""})
@@ -60,6 +64,11 @@ public class KingdomController {
     return kingdomService.listKingdomsResources(id);
   }
 
+  @PostMapping("/{kingdomId}/troops")
+  ResponseEntity addNewTroopToKingdom(@PathVariable(name = "kingdomId") long id) {
+    return purchaseService.purchaseTroop(kingdomRepository.findKingdomById(id));
+  }
+
   @PutMapping("/{kingdomId}/troop/{lvl}")
   public String upgradeTroop(@PathVariable(name = "kingdomId") long kingdomId,
       @PathVariable(name = "lvl") long lvl) throws Exception {
@@ -72,6 +81,4 @@ public class KingdomController {
     }
 
   }
-
-
 }

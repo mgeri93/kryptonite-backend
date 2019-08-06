@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingDTO;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingFactory;
@@ -16,19 +17,20 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImpl;
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.Getter;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-@Getter
 public class PurchaseServiceImpl implements PurchaseService {
 
   private BuildingServiceImpl buildingService;
-  private TroopServiceImp troopService;
+  private TroopServiceImpl troopService;
   private ResourceServiceImpl resourceService;
   private IKingdomRepository kingdomRepository;
   private KingdomServiceImpl kingdomService;
@@ -39,7 +41,7 @@ public class PurchaseServiceImpl implements PurchaseService {
   @Autowired
   public PurchaseServiceImpl(
       BuildingServiceImpl buildingService,
-      TroopServiceImp troopService,
+      TroopServiceImpl troopService,
       ResourceServiceImpl resourceService,
       IKingdomRepository kingdomRepository,
       KingdomServiceImpl kingdomService) {
@@ -99,13 +101,26 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
 
+  @Transactional
   @Override
-  public int purchaseTroop(Kingdom kingdom) throws Exception {
+  public ResponseEntity purchaseTroop(Kingdom kingdom) {
     List<Resource> kingdomResources = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResources);
-    troopService.createTroop(kingdom);
-    purchaseIfEnoughGold(gold, 1L, troopCreateCost);
-    return gold.getAmount();
+    if (isGoldEnough(gold, 10L)) {
+      if (kingdom.getBuildings()
+          .stream()
+          .filter(p -> p instanceof Academy)
+          .count() > 0) {
+        troopService.createTroop(kingdom);
+        purchaseIfEnoughGold(gold, 1L, troopCreateCost);
+        return new ResponseEntity("Troop created, gold left: " + gold.getAmount(),
+            HttpStatus.OK);
+      } else {
+        throw new BuildingRelatedException("Kingdom has no Academy to train troops.");
+      }
+    } else {
+      throw new ResourceRelatedException("Not enough gold to purchase troop.");
+    }
   }
 
   @Override
@@ -137,15 +152,14 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   @Override
-  public int purchaseIfEnoughGold(Gold gold, Long upgradeLevelTo, Long upgradeCost)
-      throws Exception {
+  public int purchaseIfEnoughGold(Gold gold, Long upgradeLevelTo, Long upgradeCost) {
     if (isGoldEnough(gold, upgradeCost)) {
       long newGoldAmount = gold.getAmount() - (upgradeLevelTo * upgradeCost);
       gold.setAmount((int) newGoldAmount);
       resourceService.saveResource(gold);
       return gold.getAmount();
     } else {
-      throw new Exception("Not enough gold to purchase.");
+      throw new ResourceRelatedException("Not enough gold to purchase.");
     }
   }
 
