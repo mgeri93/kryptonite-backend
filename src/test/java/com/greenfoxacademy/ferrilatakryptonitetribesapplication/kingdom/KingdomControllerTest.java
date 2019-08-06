@@ -218,7 +218,7 @@ public class KingdomControllerTest {
   public void buyingTroopWithEnoughGoldAndAcademy() throws Exception {
     Kingdom myKingdom = new Kingdom();
     when(purchaseService.purchaseTroop(myKingdom))
-        .thenReturn(new ResponseEntity("Troop created, gold left: 90", HttpStatus.OK));
+        .thenReturn(new ResponseEntity<String>("Troop created, gold left: 90", HttpStatus.OK));
     when(kingdomRepository.findKingdomById(1))
         .thenReturn(myKingdom);
     mockMvc.perform(post("/kingdom/1/troops")
