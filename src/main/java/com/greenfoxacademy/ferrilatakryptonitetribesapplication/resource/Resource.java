@@ -28,7 +28,7 @@ public abstract class Resource {
   private int amountPerMinute;
 
   @JsonBackReference
-  @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinColumn(name = "kingdom_id")
   private Kingdom kingdom;
 

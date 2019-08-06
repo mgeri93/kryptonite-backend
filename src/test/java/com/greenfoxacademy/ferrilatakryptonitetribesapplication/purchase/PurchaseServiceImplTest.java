@@ -12,7 +12,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImp;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImpl;
 
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -40,7 +40,7 @@ public class PurchaseServiceImplTest {
   private BuildingServiceImpl buildingService;
 
   @Mock
-  private TroopServiceImp troopService;
+  private TroopServiceImpl troopService;
 
   @Mock
   private ApplicationUserServiceImpl userService;
@@ -58,12 +58,6 @@ public class PurchaseServiceImplTest {
   @Before
   public void init() {
     MockitoAnnotations.initMocks(this);
-  }
-
-  @Test
-  public void canPurchaseTroop_Test() throws Exception {
-    kingdomResource.add(gold);
-    assertEquals(190, purchaseService.purchaseTroop(kingdom));
   }
 
   @Test

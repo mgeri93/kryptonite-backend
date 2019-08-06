@@ -1,5 +1,8 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUser;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
@@ -22,11 +25,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class PurchaseServiceJUnit5Test {
+
+
+  private Farm myFarm = new Farm();
+  private Mine myMine = new Mine();
+  private Academy myAcademy = new Academy();
+  private TownHall myTownhall = new TownHall();
+  private Gold myGold = new Gold(9);
+  private Kingdom myKingdom = new Kingdom();
 
   @Autowired
   private PurchaseService purchaseService;
@@ -37,30 +50,28 @@ public class PurchaseServiceJUnit5Test {
   @Autowired
   private IKingdomRepository kingdomRepository;
 
-  public void setup(TownHall myTownhall) {
-    Kingdom myKingdom = new Kingdom("Kutyavilág", new ApplicationUser());
-    Academy myAcademy = new Academy();
-    Farm myFarm = new Farm();
-    Mine myMine = new Mine();
-    myAcademy.setKingdom(myKingdom);
-    myMine.setKingdom(myKingdom);
-    myFarm.setKingdom(myKingdom);
-    myTownhall.setKingdom(myKingdom);
-    List<Building> myBuildings = new ArrayList<>(Arrays.asList(myMine, myAcademy,
-        myFarm, myTownhall));
-    List<Resource> myResources = new ArrayList<>(Arrays.asList(new Gold(5)));
-    myKingdom.setResourceList(myResources);
-    myKingdom.setBuildings(myBuildings);
-    buildingRepository.saveAll(myBuildings);
-    myKingdom.setResourceList(myResources);
-    kingdomRepository.save(myKingdom);
+  @Test
+  public void purchaseTroopWithoutResources() {
+    List<Resource> insufficient = Arrays.asList(myGold);
+    List<Building> hasAll = Arrays.asList(myFarm, myMine, myAcademy, myTownhall);
+    myKingdom.setResourceList(insufficient);
+    myKingdom.setBuildings(hasAll);
+    myKingdom.setId(1);
+    Assertions.assertThrows(ResourceRelatedException.class, () -> {
+      purchaseService.purchaseTroop(myKingdom);
+    });
   }
 
   @Test
-  public void upgradeBuildingByOneLevelReturnsCorrectBuildingRelatedException() {
-    setup(new TownHall());
+  public void purchaseTroopWithoutAcademy() {
+    myGold.setAmount(500);
+    List<Resource> sufficient = Arrays.asList(myGold);
+    List<Building> noTownHall = Arrays.asList(myFarm, myMine, myTownhall);
+    myKingdom.setResourceList(sufficient);
+    myKingdom.setBuildings(noTownHall);
+    myKingdom.setId(1);
     Assertions.assertThrows(BuildingRelatedException.class, () -> {
-      purchaseService.upgradeBuildingByOneLevel(2);
+      purchaseService.purchaseTroop(myKingdom);
     });
   }
 }

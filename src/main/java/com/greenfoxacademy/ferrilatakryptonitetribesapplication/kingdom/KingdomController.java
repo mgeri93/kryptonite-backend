@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,14 +23,17 @@ public class KingdomController {
   private KingdomServiceImpl kingdomService;
   private ApplicationUserServiceImpl applicationUserService;
   private PurchaseServiceImpl purchaseService;
+  private IKingdomRepository kingdomRepository;
 
   @Autowired
   public KingdomController(KingdomServiceImpl kingdomService,
       ApplicationUserServiceImpl applicationUserService,
-      PurchaseServiceImpl purchaseService) {
+      PurchaseServiceImpl purchaseService,
+      IKingdomRepository kingdomRepository) {
     this.kingdomService = kingdomService;
     this.applicationUserService = applicationUserService;
     this.purchaseService = purchaseService;
+    this.kingdomRepository = kingdomRepository;
   }
 
   @GetMapping({"/", ""})
@@ -57,9 +61,15 @@ public class KingdomController {
     return kingdomService.listKingdomsResources(id);
   }
 
+
   @PutMapping("/{kingdomId}/building/{buildingId}")
   Building initiateBuildingUpgrade(@PathVariable(name = "buildingId") long buildingId,
       @PathVariable(name = "kingdomId") long kingdomId) {
     return purchaseService.upgradeBuildingByOneLevel(buildingId);
+  }
+
+  @PostMapping("/{kingdomId}/troops")
+  ResponseEntity addNewTroopToKingdom(@PathVariable(name = "kingdomId") long id) {
+    return purchaseService.purchaseTroop(kingdomRepository.findKingdomById(id));
   }
 }

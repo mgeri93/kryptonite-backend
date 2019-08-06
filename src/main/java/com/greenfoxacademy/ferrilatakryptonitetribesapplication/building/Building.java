@@ -26,7 +26,7 @@ public abstract class Building {
   private double hp;
   private BuildingType buildingType;
 
-  @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinColumn(name = "kingdom_id", referencedColumnName = "id")
   @JsonBackReference
   private Kingdom kingdom;

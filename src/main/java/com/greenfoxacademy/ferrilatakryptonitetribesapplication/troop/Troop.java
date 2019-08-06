@@ -30,7 +30,7 @@ public class Troop {
 
 
   @JsonBackReference
-  @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinColumn(name = "kingdom_id")
   private Kingdom kingdom;
 
