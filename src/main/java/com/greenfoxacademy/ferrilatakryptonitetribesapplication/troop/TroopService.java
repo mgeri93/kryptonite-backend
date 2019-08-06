@@ -7,4 +7,6 @@ public interface TroopService {
   boolean isValidTroop(Troop troop);
 
   Troop createTroop(Kingdom kingdom);
+
+
 }

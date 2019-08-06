@@ -1,5 +1,6 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,12 +38,17 @@ public class TroopServiceImpl implements TroopService {
     return troopRepository.findTroopById(id);
   }
 
-  public Troop getTroopToUpdate(Kingdom kingdom, long level) {
-    List<Troop> sameLevelTroops = kingdom.getTroops()
-        .stream()
-        .filter(troop -> troop.getLevel() == level)
-        .collect(Collectors.toList());
-    return sameLevelTroops.get((int)Math.random() * (sameLevelTroops.size() + 1));
+  public Troop getTroopToUpdate(Kingdom kingdom, long level) throws ResourceRelatedException {
+    if (troopRepository.findTroopByLevel(level) != null) {
+      List<Troop> sameLevelTroops = kingdom.getTroops()
+          .stream()
+          .filter(troop -> troop.getLevel() == level)
+          .collect(Collectors.toList());
+      return sameLevelTroops.get((int) Math.random() * (sameLevelTroops.size() + 1));
+    } else
+      throw new ResourceRelatedException("Upgrade is not successful");
   }
+
+
 
 }

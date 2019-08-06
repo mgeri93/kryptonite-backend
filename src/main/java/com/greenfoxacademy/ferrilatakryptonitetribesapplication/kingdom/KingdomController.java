@@ -71,7 +71,7 @@ public class KingdomController {
 
   @PutMapping("/{kingdomId}/troop/{lvl}")
   public String upgradeTroop(@PathVariable(name = "kingdomId") long kingdomId,
-      @PathVariable(name = "lvl") long lvl) throws Exception {
+      @PathVariable(name = "lvl") long lvl) throws ResourceRelatedException {
     if (troopService.getTroopToUpdate(kingdomService.findKingdomById(kingdomId), lvl) != null) {
       return purchaseService.purchaseTroopUpgrade(kingdomService.findKingdomById(kingdomId),
           troopService.getTroopToUpdate(kingdomService.findKingdomById(kingdomId), lvl).getId(),
