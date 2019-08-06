@@ -139,7 +139,7 @@ public class PurchaseServiceImpl implements PurchaseService {
       return "Troop upgraded, level: " + troop.getLevel() + ", HP: " + troop.getHp()
           + ", Attack: " + troop.getAttack() + ", Defense: " + troop.getDefense() + ".";
     } else {
-      throw new ResourceRelatedException("Upgrade is not succesfull.");
+      throw new ResourceRelatedException("Upgrade is not successful.");
     }
   }
 

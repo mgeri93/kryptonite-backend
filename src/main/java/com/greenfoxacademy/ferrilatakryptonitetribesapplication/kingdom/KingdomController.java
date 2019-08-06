@@ -30,7 +30,8 @@ public class KingdomController {
   @Autowired
   public KingdomController(KingdomServiceImpl kingdomService,
       ApplicationUserServiceImpl applicationUserService,
-      TroopServiceImpl troopService, PurchaseServiceImpl purchaseService,
+      TroopServiceImpl troopService,
+      PurchaseServiceImpl purchaseService,
       IKingdomRepository kingdomRepository) {
     this.kingdomService = kingdomService;
     this.applicationUserService = applicationUserService;
@@ -77,7 +78,7 @@ public class KingdomController {
           troopService.getTroopToUpdate(kingdomService.findKingdomById(kingdomId), lvl).getId(),
           lvl + 1);
     } else {
-      throw new ResourceRelatedException("Upgrade is not succesfull.");
+      throw new ResourceRelatedException("Upgrade is not successful.");
     }
 
   }

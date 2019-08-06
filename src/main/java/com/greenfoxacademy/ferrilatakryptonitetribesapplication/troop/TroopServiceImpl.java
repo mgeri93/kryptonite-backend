@@ -49,7 +49,4 @@ public class TroopServiceImpl implements TroopService {
       throw new ResourceRelatedException("Upgrade is not successful");
     }
   }
-
-
-
 }
