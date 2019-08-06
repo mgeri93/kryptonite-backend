@@ -39,7 +39,7 @@ public class TroopServiceImpl implements TroopService {
   }
 
   public Troop getTroopToUpdate(Kingdom kingdom, long level) throws ResourceRelatedException {
-    if (troopRepository.findTroopByLevel(level) != null) {
+    if (troopRepository.existsByLevel(level)) {
       List<Troop> sameLevelTroops = kingdom.getTroops()
           .stream()
           .filter(troop -> troop.getLevel() == level)

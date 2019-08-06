@@ -8,4 +8,6 @@ public interface TroopRepository extends CrudRepository<Troop, Long> {
 
   Troop findTroopByLevel(long level);
 
+  boolean existsByLevel (long level);
+
 }
