@@ -45,8 +45,9 @@ public class TroopServiceImpl implements TroopService {
           .filter(troop -> troop.getLevel() == level)
           .collect(Collectors.toList());
       return sameLevelTroops.get((int) Math.random() * (sameLevelTroops.size() + 1));
-    } else
+    } else {
       throw new ResourceRelatedException("Upgrade is not successful");
+    }
   }
 
 
