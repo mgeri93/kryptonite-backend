@@ -43,7 +43,7 @@ public class PurchaseServiceUnitTest {
   public void purchaseBuildingWithInsufficientGold() {
     Kingdom myKingdom = new Kingdom();
     myKingdom.setResourceList(new ArrayList<>());
-    purchaseService.constructNewBuilding(new BuildingDTO("Mine", 0, 1));
+    purchaseService.constructNewBuilding(new BuildingDTO("Mine", 0, 0));
   }
 
   @Test(expected = KingdomRelatedException.class)
@@ -52,7 +52,7 @@ public class PurchaseServiceUnitTest {
     testResources.add(new Gold(1000));
     Kingdom myKingdom = new Kingdom();
     myKingdom.setResourceList(testResources);
-    purchaseService.constructNewBuilding(new BuildingDTO("Mine", 6, 1));
+    purchaseService.constructNewBuilding(new BuildingDTO("Mine", 6, 0));
   }
 
   @Test(expected = BuildingRelatedException.class)
