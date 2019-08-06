@@ -6,8 +6,6 @@ public interface TroopRepository extends CrudRepository<Troop, Long> {
 
   Troop findTroopById(long id);
 
-  Troop findTroopByLevel(long level);
-
-  boolean existsByLevel (long level);
+  boolean existsByLevel(long level);
 
 }
