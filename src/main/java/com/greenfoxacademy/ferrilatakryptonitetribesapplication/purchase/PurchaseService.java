@@ -36,6 +36,6 @@ public interface PurchaseService {
 
   int findBuildingIndexByBuildingId(long buildingId, Kingdom kingdom);
 
-  void executeBuildingUpgrade(Building building, long buildingId, List<Resource> resources,
+  void executeBuildingUpgrade(Building building, List<Resource> resources,
       Kingdom kingdom);
 }

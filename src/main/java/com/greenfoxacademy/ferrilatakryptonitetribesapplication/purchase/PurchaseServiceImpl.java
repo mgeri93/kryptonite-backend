@@ -213,7 +213,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     if (building instanceof TownHall
         || kingdom.getBuildings().get(3).getLevel() >= building.getLevel() + 1) {
       if (resources.get(0).getAmount() >= buildingUpgradeCost) {
-        executeBuildingUpgrade(building, buildingId, resources, kingdom);
+        executeBuildingUpgrade(building, resources, kingdom);
       } else {
         throw new ResourceRelatedException("Insufficient gold");
       }
@@ -234,12 +234,12 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   @Override
-  public void executeBuildingUpgrade(Building building, long buildingId, List<Resource> resources,
+  public void executeBuildingUpgrade(Building building, List<Resource> resources,
       Kingdom kingdom) {
     building.setLevel(building.getLevel() + 1);
     buildingRepository.save(building);
     List<Building> myBuildings = kingdom.getBuildings();
-    myBuildings.set(findBuildingIndexByBuildingId(buildingId, kingdom), building);
+    myBuildings.set(findBuildingIndexByBuildingId(building.getId(), kingdom), building);
     Resource myGold = resources.get(0);
     myGold.setAmount(resources.get(0).getAmount() - buildingUpgradeCost);
     resources.set(0, myGold);
