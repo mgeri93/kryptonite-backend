@@ -3,6 +3,7 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingType;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Farm;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
@@ -10,6 +11,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resourc
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -204,15 +206,23 @@ public class KingdomControllerTest {
 
   @Test
   public void upgradingBuildingWithResources() throws Exception {
+    String result = new JSONObject()
+        .put("id", 0)
+        .put("level", 0)
+        .put("hp", 0.0)
+        .put("buildingType", "Farm")
+        .toString();
     Farm myBuilding = new Farm();
+    myBuilding.setBuildingType(BuildingType.valueOf("Farm"));
     Mockito.when(purchaseService.upgradeBuildingByOneLevel(1))
         .thenReturn(myBuilding);
     mockMvc.perform(put("/kingdom/1/building/1")
         .contentType(contentType)
         .content(""))
         .andDo(print())
+        .andExpect(status().isOk())
         .andExpect(content().contentType(contentType))
-        .andExpect(status().isOk());
+        .andExpect(content().json(result));
   }
 
   @Test
