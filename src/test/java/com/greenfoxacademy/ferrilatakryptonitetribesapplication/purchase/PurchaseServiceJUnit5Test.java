@@ -2,13 +2,11 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Farm;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Mine;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.TownHall;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.BuildingRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
@@ -36,12 +34,6 @@ public class PurchaseServiceJUnit5Test {
 
   @Autowired
   private PurchaseService purchaseService;
-
-  @Autowired
-  private BuildingRepository buildingRepository;
-
-  @Autowired
-  private IKingdomRepository kingdomRepository;
 
   @Test
   public void purchaseTroopWithoutResources() {

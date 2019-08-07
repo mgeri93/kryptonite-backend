@@ -7,11 +7,9 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Buildin
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.BuildingRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.IKingdomRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -32,12 +30,6 @@ public class PurchaseServiceUnitTest {
 
   @Autowired
   private BuildingRepository buildingRepository;
-
-  @Autowired
-  private IKingdomRepository kingdomRepository;
-
-  @Autowired
-  private TroopServiceImpl troopServiceImpl;
 
   @Test(expected = KingdomRelatedException.class)
   public void purchaseBuildingWithInsufficientGold() {
@@ -94,7 +86,7 @@ public class PurchaseServiceUnitTest {
     myKingdom.setBuildings(myBuildings);
     buildingRepository.save(myKingdom.getBuildings().get(0));
     myKingdom.setResourceList(myResources);
-    purchaseService.executeBuildingUpgrade(myKingdom.getBuildings().get(0), 1,
+    purchaseService.executeBuildingUpgrade(myKingdom.getBuildings().get(0),
         myResources, myKingdom);
     assertEquals(myKingdom.getResourceList().get(0).getAmount(), 175);
   }

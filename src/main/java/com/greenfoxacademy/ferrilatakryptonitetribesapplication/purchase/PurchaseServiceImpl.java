@@ -230,7 +230,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         return i;
       }
     }
-    return 0;
+    throw new BuildingRelatedException("No building with this ID");
   }
 
   @Override

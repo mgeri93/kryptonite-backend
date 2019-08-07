@@ -3,8 +3,8 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Farm;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
@@ -203,13 +203,16 @@ public class KingdomControllerTest {
   }
 
   @Test
-  public void upgradingBuildingWithoutResources() throws Exception {
-    Kingdom kingdom = new Kingdom();
+  public void upgradingBuildingWithResources() throws Exception {
+    Farm myBuilding = new Farm();
     Mockito.when(purchaseService.upgradeBuildingByOneLevel(1))
-        .thenThrow(new ResourceRelatedException("Not enough gold to upgrade building"));
-    mockMvc.perform(put("/kingdom/1/building/1").contentType(contentType).content(""))
+        .thenReturn(myBuilding);
+    mockMvc.perform(put("/kingdom/1/building/1")
+        .contentType(contentType)
+        .content(""))
         .andDo(print())
-        .andExpect(status().isBadRequest());
+        .andExpect(content().contentType(contentType))
+        .andExpect(status().isOk());
   }
 
   @Test
@@ -221,7 +224,7 @@ public class KingdomControllerTest {
         .thenReturn(myKingdom);
     mockMvc.perform(post("/kingdom/1/troops")
         .contentType(contentType)
-        .content(""))
+        .content("Troop created, gold left: 90"))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().string("Troop created, gold left: 90"));

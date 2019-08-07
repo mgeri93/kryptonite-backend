@@ -73,13 +73,13 @@ public class KingdomController {
   }
 
   @PostMapping("/{kingdomId}/troops")
-  ResponseEntity addNewTroopToKingdom(@PathVariable(name = "kingdomId") long id) throws Exception {
+  ResponseEntity addNewTroopToKingdom(@PathVariable(name = "kingdomId") long id) {
     return purchaseService.purchaseTroop(kingdomRepository.findKingdomById(id));
   }
 
   @PutMapping("/{kingdomId}/troop/{lvl}")
   public String upgradeTroop(@PathVariable(name = "kingdomId") long kingdomId,
-      @PathVariable(name = "lvl") long lvl) throws Exception {
+      @PathVariable(name = "lvl") long lvl) {
     if (troopService.getTroopToUpdate(kingdomService.findKingdomById(kingdomId), lvl) != null) {
       return purchaseService.purchaseTroopUpgrade(kingdomService.findKingdomById(kingdomId),
           troopService.getTroopToUpdate(kingdomService.findKingdomById(kingdomId), lvl).getId(),
