@@ -4,6 +4,7 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingDTO;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingFactory;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingType;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.TownHall;
@@ -21,11 +22,11 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopRepos
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImpl;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -35,10 +36,12 @@ public class PurchaseServiceImpl implements PurchaseService {
   private ResourceServiceImpl resourceService;
   private IKingdomRepository kingdomRepository;
   private KingdomServiceImpl kingdomService;
+  private BuildingRepository buildingRepository;
   private TroopRepository troopRepository;
 
   private Long troopCreateCost = 10L;
   private Long buildingCreateCost = 100L;
+  private int buildingUpgradeCost = 25;
 
   @Autowired
   public PurchaseServiceImpl(
@@ -47,12 +50,14 @@ public class PurchaseServiceImpl implements PurchaseService {
       ResourceServiceImpl resourceService,
       IKingdomRepository kingdomRepository,
       KingdomServiceImpl kingdomService,
+      BuildingRepository buildingRepository,
       TroopRepository troopRepository) {
     this.buildingService = buildingService;
     this.troopService = troopService;
     this.resourceService = resourceService;
     this.kingdomRepository = kingdomRepository;
     this.kingdomService = kingdomService;
+    this.buildingRepository = buildingRepository;
     this.troopRepository = troopRepository;
   }
 
@@ -196,6 +201,51 @@ public class PurchaseServiceImpl implements PurchaseService {
     buildingToSave.setKingdom(kingdom);
     buildingService.saveBuilding(buildingToSave);
     kingdom.getBuildings().add(buildingToSave);
+    kingdomRepository.save(kingdom);
+  }
+
+  @Transactional
+  @Override
+  public Building upgradeBuildingByOneLevel(long buildingId) {
+    Building building = buildingRepository.findBuildingById(buildingId);
+    Kingdom kingdom = building.getKingdom();
+    List<Resource> resources = kingdom.getResourceList();
+    if (building instanceof TownHall
+        || kingdom.getBuildings().get(3).getLevel() >= building.getLevel() + 1) {
+      if (resources.get(0).getAmount() >= buildingUpgradeCost) {
+        executeBuildingUpgrade(building, resources, kingdom);
+      } else {
+        throw new ResourceRelatedException("Insufficient gold");
+      }
+    } else {
+      throw new BuildingRelatedException("Upgrade is not allowed");
+    }
+    return building;
+  }
+
+  @Override
+  public int findBuildingIndexByBuildingId(long buildingId, Kingdom kingdom) {
+    for (int i = 0; i < kingdom.getBuildings().size(); i++) {
+      if (kingdom.getBuildings().get(i).getId() == buildingId) {
+        return i;
+      }
+    }
+    throw new BuildingRelatedException("No building with this ID");
+  }
+
+  @Override
+  public void executeBuildingUpgrade(Building building, List<Resource> resources,
+      Kingdom kingdom) {
+    building.setLevel(building.getLevel() + 1);
+    buildingRepository.save(building);
+    List<Building> myBuildings = kingdom.getBuildings();
+    myBuildings.set(findBuildingIndexByBuildingId(building.getId(), kingdom), building);
+    Resource myGold = resources.get(0);
+    myGold.setAmount(resources.get(0).getAmount() - buildingUpgradeCost);
+    resources.set(0, myGold);
+    resourceService.saveResource(myGold);
+    kingdom.setResourceList(resources);
+    kingdom.setBuildings(myBuildings);
     kingdomRepository.save(kingdom);
   }
 

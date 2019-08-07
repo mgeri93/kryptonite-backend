@@ -12,19 +12,18 @@ import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-
+@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class PurchaseServiceJUnit5Test {
-
-  @Autowired
-  PurchaseServiceImpl purchaseService;
 
   private Farm myFarm = new Farm();
   private Mine myMine = new Mine();
@@ -32,6 +31,9 @@ public class PurchaseServiceJUnit5Test {
   private TownHall myTownhall = new TownHall();
   private Gold myGold = new Gold(9);
   private Kingdom myKingdom = new Kingdom();
+
+  @Autowired
+  private PurchaseService purchaseService;
 
   @Test
   public void purchaseTroopWithoutResources() {

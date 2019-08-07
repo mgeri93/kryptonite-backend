@@ -3,21 +3,22 @@ package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingType;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Farm;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.ResourceServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.Troop;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-
 import static org.mockito.Mockito.when;
-
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,9 +29,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -87,7 +88,6 @@ public class KingdomControllerTest {
   }
 
   @Test
-
   public void getResourcesOfKingdomWithExistingId() throws Exception {
     when(kingdomService.listKingdomsResources(1))
         .thenReturn(new ArrayList<>());
@@ -205,15 +205,36 @@ public class KingdomControllerTest {
   }
 
   @Test
+  public void upgradingBuildingWithResources() throws Exception {
+    String result = new JSONObject()
+        .put("id", 0)
+        .put("level", 0)
+        .put("hp", 0.0)
+        .put("buildingType", "Farm")
+        .toString();
+    Farm myBuilding = new Farm();
+    myBuilding.setBuildingType(BuildingType.valueOf("Farm"));
+    Mockito.when(purchaseService.upgradeBuildingByOneLevel(1))
+        .thenReturn(myBuilding);
+    mockMvc.perform(put("/kingdom/1/building/1")
+        .contentType(contentType)
+        .content(""))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(contentType))
+        .andExpect(content().json(result));
+  }
+
+  @Test
   public void buyingTroopWithEnoughGoldAndAcademy() throws Exception {
     Kingdom myKingdom = new Kingdom();
     when(purchaseService.purchaseTroop(myKingdom))
-        .thenReturn(new ResponseEntity("Troop created, gold left: 90", HttpStatus.OK));
+        .thenReturn(new ResponseEntity<String>("Troop created, gold left: 90", HttpStatus.OK));
     when(kingdomRepository.findKingdomById(1))
         .thenReturn(myKingdom);
     mockMvc.perform(post("/kingdom/1/troops")
         .contentType(contentType)
-        .content(""))
+        .content("Troop created, gold left: 90"))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().string("Troop created, gold left: 90"));
