@@ -1,6 +1,9 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop;
 
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +36,17 @@ public class TroopServiceImpl implements TroopService {
 
   public Troop findTroopById(long id) {
     return troopRepository.findTroopById(id);
+  }
+
+  public Troop getTroopToUpdate(Kingdom kingdom, long level) throws ResourceRelatedException {
+    if (troopRepository.existsByLevel(level)) {
+      List<Troop> sameLevelTroops = kingdom.getTroops()
+          .stream()
+          .filter(troop -> troop.getLevel() == level)
+          .collect(Collectors.toList());
+      return sameLevelTroops.get((int) Math.random() * (sameLevelTroops.size() + 1));
+    } else {
+      throw new ResourceRelatedException("Upgrade is not successful");
+    }
   }
 }
