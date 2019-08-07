@@ -73,13 +73,5 @@ public class PurchaseServiceUnitTest {
     purchaseService.constructNewBuilding(new BuildingDTO("Townhall", 0, 1));
   }
 
-  @Test
-  public void createTroopDecreaseFood() {
-    Kingdom kingdom = new Kingdom("empire", new ApplicationUser("geri", "password"));
-    kingdom.getResourceList().add(0, new Gold(100));
-    kingdom.getResourceList().add(1, new Food(100));
-    troopServiceImpl.createTroop(kingdom);
-    assertEquals(10, kingdom.getResourceList().get(1).getAmountPerMinute());
-  }
 }
 

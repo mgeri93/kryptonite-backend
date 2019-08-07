@@ -36,13 +36,13 @@ public abstract class Resource {
     this.amount = amount;
     this.kingdom = kingdom;
     this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
-    this.amountPerMinute = 10;
+    this.amountPerMinute = 0;
   }
 
   public Resource(int amount) {
     this.amount = amount;
     this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
-    this.amountPerMinute = 10;
+    this.amountPerMinute = 0;
   }
 
   public Resource() {

@@ -78,13 +78,34 @@ public class PurchaseServiceImpl implements PurchaseService {
     List<Resource> kingdomResource = kingdom.getResourceList();
     Gold gold = getGoldOfKingdom(kingdomResource);
     if (building.getBuildingType() != BuildingType.TownHall) {
-      building.setLevel(Math.min(upgradeLevelTo, townHallLevel(kingdom)));
-      return purchaseIfEnoughGold(gold, upgradeLevelTo, buildingCreateCost);
+      if (building.getBuildingType() == BuildingType.Mine) {
+        upgradeMine(kingdom, buildingId, upgradeLevelTo);
+      } else {
+        building.setLevel(Math.min(upgradeLevelTo, townHallLevel(kingdom)));
+        return purchaseIfEnoughGold(gold, upgradeLevelTo, buildingCreateCost);
+      }
     } else if (building.getLevel() < 10L) {
       building.setLevel(upgradeLevelTo);
       return purchaseIfEnoughGold(gold, upgradeLevelTo, buildingCreateCost);
     }
     return gold.getAmount();
+  }
+
+  public int upgradeMine(Kingdom kingdom, Long buildingId, Long upgradeLevelTo) {
+    Building building = buildingService.findBuildingById(buildingId);
+    List<Resource> kingdomResource = kingdom.getResourceList();
+    Gold gold = getGoldOfKingdom(kingdomResource);
+    if (building.getLevel() == 0) {
+      building.setLevel(Math.min(upgradeLevelTo, townHallLevel(kingdom)));
+      gold.setAmountPerMinute(10);
+      gold.setAmount(gold.getAmount()  + 100);
+      return purchaseIfEnoughGold(gold, upgradeLevelTo, buildingCreateCost);
+    } else {
+      building.setLevel(Math.min(upgradeLevelTo, townHallLevel(kingdom)));
+      gold.setAmountPerMinute(gold.getAmountPerMinute() + 5);
+      gold.setAmount(gold.getAmount() + (int)building.getLevel() * 100);
+      return purchaseIfEnoughGold(gold, upgradeLevelTo, buildingCreateCost);
+    }
   }
 
   @Override
