@@ -234,8 +234,9 @@ public class PurchaseServiceImpl implements PurchaseService {
       if (resources.get(0).getAmount() >= buildingUpgradeCost) {
         if (building.getBuildingType() == BuildingType.Mine) {
           upgradeMine(kingdom, buildingId, building.getLevel() + 1);
-        } else
-        executeBuildingUpgrade(building, resources, kingdom);
+        } else {
+          executeBuildingUpgrade(building, resources, kingdom);
+        }
       } else {
         throw new ResourceRelatedException("Insufficient gold");
       }
