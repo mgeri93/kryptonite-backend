@@ -1,6 +1,7 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUserServiceImpl;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.ResourceRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase.PurchaseServiceImpl;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
@@ -65,6 +66,12 @@ public class KingdomController {
     return kingdomService.listKingdomsResources(id);
   }
 
+
+  @PutMapping("/{kingdomId}/building/{buildingId}")
+  Building initiateBuildingUpgrade(@PathVariable(name = "buildingId") long buildingId) {
+    return purchaseService.upgradeBuildingByOneLevel(buildingId);
+  }
+
   @PostMapping("/{kingdomId}/troops")
   ResponseEntity addNewTroopToKingdom(@PathVariable(name = "kingdomId") long id) {
     return purchaseService.purchaseTroop(kingdomRepository.findKingdomById(id));
@@ -72,7 +79,7 @@ public class KingdomController {
 
   @PutMapping("/{kingdomId}/troop/{lvl}")
   public String upgradeTroop(@PathVariable(name = "kingdomId") long kingdomId,
-      @PathVariable(name = "lvl") long lvl) throws ResourceRelatedException {
+      @PathVariable(name = "lvl") long lvl) {
     if (troopService.getTroopToUpdate(kingdomService.findKingdomById(kingdomId), lvl) != null) {
       return purchaseService.purchaseTroopUpgrade(kingdomService.findKingdomById(kingdomId),
           troopService.getTroopToUpdate(kingdomService.findKingdomById(kingdomId), lvl).getId(),

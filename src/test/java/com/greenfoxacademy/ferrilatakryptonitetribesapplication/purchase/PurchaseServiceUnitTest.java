@@ -1,14 +1,15 @@
 package com.greenfoxacademy.ferrilatakryptonitetribesapplication.purchase;
 
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.applicationuser.ApplicationUser;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Academy;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.Building;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingDTO;
+import com.greenfoxacademy.ferrilatakryptonitetribesapplication.building.BuildingRepository;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.BuildingRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.exception.customexceptions.KingdomRelatedException;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.kingdom.Kingdom;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Food;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Gold;
 import com.greenfoxacademy.ferrilatakryptonitetribesapplication.resource.Resource;
-import com.greenfoxacademy.ferrilatakryptonitetribesapplication.troop.TroopServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -28,13 +29,13 @@ public class PurchaseServiceUnitTest {
   private PurchaseService purchaseService;
 
   @Autowired
-  private TroopServiceImpl troopServiceImpl;
+  private BuildingRepository buildingRepository;
 
   @Test(expected = KingdomRelatedException.class)
   public void purchaseBuildingWithInsufficientGold() {
     Kingdom myKingdom = new Kingdom();
     myKingdom.setResourceList(new ArrayList<>());
-    purchaseService.constructNewBuilding(new BuildingDTO("Mine", 0, 1));
+    purchaseService.constructNewBuilding(new BuildingDTO("Mine", 0, 0));
   }
 
   @Test(expected = KingdomRelatedException.class)
@@ -43,7 +44,7 @@ public class PurchaseServiceUnitTest {
     testResources.add(new Gold(1000));
     Kingdom myKingdom = new Kingdom();
     myKingdom.setResourceList(testResources);
-    purchaseService.constructNewBuilding(new BuildingDTO("Mine", 6, 1));
+    purchaseService.constructNewBuilding(new BuildingDTO("Mine", 6, 0));
   }
 
   @Test(expected = BuildingRelatedException.class)
@@ -73,5 +74,21 @@ public class PurchaseServiceUnitTest {
     purchaseService.constructNewBuilding(new BuildingDTO("Townhall", 0, 1));
   }
 
+  @Test
+  public void executeBuildingReducesGoldAmount() {
+    Kingdom myKingdom = new Kingdom("Kutyavilág", new ApplicationUser());
+    List<Building> myBuildings = new ArrayList<>();
+    Academy academy = new Academy();
+    academy.setKingdom(myKingdom);
+    myBuildings.add(academy);
+    List<Resource> myResources = new ArrayList<>();
+    myResources.add(new Gold(200));
+    myKingdom.setBuildings(myBuildings);
+    buildingRepository.save(myKingdom.getBuildings().get(0));
+    myKingdom.setResourceList(myResources);
+    purchaseService.executeBuildingUpgrade(myKingdom.getBuildings().get(0),
+        myResources, myKingdom);
+    assertEquals(myKingdom.getResourceList().get(0).getAmount(), 175);
+  }
 }
 
