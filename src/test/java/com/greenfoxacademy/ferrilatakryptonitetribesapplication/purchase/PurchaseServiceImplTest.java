@@ -79,7 +79,7 @@ public class PurchaseServiceImplTest {
     List<Troop> kingdomTroops = kingdom.getTroops();
     kingdomTroops.add(troop);
     when(troopService.findTroopById(1)).thenReturn(troop);
-    assertEquals("Troop upgraded, level: 3, HP: 1, Attack: 1, Defense: 1.",
+    assertEquals("Troop upgraded, level: 3, HP: 15, Attack: 15, Defense: 15.",
         purchaseService.purchaseTroopUpgrade(kingdom, (long) 1, (long) 3));
   }
 
