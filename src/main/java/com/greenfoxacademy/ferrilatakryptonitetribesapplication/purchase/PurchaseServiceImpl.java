@@ -159,6 +159,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     Gold gold = getGoldOfKingdom(kingdomResource);
     if (troop.getLevel() < 3) {
       troop.setLevel(upgradeLevelTo);
+      troop.setAttack(troop.getLevel() * 5);
+      troop.setDefense(troop.getLevel() * 5);
+      troop.setHp(troop.getLevel() * 5);
       purchaseIfEnoughGold(gold, upgradeLevelTo, troopCreateCost);
       return "Troop upgraded, level: " + troop.getLevel() + ", HP: " + troop.getHp()
           + ", Attack: " + troop.getAttack() + ", Defense: " + troop.getDefense() + ".";

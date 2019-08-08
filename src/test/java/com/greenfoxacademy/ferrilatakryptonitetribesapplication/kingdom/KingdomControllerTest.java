@@ -234,7 +234,7 @@ public class KingdomControllerTest {
         .thenReturn(myKingdom);
     mockMvc.perform(post("/kingdom/1/troops")
         .contentType(contentType)
-        .content("Troop created, gold left: 90"))
+        .content(""))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().string("Troop created, gold left: 90"));
