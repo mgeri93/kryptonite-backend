@@ -103,13 +103,11 @@ public class PurchaseServiceImpl implements PurchaseService {
     if (building.getLevel() == 0) {
       building.setLevel(Math.min(upgradeLevelTo, townHallLevel(kingdom)));
       gold.setAmountPerMinute(10);
-      gold.setAmount(gold.getAmount()  + 100);
-      return purchaseIfEnoughGold(gold, upgradeLevelTo, buildingCreateCost);
+      return purchaseIfEnoughGold(gold, upgradeLevelTo, (long)buildingUpgradeCost);
     } else {
       building.setLevel(Math.min(upgradeLevelTo, townHallLevel(kingdom)));
       gold.setAmountPerMinute(gold.getAmountPerMinute() + 5);
-      gold.setAmount(gold.getAmount() + (int)building.getLevel() * 100);
-      return purchaseIfEnoughGold(gold, upgradeLevelTo, buildingCreateCost);
+      return purchaseIfEnoughGold(gold, upgradeLevelTo, (long)buildingUpgradeCost);
     }
   }
 
@@ -234,6 +232,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     if (building instanceof TownHall
         || kingdom.getBuildings().get(3).getLevel() >= building.getLevel() + 1) {
       if (resources.get(0).getAmount() >= buildingUpgradeCost) {
+        if (building.getBuildingType() == BuildingType.Mine) {
+          upgradeMine(kingdom, buildingId, building.getLevel() + 1);
+        } else
         executeBuildingUpgrade(building, resources, kingdom);
       } else {
         throw new ResourceRelatedException("Insufficient gold");
